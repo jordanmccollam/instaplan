@@ -14,7 +14,7 @@ const Card = (props) => {
 	};
 
   return (
-    <div className={`${props.className} ${classnames(classes)}`}>
+    <div onClick={props.onClick} className={`${props.className} ${classnames(classes)}`}>
     
       {props.children}
     </div>
@@ -27,7 +27,8 @@ Card.propTypes = {
     PropTypes.element
   ]),
   className: PropTypes.string,
-  kind: PropTypes.oneOf(['primary', 'success', 'danger'])
+  kind: PropTypes.oneOf(['primary', 'success', 'danger']),
+  onClick: PropTypes.func
 }
 
 Card.defaultProps = {

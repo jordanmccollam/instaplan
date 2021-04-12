@@ -1,6 +1,7 @@
 @import "../../sass/variables";
 
 .hero {
+    // width: max-content;
 
     &-title {
         font-family: $font-secondary;
@@ -29,4 +30,24 @@
             color: $danger-00;
         }
     }
+
+    &-btn {
+        width: 20%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        transition: $transition;
+        &:hover {
+            transform: scale(1.05);
+        }
+    }
+}
+
+.hero-danger .hero-btn {
+    color: $danger-60;
+}
+.hero-success .hero-btn {
+    color: $success-60;
 }

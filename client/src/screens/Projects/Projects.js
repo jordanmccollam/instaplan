@@ -13,9 +13,18 @@ const Projects = (props) => {
 		[`projects`]: true
 	};
 
+  const addProject = () => {
+    console.log(logger + 'addProject');
+  }
+
   return (
     <div className={`${props.className} ${classnames(classes)}`}>
-      <Hero kind="danger" title={`Projects`} subtitle="Manage projects here" />
+      <Hero 
+        kind="danger" 
+        title={`Projects`} 
+        subtitle="Manage projects here" 
+        button={{icon: 'GoPlus', handler: addProject}} 
+      />
     </div>
   )
 }

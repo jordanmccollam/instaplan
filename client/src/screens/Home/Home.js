@@ -15,7 +15,11 @@ const Home = (props) => {
 
   return (
     <div className={`${props.className} ${classnames(classes)}`}>
-      <Hero kind="success" title={`Hello, USER`} subtitle="This is your dashboard. It gives you a quick view of everything you need to see." />
+      <Hero 
+        kind="success" 
+        title={`Hello, USER`} 
+        subtitle="This is your dashboard. It gives you a quick view of everything you need to see." 
+      />
     </div>
   )
 }

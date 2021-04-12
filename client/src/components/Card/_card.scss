@@ -7,13 +7,26 @@
     position: relative;
     border-radius: $radius;
 
+    &-faded {
+        background-color: $primary-10;
+        box-shadow: 3px 3px 1px $primary-60;
+    }
+
     &-success {
         background-color: $success;
         box-shadow: 6px 6px 1px $success-20;
+        &-faded {
+            background-color: $success-10;
+            box-shadow: 3px 3px 1px $success-60;
+        }
     }
 
     &-danger {
         background-color: $danger;
         box-shadow: 6px 6px 1px $danger-20;
+        &-faded {
+            background-color: $danger-10;
+            box-shadow: 3px 3px 1px $danger-60;
+        }
     }
 }
