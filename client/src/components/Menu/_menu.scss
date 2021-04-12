@@ -1,14 +1,14 @@
 @import "../../sass/variables";
 
 .menu {
-    height: 97vh;
+    height: 96vh;
     width: 8vw;
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 30px 0;
 
     &-navigation {
-        // margin: auto 0 auto 0;
         width: 8vw;
         display: flex;
         flex-direction: column;
@@ -16,8 +16,7 @@
     }
 
     &-item {
-        margin: 1vw 0;
-        height: 4vw;
+        height: 3.3vw;
         width: 5vw;
         display: flex;
         justify-content: center;
@@ -25,6 +24,7 @@
         cursor: pointer;
         border-radius: $radius;
         transition: $transition;
+        margin-bottom: $space-05;
 
         &:hover {
             background-color: $primary-30;
@@ -34,36 +34,42 @@
 }
 
 .menu-item.active {
-    background-color: $bg;
-    width: 9vw;
+    background-color: $primary-20;
+    width: 6vw;
     border-radius: 0;
     position: relative;
-    padding: 3vw 0;
-    margin: 0;
+    border-radius: $radius;
 
     &::after,
     &::before {
-        content: "";
         position: absolute;
-        width: 8vw;
-        height: 1.8vw;
-        right: 0.5vw;
-        background-color: $primary;
+        content: "";
+        border-radius: $radius;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
     }
+
     &::after {
-        top: -.5vw;
-        border-bottom-left-radius: $radius;
-        border-bottom-right-radius: $radius;
-        box-shadow: 6px 6px 1px $shadow-color;
+        background-color: $primary-20;
+        height: 100%;
+        z-index: 9;
+        right: -1vw;
+        width: 100%;
     }
     &::before {
-        bottom: -.5vw;
-        border-top-left-radius: $radius;
-        border-top-right-radius: $radius;
-        box-shadow: 6px -6px 1px $shadow-color;
+        background-color: $bg;
+        height: 70%;
+        z-index: 10;
+        right: -2vw;
+        width: 7.5vw;
     }
 
     &.icon {
-        color: $primary-50 !important;
+        svg, path {
+            color: $primary-50 !important;
+            // position: absolute;
+            // left: 1vw;
+            z-index: 20;
+        }
     }
 }

@@ -8,7 +8,7 @@ import './_menu.scss';
 
 const logger = "Menu:: ";
 
-const iconSize = '2vw';
+const iconSize = '1.5vw';
 const iconColor = 'white';
 
 const Menu = (props) => {
@@ -17,9 +17,8 @@ const Menu = (props) => {
 	};
 
   const screens = [
-    {name: 'home'},
-    {name: 'test'},
-    {name: 'test2'}
+    {name: 'home', icon: 'GoHome', size: iconSize},
+    {name: 'projects', icon: 'BsFolder', size: iconSize},
   ]
 
   const changeScreen = (screen) => {
@@ -30,7 +29,7 @@ const Menu = (props) => {
   return (
     <Card className={`${props.className} ${classnames(classes)}`}>
       <>
-        <Logo color="white" break size={'2.3vw'} />
+        <Logo color="white" size={'1.3vw'} />
 
         <div className="mb-5" />
 
@@ -40,7 +39,7 @@ const Menu = (props) => {
               key={`screen-${i}`} 
               onClick={() => changeScreen(screen.name)} 
             >
-              <Icon size={iconSize} color={iconColor} className={`menu-item ${props.screen === screen.name && 'active'}`}    />
+              <Icon name={screen.icon} size={screen.size} color={iconColor} className={`menu-item ${props.screen === screen.name && 'active'}`}    />
             </div>
           ))}
         </div>
