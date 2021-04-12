@@ -15,7 +15,7 @@
 
     &-success {
         &-title {
-            color: $success-00;
+            color: red !important;
         }
         &-subtitle {
             color: $success-00;
@@ -32,7 +32,7 @@
     }
 
     &-btn {
-        width: 20%;
+        width: 10%;
         height: 100%;
         display: flex;
         justify-content: center;
@@ -45,8 +45,17 @@
     }
 }
 
+
+.hero-danger .hero-title,
+.hero-danger .hero-subtitle {
+    color: $danger-00;
+}
 .hero-danger .hero-btn {
     color: $danger-60;
+}
+.hero-success .hero-title,
+.hero-success .hero-subtitle {
+    color: $success-00;
 }
 .hero-success .hero-btn {
     color: $success-60;

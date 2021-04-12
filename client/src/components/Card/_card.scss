@@ -2,7 +2,7 @@
 
 .custom-card {
     background-color: $primary;
-    box-shadow: 6px 6px 1px $primary-20;
+    box-shadow: $shadow $primary-20;
     padding: 20px;
     position: relative;
     border-radius: $radius;
@@ -14,7 +14,7 @@
 
     &-success {
         background-color: $success;
-        box-shadow: 6px 6px 1px $success-20;
+        box-shadow: $shadow $success-20;
         &-faded {
             background-color: $success-10;
             box-shadow: 3px 3px 1px $success-60;
@@ -23,7 +23,7 @@
 
     &-danger {
         background-color: $danger;
-        box-shadow: 6px 6px 1px $danger-20;
+        box-shadow: $shadow $danger-20;
         &-faded {
             background-color: $danger-10;
             box-shadow: 3px 3px 1px $danger-60;

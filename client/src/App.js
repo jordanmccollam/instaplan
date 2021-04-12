@@ -77,7 +77,7 @@ function App() {
               // LOGGED OUT CONTENT
               <>
                 <Comp.Menu screen={screen} setScreen={setScreen} />
-                <Container fluid className="full px-5 py-4" >
+                <Container fluid className="full p-3" >
                   <Row>
                     <Col lg={8}>
                       {screen === 'home' && (
