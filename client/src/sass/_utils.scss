@@ -1,0 +1,31 @@
+@import "variables";
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.center-v {
+  display: flex;
+  align-items: center;
+}
+
+.center-h {
+  display: flex;
+  justify-content: center;
+}
+
+.full {
+  height: 100vh;
+  overflow: auto;
+}
+
+.half {
+  height: 50vh;
+  overflow: auto;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
