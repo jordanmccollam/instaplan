@@ -3,9 +3,7 @@
 .custom-card {
     background-color: $primary;
     box-shadow: $shadow;
-    display: flex;
-    justify-content: center;
-    padding: 20px 10px;
+    padding: 20px;
     position: relative;
     border-radius: $radius;
 }
