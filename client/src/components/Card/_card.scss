@@ -1,0 +1,11 @@
+@import "../../sass/variables";
+
+.custom-card {
+    background-color: $primary;
+    box-shadow: $shadow;
+    display: flex;
+    justify-content: center;
+    padding: 20px 10px;
+    position: relative;
+    border-radius: $radius;
+}

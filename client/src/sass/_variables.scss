@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Chewy&display=swap');
 /*
  *  Responsive
  */
@@ -105,21 +106,28 @@ $grey-00: #EFEFEF;
  *  BOOTSTRAP OVERRIDES
  */
 
-$primary: #197d67;
-$success: #197d67;
-$light: #f8f9fa;
+$primary: #faaa1e;
+$primary-80: darken($primary, 40%);
+$primary-70: darken($primary, 30%);
+$primary-60: darken($primary, 20%);
+$primary-50: darken($primary, 10%);
+$primary-40: $primary;
+$primary-30: lighten($primary, 10%);
+$primary-20: lighten($primary, 20%);
+$primary-10: lighten($primary, 30%);
+$primary-00: lighten($primary, 40%);
 
 /*
  *  UI
  */
-$bg: #FFFFFF;
+$bg: #f7f7ff;
 $text-color: #000000;
 
-$radius: 3px;
+$radius: 20px;
 
 $font-primary: "Lato", sans-serif;
-$font-secondary: "Lato", sans-serif;
+$font-secondary: 'Chewy', cursive;
 
-$shadow-color: rgba(0,0,0,0.3);
-$shadow: 2px 2px 5px $shadow-color;
+$shadow-color: $primary-20;
+$shadow: 6px 6px 1px $shadow-color;
 $shadow-hover: 3px 3px 16px rgba(0,0,0,0.05);
