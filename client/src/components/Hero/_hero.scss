@@ -1,0 +1,32 @@
+@import "../../sass/variables";
+
+.hero {
+
+    &-title {
+        font-family: $font-secondary;
+        line-height: 120%;
+        color: $primary-00;
+    }
+    &-subtitle {
+        color: $primary-00;
+        max-width: 20em;
+    }
+
+    &-success {
+        &-title {
+            color: $success-00;
+        }
+        &-subtitle {
+            color: $success-00;
+        }
+    }
+
+    &-danger {
+        &-title {
+            color: $danger-00;
+        }
+        &-subtitle {
+            color: $danger-00;
+        }
+    }
+}

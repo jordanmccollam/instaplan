@@ -27,7 +27,7 @@ Card.propTypes = {
     PropTypes.element
   ]),
   className: PropTypes.string,
-  kind: PropTypes.oneOfType(['primary'])
+  kind: PropTypes.oneOf(['primary', 'success', 'danger'])
 }
 
 Card.defaultProps = {

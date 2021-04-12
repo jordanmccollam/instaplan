@@ -67,8 +67,38 @@
     &.icon {
         svg, path {
             color: $primary-50 !important;
-            // position: absolute;
-            // left: 1vw;
+            z-index: 20;
+        }
+    }
+}
+
+.menu-item-success:hover {
+    background-color: $success-30;
+}
+.menu-item-success.active {
+    background-color: $success-20;
+    &::after {
+        background-color: $success-20;
+    }
+    &.icon {
+        svg, path {
+            color: $success-50 !important;
+            z-index: 20;
+        }
+    }
+}
+
+.menu-item-danger:hover {
+    background-color: $danger-30;
+}
+.menu-item-danger.active {
+    background-color: $danger-20;
+    &::after {
+        background-color: $danger-20;
+    }
+    &.icon {
+        svg, path {
+            color: $danger-50 !important;
             z-index: 20;
         }
     }
