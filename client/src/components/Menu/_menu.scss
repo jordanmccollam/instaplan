@@ -16,7 +16,7 @@
     }
 
     &-item {
-        margin-bottom: 20px;
+        margin: 1vw 0;
         height: 4vw;
         width: 5vw;
         display: flex;
@@ -35,33 +35,31 @@
 
 .menu-item.active {
     background-color: $bg;
-    width: 10vw;
+    width: 9vw;
     border-radius: 0;
     position: relative;
     padding: 3vw 0;
+    margin: 0;
 
-    &::after {
-        content: "";
-        position: absolute;
-        width: 8vw;
-        height: 40px;
-        right: 1vw;
-        top: -20px;
-        border-bottom-left-radius: 3px;
-        border-bottom-right-radius: $radius;
-        background-color: $primary;
-        box-shadow: 6px 6px 1px $shadow-color;
-    }
+    &::after,
     &::before {
         content: "";
         position: absolute;
         width: 8vw;
-        height: 40px;
-        right: 1vw;
-        bottom: -20px;
-        border-top-left-radius: $radius;
-        border-top-right-radius: 3px;
+        height: 1.8vw;
+        right: 0.5vw;
         background-color: $primary;
+    }
+    &::after {
+        top: -.5vw;
+        border-bottom-left-radius: $radius;
+        border-bottom-right-radius: $radius;
+        box-shadow: 6px 6px 1px $shadow-color;
+    }
+    &::before {
+        bottom: -.5vw;
+        border-top-left-radius: $radius;
+        border-top-right-radius: $radius;
         box-shadow: 6px -6px 1px $shadow-color;
     }
 

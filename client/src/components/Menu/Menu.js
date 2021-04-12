@@ -18,7 +18,8 @@ const Menu = (props) => {
 
   const screens = [
     {name: 'home'},
-    {name: 'test'}
+    {name: 'test'},
+    {name: 'test2'}
   ]
 
   const changeScreen = (screen) => {
