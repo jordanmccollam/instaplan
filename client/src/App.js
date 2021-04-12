@@ -13,6 +13,7 @@ function App() {
   const [ theme, setTheme ] = useState('theme--light');
   const [ dbUser, setDbUser ] = useState(null);
   const [ token, setToken ] = useState(null);
+  const [ screen, setScreen ] = useState('home');
 
   // useEffect(() => {
   //   if (user) {
@@ -75,7 +76,7 @@ function App() {
             ) : (
               // LOGGED OUT CONTENT
               <>
-                <Comp.Menu />
+                <Comp.Menu screen={screen} setScreen={setScreen} />
               </>
               // ------------------
             )}

@@ -117,6 +117,28 @@ $primary-20: lighten($primary, 20%);
 $primary-10: lighten($primary, 30%);
 $primary-00: lighten($primary, 40%);
 
+$danger: #ff4c60;
+$danger-80: darken($danger, 40%);
+$danger-70: darken($danger, 30%);
+$danger-60: darken($danger, 20%);
+$danger-50: darken($danger, 10%);
+$danger-40: $danger;
+$danger-30: lighten($danger, 10%);
+$danger-20: lighten($danger, 20%);
+$danger-10: lighten($danger, 30%);
+$danger-00: lighten($danger, 40%);
+
+$success: #6c6ce5;
+$success-80: darken($success, 40%);
+$success-70: darken($success, 30%);
+$success-60: darken($success, 20%);
+$success-50: darken($success, 10%);
+$success-40: $success;
+$success-30: lighten($success, 10%);
+$success-20: lighten($success, 20%);
+$success-10: lighten($success, 30%);
+$success-00: lighten($success, 40%);
+
 /*
  *  UI
  */
@@ -127,6 +149,8 @@ $radius: 20px;
 
 $font-primary: "Lato", sans-serif;
 $font-secondary: 'Chewy', cursive;
+
+$transition: 0.2s;
 
 $shadow-color: $primary-20;
 $shadow: 6px 6px 1px $shadow-color;

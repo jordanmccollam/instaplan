@@ -9,6 +9,10 @@
 
     &-navigation {
         // margin: auto 0 auto 0;
+        width: 8vw;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     &-item {
@@ -19,11 +23,49 @@
         justify-content: center;
         align-items: center;
         cursor: pointer;
+        border-radius: $radius;
+        transition: $transition;
 
         &:hover {
             background-color: $primary-30;
             color: $primary;
-            border-radius: $radius;
         }
+    }
+}
+
+.menu-item.active {
+    background-color: $bg;
+    width: 10vw;
+    border-radius: 0;
+    position: relative;
+    padding: 3vw 0;
+
+    &::after {
+        content: "";
+        position: absolute;
+        width: 8vw;
+        height: 40px;
+        right: 1vw;
+        top: -20px;
+        border-bottom-left-radius: 3px;
+        border-bottom-right-radius: $radius;
+        background-color: $primary;
+        box-shadow: 6px 6px 1px $shadow-color;
+    }
+    &::before {
+        content: "";
+        position: absolute;
+        width: 8vw;
+        height: 40px;
+        right: 1vw;
+        bottom: -20px;
+        border-top-left-radius: $radius;
+        border-top-right-radius: 3px;
+        background-color: $primary;
+        box-shadow: 6px -6px 1px $shadow-color;
+    }
+
+    &.icon {
+        color: $primary-50 !important;
     }
 }
