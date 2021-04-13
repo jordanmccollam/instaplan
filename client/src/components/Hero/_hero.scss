@@ -15,8 +15,10 @@
     &-link {
         cursor: pointer;
         color: inherit;
+        transition: $transition;
         &:hover {
             color: $dark;
+            transition: $transition;
         }
     }
 }

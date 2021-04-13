@@ -1,10 +1,31 @@
 @import "../../sass/variables";
 
 .project {
-    padding: 5%;
+    padding: 5% 5% 0 5%;
     border-radius: $radius;
     cursor: pointer; 
     transition: $transition;
+
+    &-actions {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        transition: $transition;
+        .project-action {
+            padding: 5px;
+            border-radius: $radius;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 5px 0;
+            transition: $transition;
+        }
+        .project-action:hover {
+            background: darken($bg, 10%);
+            transition: $transition;
+        }
+    }
 
     &-card {
         border: 1px dashed $grey-10;
@@ -39,7 +60,10 @@
 
 .project:hover {
     background-color: darken($bg, 3%) !important;
-
+}
+.project:hover .project-actions {
+    opacity: 1;
+    transition: 0.5s;
 }
 
 .project:hover .project-card {

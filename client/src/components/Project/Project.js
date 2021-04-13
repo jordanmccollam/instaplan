@@ -13,13 +13,23 @@ const Project = (props) => {
 		[`project`]: true
 	};
 
+  const onDelete = () => {
+    console.log(logger + 'onDelete', props.project);
+  }
+
   return (
-    <div onClick={props.onSelect} className={`${props.className} ${classnames(classes)}`} >
-      <Card kind={props.kind} className="project-card" >
-        <Icon name="BsFileEarmarkText" size={props.size} />
-        <h4 className="project-title">{props.label}</h4>
-        <div className="project-description">{props.description}</div>
+    <div className={`${props.className} ${classnames(classes)}`} >
+      <Card onClick={props.onSelect} kind={props.kind} className="project-card" >
+        <>
+          <Icon name="BsFileEarmarkText" size={props.size} />
+          <h4 className="project-title">{props.project.label}</h4>
+          <div className="project-description">{props.project.description}</div>
+        </>
       </Card>
+
+      <div className="project-actions">
+        <div onClick={onDelete} ><Icon name="BsTrash" className="project-action" /></div>
+      </div>
     </div>
   )
 }
@@ -32,8 +42,7 @@ Project.propTypes = {
   className: PropTypes.string,
   kind: PropTypes.oneOf(['primary', 'success', 'danger', 'default', 'ghost']),
   size: PropTypes.number,
-  label: PropTypes.string,
-  description: PropTypes.string,
+  project: PropTypes.object,
   onSelect: PropTypes.func
 }
 
@@ -41,8 +50,7 @@ Project.defaultProps = {
   className: "",
   kind: 'ghost',
   size: 30,
-  label: 'Default Label',
-  description: 'Default Description',
+  object: {label: 'Default Project', description: 'This a description'},
   onSelect: () => console.log(logger + 'onSelect')
 }
 

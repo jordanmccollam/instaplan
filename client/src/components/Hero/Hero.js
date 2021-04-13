@@ -20,7 +20,7 @@ const Hero = (props) => {
         <div>
           <div className="hero-title" style={{fontSize: props.size}}>
             {props.links.map((link, i) => (
-              <span className="hero-link" onClick={link.action}>{link.label} / </span>
+              <span key={`hero-link-${i}`} className="hero-link" onClick={link.action}>{link.label} / </span>
             ))}
             {props.title}
           </div>

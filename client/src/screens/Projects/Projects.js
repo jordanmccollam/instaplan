@@ -71,8 +71,7 @@ const Projects = (props) => {
           {testProjects.map((project, i) => (
             <Col lg={3} key={`project-${i}`} className="slide-top-random">
               <Project  
-                label={project.label}
-                description={project.description}
+                project={project}
                 onSelect={() => onSelectProject(project)}
               />
             </Col>
