@@ -20,5 +20,6 @@
     }
     &-light {
         background-color: $light;
+        border: 1px dashed darken($light, 5%);
     }
 }

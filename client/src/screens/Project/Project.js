@@ -8,6 +8,18 @@ import './_project.scss';
 
 const logger = "ProjectScreen:: ";
 
+const testSections = [
+  {
+    label: 'Todo'
+  },
+  {
+    label: 'In-Progress'
+  },
+  {
+    label: 'Done'
+  },
+]
+
 const ProjectScreen = (props) => {
   let classes = {
 		[`project-screen`]: true
@@ -25,9 +37,11 @@ const ProjectScreen = (props) => {
         />
 
         <Row className="mt-3 project-screen-sections">
-          <Col>
-            <Section className="slide-top-random" />
-          </Col>
+          {testSections.map((section, i) => (
+            <Col key={`section-${i}`} className="slide-top-random" >
+              <Section section={section} />
+            </Col>
+          ))}
         </Row>
       </Col>
 

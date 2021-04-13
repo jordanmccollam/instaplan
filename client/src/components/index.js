@@ -1,3 +1,4 @@
+import Button from "./Button/Button";
 import Section from "./Section/Section";
 import Project from "./Project/Project";
 import Hero from "./Hero/Hero";
@@ -8,6 +9,7 @@ import Icon from "./Icon/Icon";
 
 
 export {
+  Button,
   Section,
   Project,
   Hero,
