@@ -1,62 +1,14 @@
 @import "../../sass/variables";
 
 .hero {
-    // width: max-content;
 
     &-title {
-        font-family: $font-secondary;
-        line-height: 120%;
-        color: $primary-00;
+        // font-family: $font-secondary;
+        color: white;
     }
     &-subtitle {
-        color: $primary-00;
-        max-width: 20em;
+        color: white;
+        max-width: 25em;
+        font-size: 18px;
     }
-
-    &-success {
-        &-title {
-            color: red !important;
-        }
-        &-subtitle {
-            color: $success-00;
-        }
-    }
-
-    &-danger {
-        &-title {
-            color: $danger-00;
-        }
-        &-subtitle {
-            color: $danger-00;
-        }
-    }
-
-    &-btn {
-        width: 10%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        cursor: pointer;
-        transition: $transition;
-        &:hover {
-            transform: scale(1.05);
-        }
-    }
-}
-
-
-.hero-danger .hero-title,
-.hero-danger .hero-subtitle {
-    color: $danger-00;
-}
-.hero-danger .hero-btn {
-    color: $danger-60;
-}
-.hero-success .hero-title,
-.hero-success .hero-subtitle {
-    color: $success-00;
-}
-.hero-success .hero-btn {
-    color: $success-60;
 }

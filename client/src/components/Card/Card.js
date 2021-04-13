@@ -27,13 +27,13 @@ Card.propTypes = {
     PropTypes.element
   ]),
   className: PropTypes.string,
-  kind: PropTypes.oneOf(['primary', 'success', 'danger']),
+  kind: PropTypes.oneOf(['primary', 'success', 'danger', 'default']),
   onClick: PropTypes.func
 }
 
 Card.defaultProps = {
   className: "",
-  kind: 'primary'
+  kind: 'default'
 }
 
 export default Card;

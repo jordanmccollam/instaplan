@@ -12,22 +12,9 @@ const iconSize = '1.5vw';
 const iconColor = 'white';
 
 const Menu = (props) => {
-  const [ kind, setKind ] = useState('primary');
   let classes = {
-		[`menu`]: true,
-    [`menu-${kind}`]: true
+		[`menu`]: true
 	};
-
-  useEffect(() => {
-    switch(props.screen) {
-      case 'projects': 
-        setKind('success') 
-        break;
-      default: 
-        setKind('primary');
-        break;
-    }
-  }, [props.screen])
 
   const screens = [
     {name: 'home', icon: 'GoHome', size: iconSize},
@@ -40,9 +27,9 @@ const Menu = (props) => {
   }
 
   return (
-    <Card kind={kind} className={`${props.className} ${classnames(classes)}`}>
+    <Card className={`${props.className} ${classnames(classes)}`}>
       <>
-        <Logo color="white" size={'1.3vw'} />
+        <Logo size={'1.3vw'} />
 
         <div className="mb-5" />
 
@@ -52,7 +39,7 @@ const Menu = (props) => {
               key={`screen-${i}`} 
               onClick={() => changeScreen(screen.name)} 
             >
-              <Icon name={screen.icon} size={screen.size} color={iconColor} className={`menu-item menu-item-${kind} ${props.screen === screen.name && 'active'}`}    />
+              <Icon name={screen.icon} size={screen.size} color={iconColor} className={`menu-item ${props.screen === screen.name && 'active'}`}    />
             </div>
           ))}
         </div>

@@ -11,8 +11,20 @@ export default {
 
 const Template = (args) => <Card {...args} />
 
+export const Default = Template.bind({})
+Default.args = {
+
+}
 export const Primary = Template.bind({})
 Primary.args = {
-
+  kind: "primary"
+}
+export const Danger = Template.bind({})
+Danger.args = {
+  kind: "danger"
+}
+export const Success = Template.bind({})
+Success.args = {
+  kind: "success"
 }
 

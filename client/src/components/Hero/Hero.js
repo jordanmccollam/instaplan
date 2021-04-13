@@ -15,18 +15,12 @@ const Hero = (props) => {
 	};
 
   return (
-    <Card kind={props.kind} className={`${props.className} ${classnames(classes)} p-4`}>
+    <Card kind={props.kind} className={`${props.className} ${classnames(classes)} px-5 py-4`}>
       <div className="d-flex justify-content-between">
         <div>
           <div className="hero-title" style={{fontSize: props.size}}>{props.title}</div>
-          <div className="hero-subtitle" style={{fontSize: props.size / 3}}>{props.subtitle}</div>
+          <div className="hero-subtitle">{props.subtitle}</div>
         </div>
-
-        {props.button && (
-          <Card kind={`${props.kind}-faded hero-btn`} onClick={props.button.handler}>
-            <Icon name={props.button.icon} />
-          </Card>
-        )}
       </div>
     </Card>
   )
@@ -34,19 +28,18 @@ const Hero = (props) => {
 
 Hero.propTypes = {
   className: PropTypes.string,
-  kind: PropTypes.oneOf(['primary', 'success', 'danger']),
+  kind: PropTypes.oneOf(['primary', 'success', 'danger', 'default']),
   title: PropTypes.string,
   subtitle: PropTypes.string,
   size: PropTypes.number,
-  button: PropTypes.object
 }
 
 Hero.defaultProps = {
   className: "",
-  kind: 'primary',
+  kind: 'default',
   title: "Default Hero Title",
   subtitle: "And this is the default subtitle",
-  size: 50,
+  size: 40,
 }
 
 export default Hero;

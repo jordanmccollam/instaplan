@@ -1,12 +1,13 @@
 @import "../../sass/variables";
 
 .menu {
-    height: 96vh;
+    height: 98vh;
     width: 8vw;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 30px 0;
+    background-color: $dark;
 
     &-navigation {
         width: 8vw;
@@ -27,14 +28,13 @@
         margin-bottom: $space-05;
 
         &:hover {
-            background-color: $primary-30;
-            color: $primary;
+            background-color: $dark-30;
         }
     }
 }
 
 .menu-item.active {
-    background-color: $primary-20;
+    background-color: $dark;
     width: 6vw;
     border-radius: 0;
     position: relative;
@@ -50,55 +50,16 @@
     }
 
     &::after {
-        background-color: $primary-20;
+        background-color: $bg;
         height: 100%;
         z-index: 9;
-        right: -1vw;
-        width: 100%;
-    }
-    &::before {
-        background-color: $bg;
-        height: 81%;
-        z-index: 10;
-        right: -2vw;
-        width: 7.8vw;
+        right: -1.5vw;
+        width: 108%;
     }
 
     &.icon {
         svg, path {
-            color: $primary-50 !important;
-            z-index: 20;
-        }
-    }
-}
-
-.menu-item-success:hover {
-    background-color: $success-30;
-}
-.menu-item-success.active {
-    background-color: $success-20;
-    &::after {
-        background-color: $success-20;
-    }
-    &.icon {
-        svg, path {
-            color: $success-50 !important;
-            z-index: 20;
-        }
-    }
-}
-
-.menu-item-danger:hover {
-    background-color: $danger-30;
-}
-.menu-item-danger.active {
-    background-color: $danger-20;
-    &::after {
-        background-color: $danger-20;
-    }
-    &.icon {
-        svg, path {
-            color: $danger-50 !important;
+            color: $danger !important;
             z-index: 20;
         }
     }

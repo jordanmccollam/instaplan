@@ -54,9 +54,9 @@ function App() {
 
   return (
     <div className="App">
-      <Container fluid>
-        <Row className="full">
-          <Col className="center-v content">
+      <Container fluid className="px-0">
+        <Row className="full mx-0">
+          <Col className="center-v content px-0">
       
             {user ? (
               dbUser ? (
@@ -76,18 +76,14 @@ function App() {
             ) : (
               // LOGGED OUT CONTENT
               <>
-                <Comp.Menu screen={screen} setScreen={setScreen} />
-                <Container fluid className="full p-3" >
-                  <Row>
-                    <Col lg={8}>
-                      {screen === 'home' && (
-                        <Screens.Home />
-                      )}
-                      {screen === 'projects' && (
-                        <Screens.Projects />
-                      )}
-                    </Col>
-                  </Row>
+                <Comp.Menu screen={screen} setScreen={setScreen} className="ml-2" />
+                <Container fluid className="full" >
+                  {screen === 'home' && (
+                    <Screens.Home />
+                  )}
+                  {screen === 'projects' && (
+                    <Screens.Projects />
+                  )}
                 </Container>
               </>
               // ------------------

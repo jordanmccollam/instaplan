@@ -1,32 +1,19 @@
 @import "../../sass/variables";
 
 .custom-card {
-    background-color: $primary;
-    box-shadow: $shadow $primary-20;
     padding: 20px;
     position: relative;
     border-radius: $radius;
+    background-color: $dark;
+    box-shadow: $shadow;
 
-    &-faded {
-        background-color: $primary-10;
-        box-shadow: 3px 3px 1px $primary-60;
+    &-primary {
+        background-color: $primary;
     }
-
     &-success {
         background-color: $success;
-        box-shadow: $shadow $success-20;
-        &-faded {
-            background-color: $success-10;
-            box-shadow: 3px 3px 1px $success-60;
-        }
     }
-
     &-danger {
         background-color: $danger;
-        box-shadow: $shadow $danger-20;
-        &-faded {
-            background-color: $danger-10;
-            box-shadow: 3px 3px 1px $danger-60;
-        }
     }
 }

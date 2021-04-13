@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Chewy&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@200&display=swap');
 /*
  *  Responsive
  */
@@ -107,11 +107,6 @@ $grey-00: #EFEFEF;
  */
 
 $primary: #faaa1e;
-// $primary: #e99c18;
-// $primary: #f5886a;
-// $primary: #709f9d;
-// $primary: #a16b56;
-// $primary: #709f9d;
 $primary-80: darken($primary, 40%);
 $primary-70: darken($primary, 30%);
 $primary-60: darken($primary, 20%);
@@ -123,7 +118,6 @@ $primary-10: lighten($primary, 30%);
 $primary-00: lighten($primary, 40%);
 
 $danger: #ff4c60;
-// $danger: #75565d;
 $danger-80: darken($danger, 40%);
 $danger-70: darken($danger, 30%);
 $danger-60: darken($danger, 20%);
@@ -135,7 +129,6 @@ $danger-10: lighten($danger, 30%);
 $danger-00: lighten($danger, 40%);
 
 $success: #6c6ce5;
-// $success: #f5886a;
 $success-80: darken($success, 40%);
 $success-70: darken($success, 30%);
 $success-60: darken($success, 20%);
@@ -146,20 +139,33 @@ $success-20: lighten($success, 20%);
 $success-10: lighten($success, 30%);
 $success-00: lighten($success, 40%);
 
+$dark: #333951;
+$dark-80: darken($dark, 40%);
+$dark-70: darken($dark, 30%);
+$dark-60: darken($dark, 20%);
+$dark-50: darken($dark, 10%);
+$dark-40: $dark;
+$dark-30: lighten($dark, 10%);
+$dark-20: lighten($dark, 20%);
+$dark-10: lighten($dark, 30%);
+$dark-00: lighten($dark, 40%);
+
 /*
  *  UI
  */
-$bg: #f7f7ff;
+// $bg: #333951;
 // $bg:#f8f2dc;
+$bg: #e7eefb;
 $text-color: #000000;
 
 $radius: 20px;
 
-$font-primary: "Lato", sans-serif;
-$font-secondary: 'Chewy', cursive;
+$font-primary: 'Titillium Web', sans-serif;
+$font-secondary: 'Titillium Web', sans-serif;
 
 $transition: 0.2s;
 
-$shadow-color: $primary-20;
-$shadow: 3px 3px 1px;
+$shadow-color: rgba(0, 0, 0, 0.3);
+// $shadow: 2px 2px 3px $shadow-color;
+$shadow: none !important;
 $shadow-hover: 3px 3px 16px rgba(0,0,0,0.05);

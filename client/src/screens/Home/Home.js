@@ -14,13 +14,18 @@ const Home = (props) => {
 	};
 
   return (
-    <div className={`${props.className} ${classnames(classes)}`}>
-      <Hero 
-        kind="success" 
-        title={`Hello, USER`} 
-        subtitle="This is your dashboard. It gives you a quick view of everything you need to see." 
-      />
-    </div>
+    <Row className={`${props.className} ${classnames(classes)}`}>
+      <Col lg={8} className="p-4">
+        <Hero 
+          kind="primary" 
+          title={`Hello, USER`} 
+          subtitle="This is your dashboard. It gives you a quick view of everything you need to see." 
+        />
+      </Col>
+      <Col className="full bg-light">
+      
+      </Col>
+    </Row>
   )
 }
 
