@@ -17,6 +17,7 @@
     }
     &-ghost {
         background-color: white;
+        border: 1px dashed $grey-10;
     }
     &-light {
         background-color: $light;

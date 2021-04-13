@@ -1,0 +1,31 @@
+@import "../../sass/variables";
+
+.checkbox {
+    background-color: $bg;
+    border: 1px dashed darken($bg, 5%);
+    color: darken($bg, 5%);
+    height: 1.2em;
+    width: 1.5em;
+    border-radius: $radius;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: .2em;
+    transition: $transition;
+    cursor: pointer;
+
+    &:hover {
+        border-color: darken($primary, 5%);
+        background-color: $light;
+        transition: $transition;
+    }
+
+    &-checked {
+        background-color: $primary-00;
+        color: $primary;
+        &:hover {
+            background-color: darken($primary-00, 5%);
+        }
+    }
+}
+

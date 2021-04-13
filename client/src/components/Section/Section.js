@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import PropTypes from 'prop-types'
 import classnames from "classnames"
 import { Row, Col } from 'react-bootstrap';
-import { Card, Icon, Button } from '../index';
+import { Card, Icon, Button, Item } from '../index';
 
 import './_section.scss';
 
@@ -16,13 +16,15 @@ const Section = (props) => {
   return (
     <Card kind="light" className={`${props.className} ${classnames(classes)}`} >
       <>
-        <div className="d-flex justify-content-between">
+        <div className="d-flex justify-content-between mb-2">
           <h5>{props.section.label}</h5>
           <div className="d-flex">
             <Button className="ml-2" ><Icon name="BsPlus" /></Button>
             <Button className="ml-2" ><Icon name="BsThreeDots" /></Button>
           </div>
         </div>
+
+        <Item />
       </>
     </Card>
   )
