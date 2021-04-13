@@ -13,10 +13,26 @@ const Section = (props) => {
 		[`section`]: true
 	};
 
+  const drop = (e) => {
+    e.preventDefault();
+    const item_id = e.dataTransfer.getData('item_id');
+    const item_data = e.dataTransfer.getData('item');
+    console.log("ITEM DATA", item_data);
+
+    const item = document.getElementById(item_id);
+    item.style.display = 'block';
+
+    e.target.appendChild(item);
+  }
+
+  const dragOver = (e) => {
+    e.preventDefault();
+  }
+
   return (
     <Card kind="light" className={`${props.className} ${classnames(classes)}`} >
       <>
-        <div className="d-flex justify-content-between mb-2">
+        <div className="d-flex justify-content-between">
           <h5>{props.section.label}</h5>
           <div className="d-flex">
             <Button className="ml-2" ><Icon name="BsPlus" /></Button>
@@ -24,7 +40,9 @@ const Section = (props) => {
           </div>
         </div>
 
-        <Item />
+        <div className="mt-2 section-dnd" id={props.id} onDrop={drop} onDragOver={dragOver}>
+          {props.children}
+        </div>
       </>
     </Card>
   )

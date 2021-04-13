@@ -3,3 +3,10 @@
 .section {
     height: 71vh;
 }
+
+.section-dnd {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}

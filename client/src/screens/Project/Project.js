@@ -2,21 +2,33 @@ import React, { useState, useEffect } from "react";
 import PropTypes from 'prop-types'
 import classnames from "classnames"
 import { Container, Row, Col } from 'react-bootstrap'
-import { Card, Hero, Section } from '../../components';
+import { Card, Hero, Section, Item } from '../../components';
 
 import './_project.scss';
 
 const logger = "ProjectScreen:: ";
 
+const testItems = [
+  {
+    label: 'Do something'
+  },
+  {
+    label: 'Do something else'
+  },
+]
+
 const testSections = [
   {
-    label: 'Todo'
+    label: 'Todo',
+    items: testItems
   },
   {
-    label: 'In-Progress'
+    label: 'In-Progress',
+    items: testItems
   },
   {
-    label: 'Done'
+    label: 'Done',
+    items: testItems
   },
 ]
 
@@ -27,7 +39,7 @@ const ProjectScreen = (props) => {
 
   return (
     <Row className={`${props.className} ${classnames(classes)}`}>
-      <Col lg={9} className="p-4">
+      <Col className="p-4">
         <Hero 
           kind="success" 
           title={`${props.project.label}`} 
@@ -39,14 +51,16 @@ const ProjectScreen = (props) => {
         <Row className="mt-3 project-screen-sections">
           {testSections.map((section, i) => (
             <Col key={`section-${i}`} className="slide-top-random" >
-              <Section section={section} />
+              <Section section={section} id={`section-${i}`} >
+                <>
+                  {section.items.map((item, item_i) => (
+                    <Item key={`section-${i}-item-${item_i}`} id={`section-${i}-item-${item_i}`} data={item} />
+                  ))}
+                </>
+              </Section>
             </Col>
           ))}
         </Row>
-      </Col>
-
-      <Col className="full bg-white">
-      
       </Col>
     </Row>
   )

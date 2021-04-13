@@ -2,4 +2,17 @@
 
 .item {
     padding: 10px !important;
+    transition: $transition;
+}
+
+.item-container {
+    padding: 5px;
+    border-radius: $radius;
+    transition: $transition;
+    cursor: pointer;
+}
+
+.item-container:hover {
+    background-color: darken($light, 5%);
+    transition: 0.4s;
 }
