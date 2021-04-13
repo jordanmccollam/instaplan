@@ -1,5 +1,7 @@
 @import "variables";
 
+$slide-distance: 2em;
+
   .scale-up-center {
     -webkit-animation: scale-up-center 0.1s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
             animation: scale-up-center 0.1s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
@@ -29,14 +31,14 @@
   
 
   .slide-top {
-    -webkit-animation: slide-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-            animation: slide-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+    -webkit-animation: slide-top $transition cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+            animation: slide-top $transition cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
   }
 
   @-webkit-keyframes slide-top {
     0% {
-      -webkit-transform: translateY(100px);
-              transform: translateY(100px);
+      -webkit-transform: translateY($slide-distance);
+              transform: translateY($slide-distance);
     }
     100% {
       -webkit-transform: translateY(0px);
@@ -45,8 +47,8 @@
   }
   @keyframes slide-top {
     0% {
-      -webkit-transform: translateY(100px);
-              transform: translateY(100px);
+      -webkit-transform: translateY($slide-distance);
+              transform: translateY($slide-distance);
     }
     100% {
       -webkit-transform: translateY(0px);
@@ -57,8 +59,8 @@
 
 
   .slide-top-random {
-    -webkit-animation: slide-top-random 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-            animation: slide-top-random 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+    -webkit-animation: slide-top-random $transition cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+            animation: slide-top-random $transition cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 
     @for $i from 1 to 9 {
       &:nth-child(#{$i}) {
@@ -69,8 +71,8 @@
 
   @-webkit-keyframes slide-top-random {
     0% {
-      -webkit-transform: translateY(100px);
-              transform: translateY(100px);
+      -webkit-transform: translateY($slide-distance);
+              transform: translateY($slide-distance);
               opacity: 0;
     }
     100% {
@@ -81,8 +83,8 @@
   }
   @keyframes slide-top-random {
     0% {
-      -webkit-transform: translateY(100px);
-              transform: translateY(100px);
+      -webkit-transform: translateY($slide-distance);
+              transform: translateY($slide-distance);
               opacity: 0;
     }
     100% {

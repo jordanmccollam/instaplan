@@ -1,5 +1,7 @@
 @import "../../sass/variables";
 
+$delayed: $transition;
+
 .project {
     padding: 5% 5% 0 5%;
     border-radius: $radius;
@@ -42,8 +44,8 @@
         .project-title {
             position: absolute;
             bottom: 1em;
-            -webkit-animation: slide-out 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-            animation: slide-out 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+            -webkit-animation: slide-out $delayed cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+            animation: slide-out $delayed cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
         }
 
         .project-description {
@@ -62,13 +64,13 @@
 }
 .project:hover .project-actions {
     opacity: 1;
-    transition: 0.5s;
+    transition: $delayed;
 }
 
 .project:hover .project-card {
     .project-title {
-        -webkit-animation: slide-in 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-        animation: slide-in 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+        -webkit-animation: slide-in $delayed cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+        animation: slide-in $delayed cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
     }
     .project-description {
         opacity: 1;

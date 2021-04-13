@@ -59,7 +59,7 @@ const Projects = (props) => {
 
   return (
     <Row className={`${props.className} ${classnames(classes)}`}>
-      <Col lg={9} className="p-4">
+      <Col className="p-4">
         <Hero 
           kind="danger" 
           title={`Projects`} 
@@ -78,9 +78,6 @@ const Projects = (props) => {
           ))}
         </Row>
 
-      </Col>
-      <Col className="full bg-white">
-      
       </Col>
     </Row>
   )
