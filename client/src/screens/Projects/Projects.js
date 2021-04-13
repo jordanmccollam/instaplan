@@ -18,14 +18,18 @@ const Projects = (props) => {
   }
 
   return (
-    <div className={`${props.className} ${classnames(classes)}`}>
-      <Hero 
-        kind="danger" 
-        title={`Projects`} 
-        subtitle="Manage projects here" 
-        button={{icon: 'GoPlus', handler: addProject}} 
-      />
-    </div>
+    <Row className={`${props.className} ${classnames(classes)}`}>
+      <Col lg={8} className="p-4">
+        <Hero 
+          kind="danger" 
+          title={`Projects`} 
+          subtitle="Manage your projects here" 
+        />
+      </Col>
+      <Col className="full bg-light">
+      
+      </Col>
+    </Row>
   )
 }
 
