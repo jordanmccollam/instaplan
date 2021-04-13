@@ -157,7 +157,7 @@ $dark-00: lighten($dark, 40%);
  */
 $bg: #e7eefb;
 // $bg: #f2edd9;
-$text-color: #000000;
+$text-color: $dark;
 
 $radius: 20px;
 

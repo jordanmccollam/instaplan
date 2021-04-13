@@ -27,4 +27,8 @@ export const Success = Template.bind({})
 Success.args = {
   kind: "success"
 }
+export const Ghost = Template.bind({})
+Ghost.args = {
+  kind: "ghost"
+}
 

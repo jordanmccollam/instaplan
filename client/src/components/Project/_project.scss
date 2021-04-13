@@ -1,0 +1,86 @@
+@import "../../sass/variables";
+
+.project {
+    padding: 5%;
+    border-radius: $radius;
+    cursor: pointer; 
+    transition: $transition;
+
+    &-card {
+        border: 1px dashed $grey-10;
+        width: 100%;
+        padding: 0 !important;
+        height: 8em;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 1em 5px !important;
+        transition: .5s;
+        overflow: hidden !important;
+
+        .project-title {
+            position: absolute;
+            bottom: 1em;
+            -webkit-animation: slide-out 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+            animation: slide-out 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+        }
+
+        .project-description {
+            width: 90%;
+            text-align: center;
+            // border: 1px solid red;
+            margin-top: 1.5em;
+            opacity: 0;
+            transition: .4s;
+        }
+    }
+}
+
+.project:hover {
+    background-color: darken($bg, 3%) !important;
+
+}
+
+.project:hover .project-card {
+    .project-title {
+        -webkit-animation: slide-in 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+        animation: slide-in 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+    }
+    .project-description {
+        opacity: 1;
+        transition: 1s;
+    }
+}
+@-webkit-keyframes slide-in {
+    0% {
+        bottom: 1em;
+    }
+    100% {
+        bottom: 1.8em;
+    } 
+  }
+  @keyframes slide-in {
+    0% {
+        bottom: 1em;
+    }
+    100% {
+        bottom: 1.8em;
+    }
+  }
+@-webkit-keyframes slide-out {
+    0% {
+        bottom: 1.8em;
+    }
+    100% {
+        bottom: 1em;
+    } 
+  }
+  @keyframes slide-out {
+    0% {
+        bottom: 1.8em;
+    }
+    100% {
+        bottom: 1em;
+    }
+  }
