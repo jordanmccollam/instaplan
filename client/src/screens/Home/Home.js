@@ -23,7 +23,7 @@ const Home = (props) => {
           className="slide-top"
         />
       </Col>
-      <Col className="full bg-light">
+      <Col className="full bg-white">
       
       </Col>
     </Row>

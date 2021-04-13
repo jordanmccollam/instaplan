@@ -27,7 +27,7 @@ Card.propTypes = {
     PropTypes.element
   ]),
   className: PropTypes.string,
-  kind: PropTypes.oneOf(['primary', 'success', 'danger', 'default', 'ghost']),
+  kind: PropTypes.oneOf(['primary', 'success', 'danger', 'default', 'ghost', 'light']),
   onClick: PropTypes.func
 }
 

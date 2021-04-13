@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import PropTypes from 'prop-types'
 import classnames from "classnames"
 import { Container, Row, Col } from 'react-bootstrap'
-import { Card, Hero } from '../../components';
+import { Card, Hero, Section } from '../../components';
 
 import './_project.scss';
 
@@ -23,9 +23,15 @@ const ProjectScreen = (props) => {
           links={[{label: 'Projects', action: () => props.setProject(null)}]}
           className="slide-top"
         />
+
+        <Row className="mt-3 project-screen-sections">
+          <Col>
+            <Section className="slide-top-random" />
+          </Col>
+        </Row>
       </Col>
 
-      <Col className="full bg-light">
+      <Col className="full bg-white">
       
       </Col>
     </Row>

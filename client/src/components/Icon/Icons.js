@@ -1,5 +1,5 @@
 import { GoHome, GoFileDirectory, GoPlus } from 'react-icons/go';
-import { BsFolder, BsFileEarmarkText, BsTrash } from 'react-icons/bs';
+import { BsFolder, BsFileEarmarkText, BsTrash, BsPlus } from 'react-icons/bs';
 
 export {
     GoHome,
@@ -7,5 +7,6 @@ export {
     BsFolder,
     GoPlus,
     BsFileEarmarkText,
-    BsTrash
+    BsTrash,
+    BsPlus
 }

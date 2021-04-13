@@ -79,7 +79,7 @@ const Projects = (props) => {
         </Row>
 
       </Col>
-      <Col className="full bg-light">
+      <Col className="full bg-white">
       
       </Col>
     </Row>

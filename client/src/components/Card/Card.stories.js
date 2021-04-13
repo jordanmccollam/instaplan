@@ -31,4 +31,8 @@ export const Ghost = Template.bind({})
 Ghost.args = {
   kind: "ghost"
 }
+export const Light = Template.bind({})
+Light.args = {
+  kind: "light"
+}
 

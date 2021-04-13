@@ -1,3 +1,4 @@
+import Section from "./Section/Section";
 import Project from "./Project/Project";
 import Hero from "./Hero/Hero";
 import Card from "./Card/Card";
@@ -7,6 +8,7 @@ import Icon from "./Icon/Icon";
 
 
 export {
+  Section,
   Project,
   Hero,
   Card,
