@@ -14,7 +14,7 @@ const Project = (props) => {
 	};
 
   return (
-    <div className={`${props.className} ${classnames(classes)}`} >
+    <div onClick={props.onSelect} className={`${props.className} ${classnames(classes)}`} >
       <Card kind={props.kind} className="project-card" >
         <Icon name="BsFileEarmarkText" size={props.size} />
         <h4 className="project-title">{props.label}</h4>
@@ -34,6 +34,7 @@ Project.propTypes = {
   size: PropTypes.number,
   label: PropTypes.string,
   description: PropTypes.string,
+  onSelect: PropTypes.func
 }
 
 Project.defaultProps = {
@@ -42,6 +43,7 @@ Project.defaultProps = {
   size: 30,
   label: 'Default Label',
   description: 'Default Description',
+  onSelect: () => console.log(logger + 'onSelect')
 }
 
 export default Project;

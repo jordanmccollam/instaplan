@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import * as apis from './api';
 import * as Screens from './screens';
@@ -14,6 +14,7 @@ function App() {
   const [ dbUser, setDbUser ] = useState(null);
   const [ token, setToken ] = useState(null);
   const [ screen, setScreen ] = useState('home');
+  const [ currentProject, setCurrentProject ] = useState(null);
 
   // useEffect(() => {
   //   if (user) {
@@ -52,6 +53,12 @@ function App() {
   //   })
   // }
 
+  // useMemo(() => {
+  //   if (currentProject) {
+  //     setCurrentProject(null);
+  //   }
+  // }, [screen])
+
   return (
     <div className="App">
       <Container fluid className="px-0">
@@ -82,7 +89,9 @@ function App() {
                     <Screens.Home />
                   )}
                   {screen === 'projects' && (
-                    <Screens.Projects />
+                    currentProject 
+                    ? <Screens.Project project={currentProject} setProject={setCurrentProject} />
+                    : <Screens.Projects setProject={setCurrentProject} />
                   )}
                 </Container>
               </>

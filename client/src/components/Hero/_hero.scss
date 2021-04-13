@@ -11,4 +11,13 @@
         max-width: 25em;
         font-size: 18px;
     }
+
+    &-link {
+        cursor: pointer;
+        color: inherit;
+        &:hover {
+            color: $dark;
+        }
+    }
 }
+

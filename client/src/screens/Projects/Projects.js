@@ -52,6 +52,11 @@ const Projects = (props) => {
     console.log(logger + 'addProject');
   }
 
+  const onSelectProject = (project) => {
+    console.log(logger + 'onSelectProject', project)
+    props.setProject(project);
+  }
+
   return (
     <Row className={`${props.className} ${classnames(classes)}`}>
       <Col lg={9} className="p-4">
@@ -68,6 +73,7 @@ const Projects = (props) => {
               <Project  
                 label={project.label}
                 description={project.description}
+                onSelect={() => onSelectProject(project)}
               />
             </Col>
           ))}
@@ -82,11 +88,13 @@ const Projects = (props) => {
 }
 
 Projects.propTypes = {
-  className: PropTypes.string
+  className: PropTypes.string,
+  setProject: PropTypes.func
 }
 
 Projects.defaultProps = {
-  className: ""
+  className: "",
+  setProject: () => console.log(logger + 'setProject')
 }
 
 export default Projects;

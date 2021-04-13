@@ -18,7 +18,12 @@ const Hero = (props) => {
     <Card kind={props.kind} className={`${props.className} ${classnames(classes)} px-5 py-4`}>
       <div className="d-flex justify-content-between">
         <div>
-          <div className="hero-title" style={{fontSize: props.size}}>{props.title}</div>
+          <div className="hero-title" style={{fontSize: props.size}}>
+            {props.links.map((link, i) => (
+              <span className="hero-link" onClick={link.action}>{link.label} / </span>
+            ))}
+            {props.title}
+          </div>
           <div className="hero-subtitle">{props.subtitle}</div>
         </div>
       </div>
@@ -32,6 +37,7 @@ Hero.propTypes = {
   title: PropTypes.string,
   subtitle: PropTypes.string,
   size: PropTypes.number,
+  links: PropTypes.array
 }
 
 Hero.defaultProps = {
@@ -40,6 +46,7 @@ Hero.defaultProps = {
   title: "Default Hero Title",
   subtitle: "And this is the default subtitle",
   size: 40,
+  links: []
 }
 
 export default Hero;
