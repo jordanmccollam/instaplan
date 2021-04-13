@@ -21,7 +21,7 @@ const Project = (props) => {
     <div className={`${props.className} ${classnames(classes)}`} >
       <Card onClick={props.onSelect} kind={props.kind} className="project-card" >
         <>
-          <Icon name="BsFileEarmarkText" size={props.size} />
+          <Icon name="BsFolder" size={props.size} />
           <h4 className="project-title">{props.project.label}</h4>
           <div className="project-description">{props.project.description}</div>
         </>
