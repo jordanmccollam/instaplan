@@ -15,11 +15,12 @@ const Home = (props) => {
 
   return (
     <Row className={`${props.className} ${classnames(classes)}`}>
-      <Col lg={8} className="p-4">
+      <Col lg={9} className="p-4">
         <Hero 
           kind="primary" 
           title={`Hello, USER`} 
           subtitle="This is your dashboard. It gives you a quick view of everything you need to see." 
+          className="slide-top"
         />
       </Col>
       <Col className="full bg-light">

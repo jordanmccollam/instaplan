@@ -107,6 +107,7 @@ $grey-00: #EFEFEF;
  */
 
 $primary: #faaa1e;
+// $primary: #90b1aa;
 $primary-80: darken($primary, 40%);
 $primary-70: darken($primary, 30%);
 $primary-60: darken($primary, 20%);
@@ -140,6 +141,7 @@ $success-10: lighten($success, 30%);
 $success-00: lighten($success, 40%);
 
 $dark: #333951;
+// $dark: #d76735;
 $dark-80: darken($dark, 40%);
 $dark-70: darken($dark, 30%);
 $dark-60: darken($dark, 20%);
@@ -153,9 +155,8 @@ $dark-00: lighten($dark, 40%);
 /*
  *  UI
  */
-// $bg: #333951;
-// $bg:#f8f2dc;
 $bg: #e7eefb;
+// $bg: #f2edd9;
 $text-color: #000000;
 
 $radius: 20px;
@@ -166,6 +167,6 @@ $font-secondary: 'Titillium Web', sans-serif;
 $transition: 0.2s;
 
 $shadow-color: rgba(0, 0, 0, 0.3);
-// $shadow: 2px 2px 3px $shadow-color;
+$shadow: 5px 5px 1px;
 $shadow: none !important;
 $shadow-hover: 3px 3px 16px rgba(0,0,0,0.05);

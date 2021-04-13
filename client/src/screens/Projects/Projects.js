@@ -19,11 +19,12 @@ const Projects = (props) => {
 
   return (
     <Row className={`${props.className} ${classnames(classes)}`}>
-      <Col lg={8} className="p-4">
+      <Col lg={9} className="p-4">
         <Hero 
           kind="danger" 
           title={`Projects`} 
           subtitle="Manage your projects here" 
+          className="slide-top"
         />
       </Col>
       <Col className="full bg-light">
