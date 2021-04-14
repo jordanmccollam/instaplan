@@ -77,7 +77,7 @@ const Home = (props) => {
       <Col className="p-4">
         <Hero 
           kind="primary" 
-          title={`Hello, USER`} 
+          title={`Hello, ${props.user.nickname}`} 
           subtitle="This is your dashboard. It gives you a quick view of everything you need to see." 
           className="slide-top"
         />
@@ -123,11 +123,13 @@ const Home = (props) => {
 }
 
 Home.propTypes = {
-  className: PropTypes.string
+  className: PropTypes.string,
+  user: PropTypes.object
 }
 
 Home.defaultProps = {
-  className: ""
+  className: "",
+  user: {nickname: 'USER'}
 }
 
 export default Home;

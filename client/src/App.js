@@ -35,7 +35,7 @@ function App() {
         createUser(_token);
       } else {
         setTheme(res.data.output.theme);
-        setDbUser({...res.data.output, _token});
+        setDbUser({...res.data.output, ...user, _token});
       }
     }).catch(e => {
       console.error("connectUserToDb", e);
@@ -64,7 +64,7 @@ function App() {
                   <Comp.Menu screen={screen} setScreen={setScreen} logout={logout} className="ml-2" />
                   <Container fluid className="full" >
                     {screen === 'home' && (
-                      <Screens.Home />
+                      <Screens.Home user={dbUser} />
                     )}
                     {screen === 'projects' && (
                       currentProject 
