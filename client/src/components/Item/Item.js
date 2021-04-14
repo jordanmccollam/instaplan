@@ -40,7 +40,7 @@ const Item = (props) => {
         <>
           <Row>
             <Col xs={3} className="mx-0 pt-1 center-h">
-              <Checkbox checked={props.data.done} />
+              <Checkbox checked={props.data.done} onCheck={props.onCheck} />
             </Col>
             <Col className="pl-0">
               <div>{props.data.name}</div>

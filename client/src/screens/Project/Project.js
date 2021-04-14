@@ -104,7 +104,7 @@ const ProjectScreen = (props) => {
 
   const onUpdateItem = (section, item) => {
     console.log(logger + 'onUpdateItem', section, item);
-    api.updateItem(props.user.token, item._id, {section: section}).then(res => {
+    api.updateItem(props.user.token, item._id, section === 'Done' ? {section: section, done: true} : {section: section, done: 'false'}).then(res => {
       console.log(logger + 'onUpdateItem: res', res);
       props.user.update(prev => ({
         ...prev,
@@ -137,7 +137,7 @@ const ProjectScreen = (props) => {
               <Section section={section} onAdd={() => toggleNew(section)} id={section} onUpdateItem={onUpdateItem} >
                 <>
                   {props.project.items.filter(t => t.section === section).map((item, item_i) => (
-                    <Item key={item._id} id={item._id} data={item} onDelete={() => onDelete(item)} />
+                    <Item key={item._id} id={item._id} data={item} onDelete={() => onDelete(item)} onCheck={() => onUpdateItem('Done', item)} />
                   ))}
                 </>
               </Section>

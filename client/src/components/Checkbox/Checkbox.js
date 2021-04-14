@@ -19,7 +19,7 @@ const Checkbox = (props) => {
   }
 
   return (
-    <div onClick={onCheck} className={`${props.className} ${classnames(classes)}`}>
+    <div onClick={props.onCheck ? props.onCheck : onCheck} className={`${props.className} ${classnames(classes)}`}>
       {props.checked ? <Icon name="BsCheck" /> : <Icon name="TiTimes" />}
     </div>
   )
