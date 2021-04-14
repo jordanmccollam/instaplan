@@ -86,7 +86,7 @@ const Projects = (props) => {
       console.log(logger + 'confirmAdd: res', res);
       props.user.update(prev => ({
         ...prev,
-        projects: [...prev.projects, res.data.output]
+        projects: [res.data.output, ...prev.projects]
       }))
     }).catch(e => {
       console.log(logger + 'confirmAdd: ERROR', e);

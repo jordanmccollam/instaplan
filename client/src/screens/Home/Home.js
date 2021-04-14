@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import classnames from "classnames"
 import { Container, Row, Col } from 'react-bootstrap'
 import { Hero, Section, Item, Project } from '../../components';
+import moment from 'moment';
 
 import './_home.scss';
 
@@ -52,20 +53,7 @@ const testItems = [
   },
 ]
 
-const testSections = [
-  {
-    label: 'Todo',
-    items: testItems
-  },
-  {
-    label: 'In-Progress',
-    items: testItems
-  },
-  {
-    label: 'Done',
-    items: testItems
-  },
-]
+const testSections = ['Todo', 'In-Progress', 'Done']
 
 const Home = (props) => {
   let classes = {
@@ -86,7 +74,7 @@ const Home = (props) => {
           <Col>
             <h4 className="pl-3 my-0">Recent Projects</h4>
             <Row>
-              {testProjects.slice(0, 3).map((project, i) => (
+              {props.user.projects.sort((a, b) => parseInt(moment(b.updatedAt).format('YYYYMMDDhhmm')) - parseInt(moment(a.updatedAt).format('YYYYMMDDhhmm'))).slice(0, 3).map((project, i) => (
                 <Col lg={4} key={`project-home-${i}`} className="slide-top-random">
                   <Project 
                     project={project}
@@ -97,7 +85,7 @@ const Home = (props) => {
             </Row>
             <h4 className="pl-3 my-0">Teammates</h4>
             <Row>
-              {testProjects.slice(0, 3).map((project, i) => (
+              {props.user.projects.slice(0, 3).map((project, i) => (
                 <Col lg={4} key={`friend-home-${i}`} className="slide-top-random">
                   <Project 
                     project={project}
@@ -110,7 +98,7 @@ const Home = (props) => {
           <Col lg={4} className="slide-top-random">
             <Section section={testSections[0]} id={`section-home}`} >
               <>
-                {testSections[0].items.map((item, item_i) => (
+                {testItems.map((item, item_i) => (
                   <Item key={`section-home-item-${item_i}`} id={`section-home-item-${item_i}`} data={item} />
                 ))}
               </>
