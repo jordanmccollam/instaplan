@@ -4,6 +4,7 @@ import classnames from "classnames"
 import { Container, Row, Col } from 'react-bootstrap'
 import { Hero, Section, Item, Project } from '../../components';
 import moment from 'moment';
+import * as api from '../../api';
 
 import './_home.scss';
 
@@ -60,6 +61,25 @@ const Home = (props) => {
 		[`home`]: true
 	};
 
+  const onSelectProject = (project) => {
+    console.log(logger + 'onSelectProject', project)
+    props.setProject(project);
+    props.setScreen('projects');
+  }
+
+  const onDelete = (project) => {
+    console.log(logger + 'onDelete', project);
+    api.deleteProject(props.user.token, project._id).then(res => {
+      console.log(logger + 'onDelete: res', res);
+      props.user.update(prev => ({
+        ...prev,
+        projects: prev.projects.filter(p => p._id !== project._id)
+      }))
+    }).catch(e => {
+      console.log(logger + 'onDelete: ERROR', e);
+    })
+  }
+
   return (
     <Row className={`${props.className} ${classnames(classes)}`}>
       <Col className="p-4">
@@ -74,31 +94,21 @@ const Home = (props) => {
           <Col>
             <h4 className="pl-3 my-0">Recent Projects</h4>
             <Row>
-              {props.user.projects.sort((a, b) => parseInt(moment(b.updatedAt).format('YYYYMMDDhhmm')) - parseInt(moment(a.updatedAt).format('YYYYMMDDhhmm'))).slice(0, 3).map((project, i) => (
+              {props.user.projects.sort((a, b) => parseInt(moment(b.updatedAt).format('YYYYMMDDhhmm')) - parseInt(moment(a.updatedAt).format('YYYYMMDDhhmm'))).slice(0, 6).map((project, i) => (
                 <Col lg={4} key={`project-home-${i}`} className="slide-top-random">
                   <Project 
                     project={project}
-                    onSelect={() => console.log(logger + 'onSelect Project', project)} 
-                  />
-                </Col>
-              ))}
-            </Row>
-            <h4 className="pl-3 my-0">Teammates</h4>
-            <Row>
-              {props.user.projects.slice(0, 3).map((project, i) => (
-                <Col lg={4} key={`friend-home-${i}`} className="slide-top-random">
-                  <Project 
-                    project={project}
-                    onSelect={() => console.log(logger + 'onSelect Project', project)} 
+                    onSelect={() => onSelectProject(project)}
+                    onDelete={() => onDelete(project)}
                   />
                 </Col>
               ))}
             </Row>
           </Col>
           <Col lg={4} className="slide-top-random">
-            <Section section={testSections[0]} id={`section-home}`} >
+            <Section section={'Todo'} id={'Todo'} hideBtns >
               <>
-                {testItems.map((item, item_i) => (
+                {props.user.items.filter(t => t.section === 'Todo').map((item, item_i) => (
                   <Item key={`section-home-item-${item_i}`} id={`section-home-item-${item_i}`} data={item} />
                 ))}
               </>
