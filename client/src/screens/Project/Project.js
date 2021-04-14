@@ -64,7 +64,11 @@ const ProjectScreen = (props) => {
       console.log(logger + 'confirmAdd: res', res);
       props.user.update(prev => ({
         ...prev,
-        projects: [res.data.output, ...prev.projects],
+        projects: prev.projects.map(p => p._id === props.project._id ? p.items = [res.data.output, ...p.items] : p),
+        items: [res.data.output, ...prev.items]
+      }))
+      props.setProject(prev => ({
+        ...prev,
         items: [res.data.output, ...prev.items]
       }))
     }).catch(e => {
@@ -78,6 +82,24 @@ const ProjectScreen = (props) => {
       ...prev,
       [e.target.name]: e.target.value
     }))
+  }
+
+  const onDelete = (item) => {
+    console.log(logger + 'onDelete', item);
+    api.deleteItem(props.user.token, item._id).then(res => {
+      console.log(logger + 'onDelete: res', res);
+      props.user.update(prev => ({
+        ...prev,
+        items: prev.items.filter(p => p._id !== item._id),
+        projects: prev.projects.map(p => p._id === props.project._id ? p.items.filter(t => t._id !== item._id) : p)
+      }))
+      props.setProject(prev => ({
+        ...prev,
+        items: prev.items.filter(p => p._id !== item._id)
+      }))
+    }).catch(e => {
+      console.log(logger + 'onDelete: ERROR', e);
+    })
   }
 
   return (
@@ -97,7 +119,7 @@ const ProjectScreen = (props) => {
               <Section section={section} onAdd={() => toggleNew(section)} id={`section-${i}`} >
                 <>
                   {props.project.items.filter(t => t.section === section).map((item, item_i) => (
-                    <Item key={`section-${i}-item-${item_i}`} id={`section-${i}-item-${item_i}`} data={item} />
+                    <Item key={`section-${i}-item-${item_i}`} id={`section-${i}-item-${item_i}`} data={item} onDelete={() => onDelete(item)} />
                   ))}
                 </>
               </Section>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import PropTypes from 'prop-types'
 import classnames from "classnames"
 import { Row, Col } from 'react-bootstrap';
-import { Card, Checkbox } from '../index';
+import { Card, Checkbox, Button, Icon } from '../index';
 
 import './_item.scss';
 
@@ -47,6 +47,10 @@ const Item = (props) => {
               <div>{props.data.name}</div>
             </Col>
           </Row>
+
+          <div className="mt-2 d-flex justify-content-end align-items-center">
+            <Button onClick={props.onDelete} ><><Icon name="BsTrash" /></></Button>
+          </div>
         </>
       </Card>
     </div>
