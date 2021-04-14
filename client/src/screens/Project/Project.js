@@ -49,11 +49,11 @@ const ProjectScreen = (props) => {
         />
 
         <Row className="mt-3 project-screen-sections">
-          {testSections.map((section, i) => (
+          {props.project.sections.map((section, i) => (
             <Col key={`section-${i}`} className="slide-top-random" >
               <Section section={section} id={`section-${i}`} >
                 <>
-                  {section.items.map((item, item_i) => (
+                  {testItems.map((item, item_i) => (
                     <Item key={`section-${i}-item-${item_i}`} id={`section-${i}-item-${item_i}`} data={item} />
                   ))}
                 </>

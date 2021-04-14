@@ -33,7 +33,7 @@ const Section = (props) => {
     <Card kind="light" className={`${props.className} ${classnames(classes)}`} >
       <>
         <div className="d-flex justify-content-between">
-          <h5>{props.section.label}</h5>
+          <h5>{props.section}</h5>
           <div className="d-flex">
             <Button className="ml-2" ><Icon name="BsPlus" /></Button>
             <Button className="ml-2" ><Icon name="BsThreeDots" /></Button>
@@ -54,12 +54,12 @@ Section.propTypes = {
     PropTypes.element
   ]),
   className: PropTypes.string,
-  section: PropTypes.object
+  section: PropTypes.string
 }
 
 Section.defaultProps = {
   className: "",
-  section: {label: 'Default Section'}
+  section: 'Todo'
 }
 
 export default Section;
