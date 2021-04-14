@@ -108,7 +108,7 @@ const Projects = (props) => {
           <Col xs={12}>
             <Button onClick={toggleEdit} size="md" ><>Add Project <Icon name="BsPlus"/></></Button>
           </Col>
-          {testProjects.map((project, i) => (
+          {props.user.projects.map((project, i) => (
             <Col lg={3} key={`project-${i}`} className="slide-top-random">
               <Project  
                 project={project}

@@ -22,7 +22,7 @@ const Project = (props) => {
       <Card onClick={props.onSelect} kind={props.kind} className="project-card" >
         <>
           <Icon name="BsFolder" size={props.size} />
-          <h4 className="project-title">{props.project.label}</h4>
+          <h4 className="project-title">{props.project.name}</h4>
           <div className="project-description">{props.project.description}</div>
         </>
       </Card>
@@ -50,7 +50,7 @@ Project.defaultProps = {
   className: "",
   kind: 'ghost',
   size: 30,
-  object: {label: 'Default Project', description: 'This a description'},
+  object: {name: 'Default Project', description: 'This a description'},
   onSelect: () => console.log(logger + 'onSelect')
 }
 

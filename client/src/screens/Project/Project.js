@@ -42,8 +42,8 @@ const ProjectScreen = (props) => {
       <Col className="p-4">
         <Hero 
           kind="success" 
-          title={`${props.project.label}`} 
-          subtitle={`Manage ${props.project.description}`} 
+          title={`${props.project.name}`} 
+          subtitle={`${props.project.description}`} 
           links={[{label: 'Projects', action: () => props.setProject(null)}]}
           className="slide-top"
         />
@@ -74,7 +74,7 @@ ProjectScreen.propTypes = {
 
 ProjectScreen.defaultProps = {
   className: "",
-  project: {label: 'Default Project', description: 'Description here...'},
+  project: {name: 'Default Project', description: 'Description here...'},
   setProject: () => console.log(logger + 'setProject')
 }
 
