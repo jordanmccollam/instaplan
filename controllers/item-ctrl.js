@@ -17,6 +17,59 @@ createItem = (req, res) => {
     }
 
     Item.save().then(() => {
+        User.findOne({ _id: body.user }, (err, User) => {
+            if (err) {
+                return res.status(404).json({
+                    err,
+                    message: 'User not found!',
+                })
+            }
+
+            User.items.push(item._id)
+
+            User
+                .save()
+                .then(() => {
+                    return res.status(200).json({
+                        success: true,
+                        output: User,
+                        message: 'User updated!',
+                    })
+                })
+                .catch(error => {
+                    return res.status(404).json({
+                        error,
+                        message: 'User not updated!',
+                    })
+                })
+        })
+        Project.findOne({ _id: body.project }, (err, Project) => {
+            if (err) {
+                return res.status(404).json({
+                    err,
+                    message: 'Project not found!',
+                })
+            }
+
+            Project.items.push(item._id)
+
+            Project
+                .save()
+                .then(() => {
+                    return res.status(200).json({
+                        success: true,
+                        output: Project,
+                        message: 'Project updated!',
+                    })
+                })
+                .catch(error => {
+                    return res.status(404).json({
+                        error,
+                        message: 'Project not updated!',
+                    })
+                })
+        })
+        
         return res.status(201).json({
             success: true,
             output: Item,

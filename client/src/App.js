@@ -35,7 +35,7 @@ function App() {
         createUser(_token);
       } else {
         setTheme(res.data.output.theme);
-        setDbUser({...res.data.output, ...user, _token});
+        setDbUser({...res.data.output, ...user, token: _token});
       }
     }).catch(e => {
       console.error("connectUserToDb", e);
@@ -68,8 +68,8 @@ function App() {
                     )}
                     {screen === 'projects' && (
                       currentProject 
-                      ? <Screens.Project project={currentProject} setProject={setCurrentProject} />
-                      : <Screens.Projects setProject={setCurrentProject} />
+                      ? <Screens.Project project={currentProject} setProject={setCurrentProject} user={dbUser} />
+                      : <Screens.Projects setProject={setCurrentProject} user={dbUser} />
                     )}
                   </Container>
                 </>

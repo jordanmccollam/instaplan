@@ -10,7 +10,7 @@ const defaultProjects = [
 const Project = new Schema(
     {
         name: { type: String, required: true },
-        description: { type: Number, required: true },
+        description: { type: String, required: true },
         sections: [{ type: String, required: true, default: defaultProjects }],
         user: { type: Schema.Types.ObjectId, ref: "users" },
         items: [{ type: Schema.Types.ObjectId, ref: "items" }],

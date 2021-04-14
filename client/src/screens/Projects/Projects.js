@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import classnames from "classnames"
 import { Container, Row, Col, Form } from 'react-bootstrap'
 import { Hero, Project, Button, Icon } from '../../components';
+import * as api from '../../api/';
 
 import './_projects.scss';
 
@@ -43,8 +44,14 @@ const testProjects = [
   },
 ]
 
+const initialEdit = {
+  name: '',
+  description: '',
+  sections: ['Todo', 'In-Progress', 'Done']
+}
+
 const Projects = (props) => {
-  const [ editing, setEditing ] = useState(false);
+  const [ edit, setEdit ] = useState(null);
   let classes = {
 		[`projects`]: true
 	};
@@ -59,16 +66,37 @@ const Projects = (props) => {
   }
 
   const toggleEdit = () => {
-    if (editing) {
-      setEditing(false);
+    if (edit) {
+      setEdit(null);
     } else {
-      setEditing(true);
+      setEdit(initialEdit);
     }
+  }
+
+  useEffect(() => { console.log(logger + 'user:', props.user); console.log(logger + 'edit: ', edit)}, [edit])
+
+  const onEdit = (e) => {
+    setEdit(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }))
+  }
+
+  const confirmEdit = () => {
+    api.createProject(props.user.token, {
+      ...edit,
+      user: props.user._id
+    }).then(res => {
+      console.log(logger + 'confirmEdit: res', res);
+    }).catch(e => {
+      console.log(logger + 'confirmEdit: ERROR', e);
+    })
+    toggleEdit();
   }
 
   return (
     <Row className={`${props.className} ${classnames(classes)}`}>
-      <Col lg={editing ? 9 : 12} className="p-4 projects-col">
+      <Col lg={edit ? 9 : 12} className="p-4 projects-col">
         <Hero 
           kind="danger" 
           title={`Projects`} 
@@ -91,12 +119,12 @@ const Projects = (props) => {
         </Row>
 
       </Col>
-      <Col className={`slide-left ${editing ? 'd-block' : 'd-none'} projects-col projects-sidebar`}>
+      <Col className={`slide-left ${edit ? 'd-block' : 'd-none'} projects-col projects-sidebar`}>
         <Form.Label >Project Name</Form.Label>
-        <Form.Control placeholder="Name" />
+        <Form.Control placeholder="Name" name="name" value={edit?.label} onChange={onEdit} />
         <Form.Label className="mt-3" >Description</Form.Label>
-        <Form.Control placeholder="Description" />
-        <Button size="md" kind="danger" full className="mt-4" ><>Add Project <Icon name="BsPlus"/></></Button>
+        <Form.Control placeholder="Description" name="description" value={edit?.description} onChange={onEdit} />
+        <Button onClick={confirmEdit} size="md" kind="danger" full className="mt-4" ><>Add Project <Icon name="BsPlus"/></></Button>
         <Button onClick={toggleEdit} size="md" kind="dark" full className="mt-2" ><>Cancel</></Button>
       </Col>
     </Row>
@@ -105,12 +133,14 @@ const Projects = (props) => {
 
 Projects.propTypes = {
   className: PropTypes.string,
-  setProject: PropTypes.func
+  setProject: PropTypes.func,
+  user: PropTypes.object,
 }
 
 Projects.defaultProps = {
   className: "",
-  setProject: () => console.log(logger + 'setProject')
+  setProject: () => console.log(logger + 'setProject'),
+  user: {nickname: 'USER', token: 'test', _id: '123'}
 }
 
 export default Projects;
