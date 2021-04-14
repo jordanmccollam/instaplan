@@ -16,7 +16,6 @@ const Item = (props) => {
 
   const dragStart = e => {
     const target = e.target;
-    e.dataTransfer.setData('item_id', target.id);
     e.dataTransfer.setData('item', target.getAttribute('data'));
 
     setTimeout(() => {

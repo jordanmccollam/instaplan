@@ -64,7 +64,7 @@ const ProjectScreen = (props) => {
       console.log(logger + 'confirmAdd: res', res);
       props.user.update(prev => ({
         ...prev,
-        projects: prev.projects.map(p => p._id === props.project._id ? p.items = [res.data.output, ...p.items] : p),
+        projects: prev.projects.map(p => p._id === props.project._id ? {...p, items: [res.data.output, ...p.items]} : p),
         items: [res.data.output, ...prev.items]
       }))
       props.setProject(prev => ({
@@ -102,6 +102,24 @@ const ProjectScreen = (props) => {
     })
   }
 
+  const onUpdateItem = (section, item) => {
+    console.log(logger + 'onUpdateItem', section, item);
+    api.updateItem(props.user.token, item._id, {section: section}).then(res => {
+      console.log(logger + 'onUpdateItem: res', res);
+      props.user.update(prev => ({
+        ...prev,
+        projects: prev.projects.map(p => p._id === props.project._id ? {...p, items: [res.data.output, ...p.items]} : p),
+        items: [res.data.output, ...prev.items.filter(t => t._id !== item._id)]
+      }))
+      props.setProject(prev => ({
+        ...prev,
+        items: [res.data.output, ...prev.items.filter(t => t._id !== item._id)]
+      }))
+    }).catch(e => {
+      console.log(logger + 'onUpdateItem: ERROR', e);
+    })
+  }
+
   return (
     <Row className={`${props.className} ${classnames(classes)}`}>
       <Col lg={add ? 9 : 12} className="p-4 projects-col">
@@ -115,11 +133,11 @@ const ProjectScreen = (props) => {
 
         <Row className="mt-3 project-screen-sections">
           {props.project.sections.map((section, i) => (
-            <Col key={`section-${i}`} className="slide-top-random" >
-              <Section section={section} onAdd={() => toggleNew(section)} id={`section-${i}`} >
+            <Col key={section} className="slide-top-random" >
+              <Section section={section} onAdd={() => toggleNew(section)} id={section} onUpdateItem={onUpdateItem} >
                 <>
                   {props.project.items.filter(t => t.section === section).map((item, item_i) => (
-                    <Item key={`section-${i}-item-${item_i}`} id={`section-${i}-item-${item_i}`} data={item} onDelete={() => onDelete(item)} />
+                    <Item key={item._id} id={item._id} data={item} onDelete={() => onDelete(item)} />
                   ))}
                 </>
               </Section>

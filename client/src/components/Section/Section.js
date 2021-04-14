@@ -15,14 +15,8 @@ const Section = (props) => {
 
   const drop = (e) => {
     e.preventDefault();
-    const item_id = e.dataTransfer.getData('item_id');
-    const item_data = e.dataTransfer.getData('item');
-    console.log("ITEM DATA", item_data);
-
-    const item = document.getElementById(item_id);
-    item.style.display = 'block';
-
-    e.target.appendChild(item);
+    const item_data = JSON.parse(e.dataTransfer.getData('item'));
+    props.onUpdateItem(e.target.id, item_data)
   }
 
   const dragOver = (e) => {
