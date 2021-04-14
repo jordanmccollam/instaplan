@@ -62,7 +62,7 @@ $slide-distance: 2em;
     -webkit-animation: slide-top-random $transition cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
             animation: slide-top-random $transition cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 
-    @for $i from 1 to 9 {
+    @for $i from 1 to 20 {
       &:nth-child(#{$i}) {
         animation-delay: (($i * 0.1) / 2) + s;
       }

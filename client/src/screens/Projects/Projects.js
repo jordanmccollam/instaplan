@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import PropTypes from 'prop-types'
 import classnames from "classnames"
 import { Container, Row, Col } from 'react-bootstrap'
-import { Hero, Project } from '../../components';
+import { Hero, Project, Button, Icon } from '../../components';
 
 import './_projects.scss';
 
@@ -67,7 +67,10 @@ const Projects = (props) => {
           className="slide-top"
         />
 
-        <Row className="mt-3">
+        <Row className="mt-2">
+          <Col xs={12}>
+            <Button size="md" ><>Add Project <Icon name="BsPlus"/></></Button>
+          </Col>
           {testProjects.map((project, i) => (
             <Col lg={3} key={`project-${i}`} className="slide-top-random">
               <Project  
