@@ -120,6 +120,7 @@ const Projects = (props) => {
 
       </Col>
       <Col className={`slide-left ${edit ? 'd-block' : 'd-none'} projects-col projects-sidebar`}>
+        <h2>Add Project</h2>
         <Form.Label >Project Name</Form.Label>
         <Form.Control placeholder="Name" name="name" value={edit?.label} onChange={onEdit} />
         <Form.Label className="mt-3" >Description</Form.Label>
