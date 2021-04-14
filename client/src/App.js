@@ -35,7 +35,7 @@ function App() {
         createUser(_token);
       } else {
         setTheme(res.data.output.theme);
-        setDbUser({...res.data.output, ...user, token: _token});
+        setDbUser({...res.data.output, ...user, token: _token, update: setDbUser});
       }
     }).catch(e => {
       console.error("connectUserToDb", e);

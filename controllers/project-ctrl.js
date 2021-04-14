@@ -13,8 +13,6 @@ createProject = (req, res) => {
 
     const project = new Project({...body});
 
-    console.log("TEST", project);
-
     if (!project) {
         return res.status(400).json({ success: false, error: err })
     }
@@ -101,9 +99,20 @@ updateProject = async (req, res) => {
     })
 }
 
+deleteProject = async (req, res) => {
+    await Project.findOneAndDelete({ _id: req.params.id }, (err, entry) => {
+        if (!err) {
+            return res.status(200).json({ success: true, output: req.params.id });
+        } else {
+            return res.status(400).json({ success: false, error: err });
+        }
+    }).catch(err => console.log(err))
+}
+
 module.exports = {
     createProject,
-    updateProject
+    updateProject,
+    deleteProject
 }
 
 

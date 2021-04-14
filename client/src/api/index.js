@@ -27,13 +27,18 @@ export const updateProject = (token, id, payload) =>
     rest.put(`/api/project/${id}`, payload)
     // {headers: {Authorization: `Bearer ${token}`}})
     .catch(e => console.error("request", e));
+export const deleteProject = (token, id) => 
+    rest.delete(`/api/project/${id}`)
+    // {headers: {Authorization: `Bearer ${token}`}})
+    .catch(e => console.error("request", e));
 
 const apis = {
     getUser,
     createUser,
     updateUser,
     createProject,
-    updateProject
+    updateProject,
+    deleteProject
 }
 
 export default apis;

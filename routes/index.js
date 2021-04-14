@@ -14,6 +14,7 @@ router.put('/user/:id', UserCtrl.updateUser);
 // PROJECTS
 router.post('/project', ProjectCtrl.createProject);
 router.put('/project/:id', ProjectCtrl.updateProject);
+router.delete('/project/:id', ProjectCtrl.deleteProject);
 // PROJECTS
 router.post('/item', ItemCtrl.createItem);
 router.put('/item/:id', ItemCtrl.updateItem);

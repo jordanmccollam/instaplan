@@ -51,52 +51,65 @@ const initialEdit = {
 }
 
 const Projects = (props) => {
-  const [ edit, setEdit ] = useState(null);
+  const [ add, setAdd ] = useState(null);
   let classes = {
 		[`projects`]: true
 	};
-
-  const addProject = () => {
-    console.log(logger + 'addProject');
-  }
 
   const onSelectProject = (project) => {
     console.log(logger + 'onSelectProject', project)
     props.setProject(project);
   }
 
-  const toggleEdit = () => {
-    if (edit) {
-      setEdit(null);
+  const toggleNew = () => {
+    if (add) {
+      setAdd(null);
     } else {
-      setEdit(initialEdit);
+      setAdd(initialEdit);
     }
   }
 
-  useEffect(() => { console.log(logger + 'user:', props.user); console.log(logger + 'edit: ', edit)}, [edit])
-
-  const onEdit = (e) => {
-    setEdit(prev => ({
+  const onAdd = (e) => {
+    setAdd(prev => ({
       ...prev,
       [e.target.name]: e.target.value
     }))
   }
 
-  const confirmEdit = () => {
+  useEffect(() => {console.log(props.user)}, [props.user])
+
+  const confirmAdd = () => {
     api.createProject(props.user.token, {
-      ...edit,
+      ...add,
       user: props.user._id
     }).then(res => {
-      console.log(logger + 'confirmEdit: res', res);
+      console.log(logger + 'confirmAdd: res', res);
+      props.user.update(prev => ({
+        ...prev,
+        projects: [...prev.projects, res.data.output]
+      }))
     }).catch(e => {
-      console.log(logger + 'confirmEdit: ERROR', e);
+      console.log(logger + 'confirmAdd: ERROR', e);
     })
-    toggleEdit();
+    toggleNew();
+  }
+
+  const onDelete = (project) => {
+    console.log(logger + 'onDelete', project);
+    api.deleteProject(props.user.token, project._id).then(res => {
+      console.log(logger + 'onDelete: res', res);
+      props.user.update(prev => ({
+        ...prev,
+        projects: prev.projects.filter(p => p._id !== project._id)
+      }))
+    }).catch(e => {
+      console.log(logger + 'onDelete: ERROR', e);
+    })
   }
 
   return (
     <Row className={`${props.className} ${classnames(classes)}`}>
-      <Col lg={edit ? 9 : 12} className="p-4 projects-col">
+      <Col lg={add ? 9 : 12} className="p-4 projects-col">
         <Hero 
           kind="danger" 
           title={`Projects`} 
@@ -106,27 +119,28 @@ const Projects = (props) => {
 
         <Row className="mt-2">
           <Col xs={12}>
-            <Button onClick={toggleEdit} size="md" ><>Add Project <Icon name="BsPlus"/></></Button>
+            <Button onClick={toggleNew} size="md" ><>Add Project <Icon name="BsPlus"/></></Button>
           </Col>
           {props.user.projects.map((project, i) => (
-            <Col lg={3} key={`project-${i}`} className="slide-top-random">
+            <Col lg={3} key={`project-${project._id}`} id={project._id} className="slide-top-random">
               <Project  
                 project={project}
                 onSelect={() => onSelectProject(project)}
+                onDelete={() => onDelete(project)}
               />
             </Col>
           ))}
         </Row>
 
       </Col>
-      <Col className={`slide-left ${edit ? 'd-block' : 'd-none'} projects-col projects-sidebar`}>
+      <Col className={`slide-left ${add ? 'd-block' : 'd-none'} projects-col projects-sidebar`}>
         <h2>Add Project</h2>
         <Form.Label >Project Name</Form.Label>
-        <Form.Control placeholder="Name" name="name" value={edit?.label} onChange={onEdit} />
+        <Form.Control placeholder="Name" name="name" value={add?.label} onChange={onAdd} />
         <Form.Label className="mt-3" >Description</Form.Label>
-        <Form.Control placeholder="Description" name="description" value={edit?.description} onChange={onEdit} />
-        <Button onClick={confirmEdit} size="md" kind="danger" full className="mt-4" ><>Add Project <Icon name="BsPlus"/></></Button>
-        <Button onClick={toggleEdit} size="md" kind="dark" full className="mt-2" ><>Cancel</></Button>
+        <Form.Control placeholder="Description" name="description" value={add?.description} onChange={onAdd} />
+        <Button onClick={confirmAdd} size="md" kind="danger" full className="mt-4" ><>Add Project <Icon name="BsPlus"/></></Button>
+        <Button onClick={toggleNew} size="md" kind="dark" full className="mt-2" ><>Cancel</></Button>
       </Col>
     </Row>
   )

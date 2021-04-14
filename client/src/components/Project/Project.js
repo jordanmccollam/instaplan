@@ -13,10 +13,6 @@ const Project = (props) => {
 		[`project`]: true
 	};
 
-  const onDelete = () => {
-    console.log(logger + 'onDelete', props.project);
-  }
-
   return (
     <div className={`${props.className} ${classnames(classes)}`} >
       <Card onClick={props.onSelect} kind={props.kind} className="project-card" >
@@ -28,7 +24,7 @@ const Project = (props) => {
       </Card>
 
       <div className="project-actions">
-        <div onClick={onDelete} ><Icon name="BsTrash" className="project-action" /></div>
+        <div onClick={props.onDelete} ><Icon name="BsTrash" className="project-action" /></div>
       </div>
     </div>
   )
@@ -43,7 +39,8 @@ Project.propTypes = {
   kind: PropTypes.oneOf(['primary', 'success', 'danger', 'default', 'ghost']),
   size: PropTypes.number,
   project: PropTypes.object,
-  onSelect: PropTypes.func
+  onSelect: PropTypes.func,
+  onDelete: PropTypes.func
 }
 
 Project.defaultProps = {
@@ -51,7 +48,8 @@ Project.defaultProps = {
   kind: 'ghost',
   size: 30,
   object: {name: 'Default Project', description: 'This a description'},
-  onSelect: () => console.log(logger + 'onSelect')
+  onSelect: () => console.log(logger + 'onSelect'),
+  onDelete: () => console.log(logger + 'onDelete')
 }
 
 export default Project;
