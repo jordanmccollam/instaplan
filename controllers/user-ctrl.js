@@ -57,8 +57,9 @@ updateUser = async (req, res) => {
                 message: 'User not found!',
             })
         }
-        User.theme = body.theme
-        // User.time = body.time
+
+        User.theme = body.theme ? body.theme : User.theme;
+
         User
             .save()
             .then(() => {

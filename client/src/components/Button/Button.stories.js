@@ -15,4 +15,14 @@ export const Default = Template.bind({})
 Default.args = {
 
 }
+export const Medium = Template.bind({})
+Medium.args = {
+  size: 'md',
+  children: "LOGIN"
+}
+export const Large = Template.bind({})
+Large.args = {
+  size: 'lg',
+  children: "LOGIN"
+}
 

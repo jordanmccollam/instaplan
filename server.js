@@ -12,15 +12,15 @@ const apiPort = process.env.PORT || 8000;
 
 const routes = require('./routes/index.js');
 
-// mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true }).catch(e => {
-//     console.error('Connection error', e.message);
-// });
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true }).catch(e => {
+    console.error('Connection error', e.message);
+});
 
-// const db = mongoose.connection;
-// db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-// db.on('connected', () => {
-//     console.log("Mongoose is conntected!");
-// });
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+db.on('connected', () => {
+    console.log("Mongoose is conntected!");
+});
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
@@ -39,6 +39,7 @@ var jwtCheck = jwt({
 });
 
 // app.use('/api', jwtCheck, routes);
+app.use('/api', routes);
 
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static('client/build'));

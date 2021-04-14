@@ -10,7 +10,8 @@ const logger = "Button:: ";
 const Button = (props) => {
   let classes = {
 		[`button`]: true,
-    [`button-${props.kind}`]: true
+    [`button-${props.kind}`]: true,
+    [`button-${props.size}`]: true
 	};
 
   return (
@@ -28,14 +29,16 @@ Button.propTypes = {
   ]),
   className: PropTypes.string,
   kind: PropTypes.oneOf(['default']),
-  onClick: PropTypes.func
+  onClick: PropTypes.func,
+  size: PropTypes.oneOf(['sm', 'md', 'lg'])
 }
 
 Button.defaultProps = {
   className: "",
   kind: 'default',
-  children: "Default Button",
-  onClick: () => console.log(logger + 'onClick')
+  children: "+",
+  onClick: () => console.log(logger + 'onClick'),
+  size: 'sm'
 }
 
 export default Button;

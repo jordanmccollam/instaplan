@@ -10,54 +10,46 @@ import './App.scss';
 
 function App() {
   const { loginWithRedirect, logout, user, getAccessTokenSilently } = useAuth0();
+  // const user = {email: 'jordy.mccollam@gmail.com'};
+  // const user = null;
   const [ theme, setTheme ] = useState('theme--light');
   const [ dbUser, setDbUser ] = useState(null);
   const [ token, setToken ] = useState(null);
   const [ screen, setScreen ] = useState('home');
   const [ currentProject, setCurrentProject ] = useState(null);
 
-  // useEffect(() => {
-  //   if (user) {
-  //     console.log('User', user);
-  //     connectUserToDb();
-  //   }
-  // }, [user])
+  useEffect(() => {
+    if (user) {
+      console.log('User', user);
+      connectUserToDb();
+    }
+  }, [user])
 
-  // const signOut = () => {
-  //   logout();
-  // }
+  const connectUserToDb = async () => {
+    const _token = 'test';
+    // const _token = await getAccessTokenSilently();
+    setToken(_token);
+    apis.getUser(_token, user.email).then(res => {
+      console.log("connectUserToDb:: res", res);
+      if (!res.data.output) {
+        createUser(_token);
+      } else {
+        setTheme(res.data.output.theme);
+        setDbUser({...res.data.output, _token});
+      }
+    }).catch(e => {
+      console.error("connectUserToDb", e);
+    }) 
+  }
 
-  // const connectUserToDb = async () => {
-  //   const _token = 'test';
-  //   // const _token = await getAccessTokenSilently();
-  //   setToken(_token);
-  //   apis.getUser(_token, user.email).then(res => {
-  //     console.log("connectUserToDb:: res", res);
-  //     if (!res.data.output) {
-  //       createUser(_token);
-  //     } else {
-  //       setTheme(res.data.output.theme);
-  //       setDbUser({...res.data.output, _token});
-  //     }
-  //   }).catch(e => {
-  //     console.error("connectUserToDb", e);
-  //   }) 
-  // }
-
-  // const createUser = (_token) => {
-  //   apis.createUser(_token, {email: user.email}).then(res => {
-  //     console.log("createUser:: res", res);
-  //     connectUserToDb();
-  //   }).catch(e => {
-  //     console.error("createUser", e);
-  //   })
-  // }
-
-  // useMemo(() => {
-  //   if (currentProject) {
-  //     setCurrentProject(null);
-  //   }
-  // }, [screen])
+  const createUser = (_token) => {
+    apis.createUser(_token, {email: user.email}).then(res => {
+      console.log("createUser:: res", res);
+      connectUserToDb();
+    }).catch(e => {
+      console.error("createUser", e);
+    })
+  }
 
   return (
     <div className="App">
@@ -69,30 +61,36 @@ function App() {
               dbUser ? (
                 // LOGGED IN CONTENT
                 <>
-                  Logged In
+                  <Comp.Menu screen={screen} setScreen={setScreen} logout={logout} className="ml-2" />
+                  <Container fluid className="full" >
+                    {screen === 'home' && (
+                      <Screens.Home />
+                    )}
+                    {screen === 'projects' && (
+                      currentProject 
+                      ? <Screens.Project project={currentProject} setProject={setCurrentProject} />
+                      : <Screens.Projects setProject={setCurrentProject} />
+                    )}
+                  </Container>
                 </>
                 // ------------------
               ) : (
                 <Container>
                   <div className="text-center full d-flex flex-column justify-content-center align-items-center">
-                    <Spinner animation="border" variant="light" style={{height: 100, width: 100}} />
-                    <h5 className="text-light mt-4">Please wait...</h5>
+                    <Spinner animation="border" variant="dark" style={{height: 75, width: 75}} />
+                    <h1 className="text-dark mt-4">Please wait...</h1>
                   </div>
                 </Container>
               )
             ) : (
               // LOGGED OUT CONTENT
               <>
-                <Comp.Menu screen={screen} setScreen={setScreen} className="ml-2" />
-                <Container fluid className="full" >
-                  {screen === 'home' && (
-                    <Screens.Home />
-                  )}
-                  {screen === 'projects' && (
-                    currentProject 
-                    ? <Screens.Project project={currentProject} setProject={setCurrentProject} />
-                    : <Screens.Projects setProject={setCurrentProject} />
-                  )}
+                <Container >
+                  <Row>
+                    <Col className="center">
+                      <Comp.Button onClick={loginWithRedirect} size="lg" ><div style={{fontSize: 50}}>LOGIN</div></Comp.Button>
+                    </Col>
+                  </Row>
                 </Container>
               </>
               // ------------------

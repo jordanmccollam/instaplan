@@ -43,6 +43,13 @@ const Menu = (props) => {
             </div>
           ))}
         </div>
+        <div className="menu-footer">
+          <div 
+            onClick={props.logout} 
+          >
+            <Icon name={'FiLogOut'} size={iconSize} color={iconColor} className={`menu-item`}    />
+          </div>
+        </div>
       </>
     </Card>
   )
@@ -51,13 +58,15 @@ const Menu = (props) => {
 Menu.propTypes = {
   className: PropTypes.string,
   screen: PropTypes.string,
-  setScreen: PropTypes.func
+  setScreen: PropTypes.func,
+  logout: PropTypes.func
 }
 
 Menu.defaultProps = {
   className: "",
   screen: 'home',
-  setScreen: () => console.log(logger + 'setScreen')
+  setScreen: () => console.log(logger + 'setScreen'),
+  logout: () => console.log(logger + 'logout'),
 }
 
 export default Menu;

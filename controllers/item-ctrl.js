@@ -10,7 +10,7 @@ createItem = (req, res) => {
         })
     }
 
-    const Item = new Item({...body, theme: 'theme--light'});
+    const Item = new Item({...body});
 
     if (!Item) {
         return res.status(400).json({ success: false, error: err })
@@ -48,9 +48,10 @@ updateItem = async (req, res) => {
             })
         }
 
-        Project.name = body.name ? body.name : Project.name;
-        Project.description = body.description ? body.description : Project.description;
-        Project.items = body.items ? body.items : Project.items;
+        Project.task = body.task ? body.task : Project.task;
+        Project.section = body.section ? body.section : Project.section;
+        Project.dueDate = body.dueDate ? body.dueDate : Project.dueDate;
+        Project.tags = body.tags ? body.tags : Project.tags;
 
         Item
             .save()
