@@ -44,6 +44,7 @@ const testProjects = [
 ]
 
 const Projects = (props) => {
+  const [ editing, setEditing ] = useState(false);
   let classes = {
 		[`projects`]: true
 	};
@@ -59,7 +60,7 @@ const Projects = (props) => {
 
   return (
     <Row className={`${props.className} ${classnames(classes)}`}>
-      <Col className="p-4">
+      <Col lg={editing ? 9 : 12} className="p-4 projects-col">
         <Hero 
           kind="danger" 
           title={`Projects`} 
@@ -69,7 +70,7 @@ const Projects = (props) => {
 
         <Row className="mt-2">
           <Col xs={12}>
-            <Button size="md" ><>Add Project <Icon name="BsPlus"/></></Button>
+            <Button onClick={() => setEditing(prev => !prev)} size="md" ><>Add Project <Icon name="BsPlus"/></></Button>
           </Col>
           {testProjects.map((project, i) => (
             <Col lg={3} key={`project-${i}`} className="slide-top-random">
@@ -81,6 +82,9 @@ const Projects = (props) => {
           ))}
         </Row>
 
+      </Col>
+      <Col className={`bg-white full slide-left ${editing ? 'd-block' : 'd-none'} projects-col`}>
+      
       </Col>
     </Row>
   )

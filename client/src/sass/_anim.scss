@@ -93,3 +93,30 @@ $slide-distance: 2em;
               opacity: 1;
     }
   }
+
+  .slide-left {
+    -webkit-animation: slide-left $transition cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+            animation: slide-left $transition cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+            animation-delay: $transition;
+  }
+  @-webkit-keyframes slide-left {
+    0% {
+      -webkit-transform: translateX(100%);
+              transform: translateX(100%);
+    }
+    100% {
+      -webkit-transform: translateX(0);
+              transform: translateX(0);
+    }
+  }
+  @keyframes slide-left {
+    0% {
+      -webkit-transform: translateX(100%);
+              transform: translateX(100%);
+    }
+    100% {
+      -webkit-transform: translateX(0);
+              transform: translateX(0);
+    }
+  }
+

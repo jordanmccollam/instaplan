@@ -1,5 +1,9 @@
 @import "../../sass/variables";
 
 .projects {
+    overflow: hidden !important;
 
+    &-col {
+        transition: $transition;
+    }
 }
