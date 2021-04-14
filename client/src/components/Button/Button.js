@@ -11,7 +11,8 @@ const Button = (props) => {
   let classes = {
 		[`button`]: true,
     [`button-${props.kind}`]: true,
-    [`button-${props.size}`]: true
+    [`button-${props.size}`]: true,
+    [`button-full`]: props.full,
 	};
 
   return (
@@ -28,9 +29,10 @@ Button.propTypes = {
     PropTypes.element
   ]),
   className: PropTypes.string,
-  kind: PropTypes.oneOf(['default']),
+  kind: PropTypes.oneOf(['default', 'danger', 'primary', 'success', 'dark']),
   onClick: PropTypes.func,
-  size: PropTypes.oneOf(['sm', 'md', 'lg'])
+  size: PropTypes.oneOf(['sm', 'md', 'lg']),
+  full: PropTypes.bool
 }
 
 Button.defaultProps = {
@@ -38,7 +40,8 @@ Button.defaultProps = {
   kind: 'default',
   children: "+",
   onClick: () => console.log(logger + 'onClick'),
-  size: 'sm'
+  size: 'sm',
+  full: false
 }
 
 export default Button;

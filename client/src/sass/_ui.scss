@@ -1,3 +1,14 @@
 @import "variables";
 
-  
+input {
+    border-radius: $radius !important;
+
+    &:focus {
+        box-shadow: none !important;
+        border-color: $primary;
+    }
+}
+
+label {
+    margin-bottom: 0 !important;
+}

@@ -6,4 +6,10 @@
     &-col {
         transition: $transition;
     }
+
+    &-sidebar {
+        background: white;
+        height: 100vh;
+        padding: $space-05;
+    }
 }

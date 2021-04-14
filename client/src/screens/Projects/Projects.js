@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from 'prop-types'
 import classnames from "classnames"
-import { Container, Row, Col } from 'react-bootstrap'
+import { Container, Row, Col, Form } from 'react-bootstrap'
 import { Hero, Project, Button, Icon } from '../../components';
 
 import './_projects.scss';
@@ -58,6 +58,14 @@ const Projects = (props) => {
     props.setProject(project);
   }
 
+  const toggleEdit = () => {
+    if (editing) {
+      setEditing(false);
+    } else {
+      setEditing(true);
+    }
+  }
+
   return (
     <Row className={`${props.className} ${classnames(classes)}`}>
       <Col lg={editing ? 9 : 12} className="p-4 projects-col">
@@ -70,7 +78,7 @@ const Projects = (props) => {
 
         <Row className="mt-2">
           <Col xs={12}>
-            <Button onClick={() => setEditing(prev => !prev)} size="md" ><>Add Project <Icon name="BsPlus"/></></Button>
+            <Button onClick={toggleEdit} size="md" ><>Add Project <Icon name="BsPlus"/></></Button>
           </Col>
           {testProjects.map((project, i) => (
             <Col lg={3} key={`project-${i}`} className="slide-top-random">
@@ -83,8 +91,13 @@ const Projects = (props) => {
         </Row>
 
       </Col>
-      <Col className={`bg-white full slide-left ${editing ? 'd-block' : 'd-none'} projects-col`}>
-      
+      <Col className={`slide-left ${editing ? 'd-block' : 'd-none'} projects-col projects-sidebar`}>
+        <Form.Label >Project Name</Form.Label>
+        <Form.Control placeholder="Name" />
+        <Form.Label className="mt-3" >Description</Form.Label>
+        <Form.Control placeholder="Description" />
+        <Button size="md" kind="danger" full className="mt-4" ><>Add Project <Icon name="BsPlus"/></></Button>
+        <Button onClick={toggleEdit} size="md" kind="dark" full className="mt-2" ><>Cancel</></Button>
       </Col>
     </Row>
   )

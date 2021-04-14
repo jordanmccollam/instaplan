@@ -2,8 +2,6 @@
 
 .button {
     border-radius: $radius;
-    height: 2em;
-    width: 3em;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -11,22 +9,62 @@
     color: $dark;
     cursor: pointer;
     transition: $transition;
+    width: max-content;
 
     &:hover {
         background-color: darken($light, 5%);
         transition: $transition;
     }
 
-    &-md  {
-        height: auto;
-        width: max-content;
-        padding: 0.5em 2em;
+    &-sm {
+        padding-left: .8em;
+        padding-right: .8em;
+        border-radius: $radius;
+    }
+
+    &-md {
+        padding: 0.4em 2em;
         border-radius: $radius;
     }
     &-lg  {
-        height: auto;
-        width: max-content;
         padding: 1em 3em;
         border-radius: $radius;
+    }
+
+    &-danger {
+        border: 1px solid $danger;
+        color: $danger;
+        &:hover {
+            background-color: $danger;
+            color: white;
+        }
+    }
+    &-primary {
+        border: 1px solid $primary;
+        color: $primary;
+        &:hover {
+            background-color: $primary;
+            color: white;
+        }
+    }
+    &-success {
+        border: 1px solid $success;
+        color: $success;
+        &:hover {
+            background-color: $success;
+            color: white;
+        }
+    }
+    &-dark {
+        border: 1px solid $dark;
+        color: $dark;
+        &:hover {
+            background-color: $dark;
+            color: white;
+        }
+    }
+
+    &-full {
+        width: 100%;
     }
 }

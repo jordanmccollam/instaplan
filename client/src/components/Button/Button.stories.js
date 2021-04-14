@@ -25,4 +25,28 @@ Large.args = {
   size: 'lg',
   children: "LOGIN"
 }
+export const Danger = Template.bind({})
+Danger.args = {
+  size: 'md',
+  children: "LOGIN",
+  kind: 'danger'
+}
+export const Success = Template.bind({})
+Success.args = {
+  size: 'md',
+  children: "LOGIN",
+  kind: 'success'
+}
+export const Primary = Template.bind({})
+Primary.args = {
+  size: 'md',
+  children: "LOGIN",
+  kind: 'primary'
+}
+export const Dark = Template.bind({})
+Dark.args = {
+  size: 'md',
+  children: "LOGIN",
+  kind: 'dark'
+}
 
