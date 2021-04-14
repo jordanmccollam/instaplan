@@ -35,7 +35,7 @@ const Section = (props) => {
         <div className="d-flex justify-content-between">
           <h5>{props.section}</h5>
           <div className="d-flex">
-            <Button className="ml-2" ><Icon name="BsPlus" /></Button>
+            <Button onClick={props.onAdd} className="ml-2" ><Icon name="BsPlus" /></Button>
             <Button className="ml-2" ><Icon name="BsThreeDots" /></Button>
           </div>
         </div>
@@ -54,12 +54,14 @@ Section.propTypes = {
     PropTypes.element
   ]),
   className: PropTypes.string,
-  section: PropTypes.string
+  section: PropTypes.string,
+  onAdd: PropTypes.func
 }
 
 Section.defaultProps = {
   className: "",
-  section: 'Todo'
+  section: 'Todo',
+  onAdd: () => console.log(logger + 'onAdd')
 }
 
 export default Section;

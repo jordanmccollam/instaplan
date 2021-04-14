@@ -1,4 +1,6 @@
 const Item = require('../models/item-model');
+const Project = require('../models/project-model');
+const User = require('../models/user-model');
 
 createItem = (req, res) => {
     const body = req.body;
@@ -10,14 +12,14 @@ createItem = (req, res) => {
         })
     }
 
-    const Item = new Item({...body});
+    const item = new Item({...body});
 
-    if (!Item) {
+    if (!item) {
         return res.status(400).json({ success: false, error: err })
     }
 
-    Item.save().then(() => {
-        User.findOne({ _id: body.user }, (err, User) => {
+    item.save().then(() => {
+        User.findOne({ _id: body.user }, (err, user) => {
             if (err) {
                 return res.status(404).json({
                     err,
@@ -25,14 +27,14 @@ createItem = (req, res) => {
                 })
             }
 
-            User.items.push(item._id)
+            user.items.push(item._id)
 
-            User
+            user
                 .save()
                 .then(() => {
                     return res.status(200).json({
                         success: true,
-                        output: User,
+                        output: user,
                         message: 'User updated!',
                     })
                 })
@@ -43,36 +45,36 @@ createItem = (req, res) => {
                     })
                 })
         })
-        Project.findOne({ _id: body.project }, (err, Project) => {
+        Project.findOne({ _id: body.project }, (err, project) => {
             if (err) {
                 return res.status(404).json({
                     err,
-                    message: 'Project not found!',
+                    message: 'item not found!',
                 })
             }
 
-            Project.items.push(item._id)
+            project.items.push(item._id)
 
-            Project
+            project
                 .save()
                 .then(() => {
                     return res.status(200).json({
                         success: true,
-                        output: Project,
-                        message: 'Project updated!',
+                        output: project,
+                        message: 'item updated!',
                     })
                 })
                 .catch(error => {
                     return res.status(404).json({
                         error,
-                        message: 'Project not updated!',
+                        message: 'item not updated!',
                     })
                 })
         })
         
         return res.status(201).json({
             success: true,
-            output: Item,
+            output: item,
             message: 'Item created!',
         })
     }).catch(error => {
@@ -93,7 +95,7 @@ updateItem = async (req, res) => {
         })
     }
 
-    Item.findOne({ _id: req.params.id }, (err, Item) => {
+    Item.findOne({ _id: req.params.id }, (err, item) => {
         if (err) {
             return res.status(404).json({
                 err,
@@ -101,17 +103,18 @@ updateItem = async (req, res) => {
             })
         }
 
-        Project.task = body.task ? body.task : Project.task;
-        Project.section = body.section ? body.section : Project.section;
-        Project.dueDate = body.dueDate ? body.dueDate : Project.dueDate;
-        Project.tags = body.tags ? body.tags : Project.tags;
+        item.name = body.name ? body.name : item.name;
+        item.section = body.section ? body.section : item.section;
+        item.dueDate = body.dueDate ? body.dueDate : item.dueDate;
+        item.tags = body.tags ? body.tags : item.tags;
+        item.done = body.done ? body.done : item.done;
 
-        Item
+        item
             .save()
             .then(() => {
                 return res.status(200).json({
                     success: true,
-                    output: Item,
+                    output: item,
                     message: 'Item updated!',
                 })
             })
@@ -124,9 +127,20 @@ updateItem = async (req, res) => {
     })
 }
 
+deleteItem = async (req, res) => {
+    await Item.findOneAndDelete({ _id: req.params.id }, (err, entry) => {
+        if (!err) {
+            return res.status(200).json({ success: true, output: req.params.id });
+        } else {
+            return res.status(400).json({ success: false, error: err });
+        }
+    }).catch(err => console.log(err))
+}
+
 module.exports = {
     createItem,
-    updateItem
+    updateItem,
+    deleteItem
 }
 
 

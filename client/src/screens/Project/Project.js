@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from 'prop-types'
 import classnames from "classnames"
-import { Container, Row, Col } from 'react-bootstrap'
-import { Card, Hero, Section, Item } from '../../components';
+import { Container, Row, Col, Form } from 'react-bootstrap'
+import { Card, Hero, Section, Item, Button, Icon } from '../../components';
+import * as api from '../../api';
 
 import './_project.scss';
 
@@ -32,14 +33,56 @@ const testSections = [
   },
 ]
 
+const initialAdd = {
+  name: '',
+  dueDate: '',
+  section: '',
+  done: false,
+  tags: []
+}
+
 const ProjectScreen = (props) => {
+  const [ add, setAdd ] = useState(null);
   let classes = {
 		[`project-screen`]: true
 	};
 
+  const toggleNew = (section) => {
+    if (add) {
+      setAdd(null);
+    } else {
+      setAdd({...initialAdd, section});
+    }
+  }
+
+  const confirmAdd = () => {
+    api.createItem(props.user.token, {
+      ...add,
+      user: props.user._id,
+      project: props.project._id
+    }).then(res => {
+      console.log(logger + 'confirmAdd: res', res);
+      props.user.update(prev => ({
+        ...prev,
+        projects: [res.data.output, ...prev.projects],
+        items: [res.data.output, ...prev.items]
+      }))
+    }).catch(e => {
+      console.log(logger + 'confirmAdd: ERROR', e);
+    })
+    toggleNew();
+  }
+
+  const onAdd = (e) => {
+    setAdd(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }))
+  }
+
   return (
     <Row className={`${props.className} ${classnames(classes)}`}>
-      <Col className="p-4">
+      <Col lg={add ? 9 : 12} className="p-4 projects-col">
         <Hero 
           kind="success" 
           title={`${props.project.name}`} 
@@ -51,9 +94,9 @@ const ProjectScreen = (props) => {
         <Row className="mt-3 project-screen-sections">
           {props.project.sections.map((section, i) => (
             <Col key={`section-${i}`} className="slide-top-random" >
-              <Section section={section} id={`section-${i}`} >
+              <Section section={section} onAdd={() => toggleNew(section)} id={`section-${i}`} >
                 <>
-                  {testItems.map((item, item_i) => (
+                  {props.project.items.filter(t => t.section === section).map((item, item_i) => (
                     <Item key={`section-${i}-item-${item_i}`} id={`section-${i}-item-${item_i}`} data={item} />
                   ))}
                 </>
@@ -61,6 +104,16 @@ const ProjectScreen = (props) => {
             </Col>
           ))}
         </Row>
+      </Col>
+
+      <Col className={`slide-left ${add ? 'd-block' : 'd-none'} projects-col projects-sidebar`}>
+        <h2>Add {add?.section} Item</h2>
+        <Form.Label >Item Name</Form.Label>
+        <Form.Control placeholder="Name" name="name" value={add?.name} onChange={onAdd} />
+        {/* <Form.Label className="mt-3" >Due Date</Form.Label>
+        <Form.Control placeholder="MM/DD/YYYY" name="dueDate" value={add?.dueDate} /> */}
+        <Button onClick={confirmAdd} size="md" kind="success" full className="mt-4" ><>Add Item <Icon name="BsPlus"/></></Button>
+        <Button onClick={toggleNew} size="md" kind="dark" full className="mt-2" ><>Cancel</></Button>
       </Col>
     </Row>
   )

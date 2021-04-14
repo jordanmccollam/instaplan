@@ -32,13 +32,30 @@ export const deleteProject = (token, id) =>
     // {headers: {Authorization: `Bearer ${token}`}})
     .catch(e => console.error("request", e));
 
+// ITEMS
+export const createItem = (token, payload) => 
+    rest.post(`/api/item`, payload)
+    // {headers: {Authorization: `Bearer ${token}`}})
+    .catch(e => console.error("request", e));
+export const updateItem = (token, id, payload) => 
+    rest.put(`/api/item/${id}`, payload)
+    // {headers: {Authorization: `Bearer ${token}`}})
+    .catch(e => console.error("request", e));
+export const deleteItem = (token, id) => 
+    rest.delete(`/api/item/${id}`)
+    // {headers: {Authorization: `Bearer ${token}`}})
+    .catch(e => console.error("request", e));
+
 const apis = {
     getUser,
     createUser,
     updateUser,
     createProject,
     updateProject,
-    deleteProject
+    deleteProject,
+    createItem,
+    updateItem,
+    deleteItem
 }
 
 export default apis;

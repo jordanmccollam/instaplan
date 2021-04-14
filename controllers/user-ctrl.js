@@ -1,7 +1,10 @@
 const User = require('../models/user-model');
 
 getUser = async (req, res) => {
-    await User.findOne({ email: req.params.email }).populate('projects').exec((err, user) => {
+    await User.findOne({ email: req.params.email }).populate({
+        path: 'projects',
+        populate: {path: 'items', model: 'items'}
+    }).populate('items').exec((err, user) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         } else {

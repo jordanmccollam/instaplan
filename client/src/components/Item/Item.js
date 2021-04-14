@@ -41,10 +41,10 @@ const Item = (props) => {
         <>
           <Row>
             <Col xs={3} className="mx-0 pt-1 center-h">
-              <Checkbox checked={completed} setChecked={setCompleted} />
+              <Checkbox checked={props.data.done} />
             </Col>
             <Col className="pl-0">
-              <div>{props.data.label}</div>
+              <div>{props.data.name}</div>
             </Col>
           </Row>
         </>

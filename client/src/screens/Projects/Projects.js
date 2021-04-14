@@ -136,7 +136,7 @@ const Projects = (props) => {
       <Col className={`slide-left ${add ? 'd-block' : 'd-none'} projects-col projects-sidebar`}>
         <h2>Add Project</h2>
         <Form.Label >Project Name</Form.Label>
-        <Form.Control placeholder="Name" name="name" value={add?.label} onChange={onAdd} />
+        <Form.Control placeholder="Name" name="name" value={add?.name} onChange={onAdd} />
         <Form.Label className="mt-3" >Description</Form.Label>
         <Form.Control placeholder="Description" name="description" value={add?.description} onChange={onAdd} />
         <Button onClick={confirmAdd} size="md" kind="danger" full className="mt-4" ><>Add Project <Icon name="BsPlus"/></></Button>
