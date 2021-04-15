@@ -47,7 +47,7 @@ const Item = (props) => {
             </Col>
           </Row>
 
-          <div className="mt-2 d-flex justify-content-end align-items-center">
+          <div className={`mt-2 justify-content-end align-items-center ${props.hideActions ? 'd-none' : 'd-flex'}`}>
             <Button onClick={props.onEdit} className="mr-1" ><><Icon name="BsPencil" /></></Button>
             <Button onClick={props.onDelete} ><><Icon name="BsTrash" /></></Button>
           </div>
@@ -60,13 +60,15 @@ const Item = (props) => {
 Item.propTypes = {
   className: PropTypes.string,
   data: PropTypes.object,
-  id: PropTypes.string
+  id: PropTypes.string,
+  hideActions: PropTypes.bool
 }
 
 Item.defaultProps = {
   className: "",
   data: {label: 'Default Item'},
   id: '123',
+  hideActions: false
 }
 
 export default Item;

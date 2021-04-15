@@ -140,7 +140,7 @@ const Home = (props) => {
             <Section section={'Todo'} id={'Todo'} hideBtns >
               <>
                 {props.user.items.filter(t => t.section === 'Todo').map((item, item_i) => (
-                  <Item key={`section-home-item-${item_i}`} id={`section-home-item-${item_i}`} data={item} />
+                  <Item key={`section-home-item-${item_i}`} id={`section-home-item-${item_i}`} data={item} hideActions />
                 ))}
               </>
             </Section>
