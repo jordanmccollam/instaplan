@@ -42,6 +42,7 @@ const initialAdd = {
 }
 
 const ProjectScreen = (props) => {
+  const [ edit, setEdit ] = useState(null);
   const [ add, setAdd ] = useState(null);
   let classes = {
 		[`project-screen`]: true
@@ -120,9 +121,43 @@ const ProjectScreen = (props) => {
     })
   }
 
+  const toggleEdit = (item) => {
+    if (edit || !item) {
+      setEdit(null);
+    } else {
+      setEdit(item);
+    }
+  }
+
+  const onEdit = (e) => {
+    setEdit(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }))
+  }
+
+  const confirmEdit = () => {
+    console.log(logger + 'confirmEdit', edit);
+    api.updateItem(props.user.token, edit._id, {name: edit.name}).then(res => {
+      console.log(logger + 'confirmEdit: res', res);
+      props.user.update(prev => ({
+        ...prev,
+        projects: prev.projects.map(p => p._id === props.project._id ? {...p, items: [res.data.output, ...p.items.filter(t => t._id !== edit._id)]} : p),
+        items: [res.data.output, ...prev.items.filter(t => t._id !== edit._id)],
+      }))
+      props.setProject(prev => ({
+        ...prev,
+        items: [res.data.output, ...prev.items.filter(t => t._id !== edit._id)]
+      }))
+    }).catch(e => {
+      console.log(logger + 'confirmEdit: ERROR', e);
+    })
+    toggleEdit();
+  }
+
   return (
     <Row className={`${props.className} ${classnames(classes)}`}>
-      <Col lg={add ? 9 : 12} className="p-4 projects-col">
+      <Col lg={(add || edit) ? 9 : 12} className="p-4 projects-col">
         <Hero 
           kind="success" 
           title={`${props.project.name}`} 
@@ -137,7 +172,7 @@ const ProjectScreen = (props) => {
               <Section section={section} onAdd={() => toggleNew(section)} id={section} onUpdateItem={onUpdateItem} >
                 <>
                   {props.project.items.filter(t => t.section === section).map((item, item_i) => (
-                    <Item key={item._id} id={item._id} data={item} onDelete={() => onDelete(item)} onCheck={() => onUpdateItem('Done', item)} />
+                    <Item key={item._id} id={item._id} data={item} onDelete={() => onDelete(item)} onCheck={() => onUpdateItem('Done', item)} onEdit={() => toggleEdit(item)} />
                   ))}
                 </>
               </Section>
@@ -150,10 +185,15 @@ const ProjectScreen = (props) => {
         <h2>Add {add?.section} Item</h2>
         <Form.Label >Item Name</Form.Label>
         <Form.Control placeholder="Name" name="name" value={add?.name} onChange={onAdd} />
-        {/* <Form.Label className="mt-3" >Due Date</Form.Label>
-        <Form.Control placeholder="MM/DD/YYYY" name="dueDate" value={add?.dueDate} /> */}
         <Button onClick={confirmAdd} size="md" kind="success" full className="mt-4" ><>Add Item <Icon name="BsPlus"/></></Button>
         <Button onClick={toggleNew} size="md" kind="dark" full className="mt-2" ><>Cancel</></Button>
+      </Col>
+      <Col className={`slide-left ${edit ? 'd-block' : 'd-none'} projects-col projects-sidebar`}>
+        <h2>Edit {edit?.name}</h2>
+        <Form.Label >Item Name</Form.Label>
+        <Form.Control placeholder="Name" name="name" value={edit?.name} onChange={onEdit} />
+        <Button onClick={confirmEdit} size="md" kind="success" full className="mt-4" ><>Confirm Edit</></Button>
+        <Button onClick={toggleEdit} size="md" kind="dark" full className="mt-2" ><>Cancel</></Button>
       </Col>
     </Row>
   )

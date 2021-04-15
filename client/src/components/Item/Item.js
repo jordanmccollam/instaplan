@@ -48,6 +48,7 @@ const Item = (props) => {
           </Row>
 
           <div className="mt-2 d-flex justify-content-end align-items-center">
+            <Button onClick={props.onEdit} className="mr-1" ><><Icon name="BsPencil" /></></Button>
             <Button onClick={props.onDelete} ><><Icon name="BsTrash" /></></Button>
           </div>
         </>
