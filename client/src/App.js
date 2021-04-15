@@ -64,7 +64,7 @@ function App() {
                   <Comp.Menu screen={screen} setScreen={setScreen} logout={logout} className="ml-2" />
                   <Container fluid className="full" >
                     {screen === 'home' && (
-                      <Screens.Home user={dbUser} setProject={setCurrentProject} setScreen={setScreen} />
+                      <Screens.Home user={dbUser} project={currentProject} setProject={setCurrentProject} setScreen={setScreen} />
                     )}
                     {screen === 'projects' && (
                       currentProject 

@@ -110,6 +110,26 @@ const Home = (props) => {
     toggleEdit();
   }
 
+  const onCheck = (item) => {
+    console.log(logger + 'onCheck', item);
+    api.updateItem(props.user.token, item._id, {section: 'Done', done: true}).then(res => {
+      console.log(logger + 'onCheck: res', res);
+      props.user.update(prev => ({
+        ...prev,
+        projects: prev.projects.map(p => p._id === item.project ? {...p, items: [res.data.output, ...p.items.filter(t => t._id !== item._id)]} : p),
+        items: [res.data.output, ...prev.items.filter(t => t._id !== item._id)]
+      }))
+      if (props.project && props.project._id === item.project) {
+        props.setProject(prev => ({
+          ...prev,
+          items: [res.data.output, ...prev.items.filter(t => t._id !== item._id)]
+        }))
+      }
+    }).catch(e => {
+      console.log(logger + 'onCheck: ERROR', e);
+    })
+  }
+
   return (
     <Row className={`${props.className} ${classnames(classes)}`}>
       <Col lg={(edit) ? 9 : 12} className="p-4 projects-col">
@@ -140,7 +160,7 @@ const Home = (props) => {
             <Section section={'Todo'} id={'Todo'} hideBtns >
               <>
                 {props.user.items.filter(t => t.section === 'Todo').map((item, item_i) => (
-                  <Item key={`section-home-item-${item_i}`} id={`section-home-item-${item_i}`} data={item} hideActions />
+                  <Item key={`section-home-item-${item_i}`} id={`section-home-item-${item_i}`} data={item} hideActions onCheck={() => onCheck(item)} />
                 ))}
               </>
             </Section>
