@@ -30,7 +30,7 @@ const Section = (props) => {
           <h5>{props.section}</h5>
           <div className={`${props.hideBtns ? "d-none" : "d-flex"}`}>
             <Button onClick={props.onAdd} className="ml-2" ><Icon name="BsPlus" /></Button>
-            <Button className="ml-2" ><Icon name="BsThreeDots" /></Button>
+            {/* <Button className="ml-2" ><Icon name="BsThreeDots" /></Button> */}
           </div>
         </div>
 
