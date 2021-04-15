@@ -24,6 +24,7 @@ const Project = (props) => {
       </Card>
 
       <div className="project-actions">
+        <div onClick={props.onEdit} className="mr-1" ><Icon name="BsPencil" className="project-action" /></div>
         <div onClick={props.onDelete} ><Icon name="BsTrash" className="project-action" /></div>
       </div>
     </div>
@@ -40,7 +41,8 @@ Project.propTypes = {
   size: PropTypes.number,
   project: PropTypes.object,
   onSelect: PropTypes.func,
-  onDelete: PropTypes.func
+  onDelete: PropTypes.func,
+  onEdit: PropTypes.func
 }
 
 Project.defaultProps = {
@@ -49,7 +51,8 @@ Project.defaultProps = {
   size: 30,
   object: {name: 'Default Project', description: 'This a description'},
   onSelect: () => console.log(logger + 'onSelect'),
-  onDelete: () => console.log(logger + 'onDelete')
+  onDelete: () => console.log(logger + 'onDelete'),
+  onEdit: () => console.log(logger + 'onEdit')
 }
 
 export default Project;

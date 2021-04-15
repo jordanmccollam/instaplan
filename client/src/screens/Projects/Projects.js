@@ -52,6 +52,7 @@ const initialEdit = {
 
 const Projects = (props) => {
   const [ add, setAdd ] = useState(null);
+  const [ edit, setEdit ] = useState(null);
   let classes = {
 		[`projects`]: true
 	};
@@ -107,9 +108,38 @@ const Projects = (props) => {
     })
   }
 
+  const toggleEdit = (project) => {
+    if (edit || !project) {
+      setEdit(null);
+    } else {
+      setEdit(project);
+    }
+  }
+
+  const onEdit = (e) => {
+    setEdit(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }))
+  }
+
+  const confirmEdit = () => {
+    console.log(logger + 'confirmEdit', edit);
+    api.updateProject(props.user.token, edit._id, {name: edit.name, description: edit.description}).then(res => {
+      console.log(logger + 'confirmEdit: res', res);
+      props.user.update(prev => ({
+        ...prev,
+        projects: [res.data.output, ...prev.projects.filter(p => p._id !== edit._id)]
+      }))
+    }).catch(e => {
+      console.log(logger + 'confirmEdit: ERROR', e);
+    })
+    toggleEdit();
+  }
+
   return (
     <Row className={`${props.className} ${classnames(classes)}`}>
-      <Col lg={add ? 9 : 12} className="p-4 projects-col">
+      <Col lg={(add || edit) ? 9 : 12} className="p-4 projects-col">
         <Hero 
           kind="danger" 
           title={`Projects`} 
@@ -127,6 +157,7 @@ const Projects = (props) => {
                 project={project}
                 onSelect={() => onSelectProject(project)}
                 onDelete={() => onDelete(project)}
+                onEdit={() => toggleEdit(project)}
               />
             </Col>
           ))}
@@ -141,6 +172,15 @@ const Projects = (props) => {
         <Form.Control placeholder="Description" name="description" value={add?.description} onChange={onAdd} />
         <Button onClick={confirmAdd} size="md" kind="danger" full className="mt-4" ><>Add Project <Icon name="BsPlus"/></></Button>
         <Button onClick={toggleNew} size="md" kind="dark" full className="mt-2" ><>Cancel</></Button>
+      </Col>
+      <Col className={`slide-left ${edit ? 'd-block' : 'd-none'} projects-col projects-sidebar`}>
+        <h2>Edit {edit?.name}</h2>
+        <Form.Label >Project Name</Form.Label>
+        <Form.Control placeholder="Name" name="name" value={edit?.name} onChange={onEdit} />
+        <Form.Label className="mt-3" >Description</Form.Label>
+        <Form.Control placeholder="Description" name="description" value={edit?.description} onChange={onEdit} />
+        <Button onClick={confirmEdit} size="md" kind="danger" full className="mt-4" ><>Confirm Edit</></Button>
+        <Button onClick={toggleEdit} size="md" kind="dark" full className="mt-2" ><>Cancel</></Button>
       </Col>
     </Row>
   )

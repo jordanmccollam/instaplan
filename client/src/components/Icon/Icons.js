@@ -1,5 +1,5 @@
 import { GoHome, GoFileDirectory, GoPlus } from 'react-icons/go';
-import { BsFolder, BsFileEarmarkText, BsTrash, BsPlus, BsThreeDots, BsCheck } from 'react-icons/bs';
+import { BsFolder, BsFileEarmarkText, BsTrash, BsPlus, BsThreeDots, BsCheck, BsPencil } from 'react-icons/bs';
 import { TiTimes } from 'react-icons/ti';
 import { FiLogOut } from 'react-icons/fi';
 
@@ -14,5 +14,6 @@ export {
     BsThreeDots,
     BsCheck,
     TiTimes,
-    FiLogOut
+    FiLogOut,
+    BsPencil
 }
