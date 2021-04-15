@@ -129,7 +129,7 @@ const Projects = (props) => {
       console.log(logger + 'confirmEdit: res', res);
       props.user.update(prev => ({
         ...prev,
-        projects: [res.data.output, ...prev.projects.filter(p => p._id !== edit._id)]
+        projects: [{...res.data.output, items: edit.items}, ...prev.projects.filter(p => p._id !== edit._id)]
       }))
     }).catch(e => {
       console.log(logger + 'confirmEdit: ERROR', e);
