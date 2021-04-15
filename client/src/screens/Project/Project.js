@@ -108,7 +108,7 @@ const ProjectScreen = (props) => {
       console.log(logger + 'onUpdateItem: res', res);
       props.user.update(prev => ({
         ...prev,
-        projects: prev.projects.map(p => p._id === props.project._id ? {...p, items: [res.data.output, ...p.items]} : p),
+        projects: prev.projects.map(p => p._id === props.project._id ? {...p, items: [res.data.output, ...p.items.filter(t => t._id !== item._id)]} : p),
         items: [res.data.output, ...prev.items.filter(t => t._id !== item._id)]
       }))
       props.setProject(prev => ({
@@ -133,7 +133,7 @@ const ProjectScreen = (props) => {
 
         <Row className="mt-3 project-screen-sections">
           {props.project.sections.map((section, i) => (
-            <Col key={section} className="slide-top-random" >
+            <Col key={`${props.project._id}-${section}`} className="slide-top-random" >
               <Section section={section} onAdd={() => toggleNew(section)} id={section} onUpdateItem={onUpdateItem} >
                 <>
                   {props.project.items.filter(t => t.section === section).map((item, item_i) => (
