@@ -44,6 +44,7 @@ const initialAdd = {
 const ProjectScreen = (props) => {
   const [ edit, setEdit ] = useState(null);
   const [ add, setAdd ] = useState(null);
+  const [ targetSection, setTargetSection ] = useState(null);
   let classes = {
 		[`project-screen`]: true
 	};
@@ -169,10 +170,10 @@ const ProjectScreen = (props) => {
         <Row className="mt-3 project-screen-sections">
           {props.project.sections.map((section, i) => (
             <Col key={`${props.project._id}-${section}`} className="slide-top-random" >
-              <Section section={section} onAdd={() => toggleNew(section)} id={section} onUpdateItem={onUpdateItem} >
+              <Section section={section} onAdd={() => toggleNew(section)} id={section} onUpdateItem={onUpdateItem} setTargetSection={setTargetSection} >
                 <>
                   {props.project.items.filter(t => t.section === section).map((item, item_i) => (
-                    <Item key={item._id} id={item._id} data={item} onDelete={() => onDelete(item)} onCheck={() => onUpdateItem('Done', item)} onEdit={() => toggleEdit(item)} />
+                    <Item key={item._id} id={item._id} data={item} onDelete={() => onDelete(item)} onCheck={() => onUpdateItem('Done', item)} onEdit={() => toggleEdit(item)} targetSection={targetSection} onUpdateItem={onUpdateItem} />
                   ))}
                 </>
               </Section>

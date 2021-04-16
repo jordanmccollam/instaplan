@@ -15,12 +15,13 @@ const Section = (props) => {
 
   const drop = (e) => {
     e.preventDefault();
-    const item_data = JSON.parse(e.dataTransfer.getData('item'));
-    props.onUpdateItem(e.target.id, item_data)
+    // const item_data = JSON.parse(e.dataTransfer.getData('item'));
+    // props.onUpdateItem(e.target.id, item_data)
   }
 
   const dragOver = (e) => {
     e.preventDefault();
+    props.setTargetSection(e.target.id);
   }
 
   return (

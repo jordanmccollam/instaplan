@@ -16,7 +16,7 @@ const Item = (props) => {
 
   const dragStart = e => {
     const target = e.target;
-    e.dataTransfer.setData('item', target.getAttribute('data'));
+    // e.dataTransfer.setData('item', target.getAttribute('data'));
 
     // setTimeout(() => {
     //   target.style.display = "none";
@@ -27,6 +27,15 @@ const Item = (props) => {
     e.stopPropagation();
   }
 
+  const dragEnd = (e) => {
+    console.log("DRAG END", e.target);
+
+    console.log("TARGET SECTION", props.targetSection)
+    if (props.targetSection && props.targetSection !== undefined) {
+      props.onUpdateItem(props.targetSection, JSON.parse(e.target.getAttribute('data')))
+    }
+  }
+
   return (
     <div 
       id={props.id}
@@ -35,6 +44,7 @@ const Item = (props) => {
       draggable="true"
       className="slide-top-random item-container"
       data={JSON.stringify(props.data)}
+      onDragEnd={dragEnd}
     >
       <Card kind="ghost" className={`${props.className} ${classnames(classes)}`}>
         <>
