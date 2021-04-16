@@ -28,11 +28,10 @@ const Item = (props) => {
   }
 
   const dragEnd = (e) => {
-    console.log("DRAG END", e.target);
-
-    console.log("TARGET SECTION", props.targetSection)
     if (props.targetSection && props.targetSection !== undefined) {
       props.onUpdateItem(props.targetSection, JSON.parse(e.target.getAttribute('data')))
+    } else {
+      console.log(logger + 'ERROR dragEnd: No target section!');
     }
   }
 
