@@ -49,7 +49,7 @@ Project.defaultProps = {
   className: "",
   kind: 'ghost',
   size: 30,
-  object: {name: 'Default Project', description: 'This a description'},
+  project: {name: 'Default Project', description: 'This a description'},
   onSelect: () => console.log(logger + 'onSelect'),
   onDelete: () => console.log(logger + 'onDelete'),
   onEdit: () => console.log(logger + 'onEdit')

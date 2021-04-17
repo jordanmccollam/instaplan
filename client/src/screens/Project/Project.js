@@ -211,7 +211,7 @@ ProjectScreen.propTypes = {
 
 ProjectScreen.defaultProps = {
   className: "",
-  project: {name: 'Default Project', description: 'Description here...', sections: ['Todo', 'In-Progress', 'Done']},
+  project: {name: 'Default Project', description: 'Description here...', sections: ['Todo', 'In-Progress', 'Done'], items: []},
   setProject: () => console.log(logger + 'setProject')
 }
 

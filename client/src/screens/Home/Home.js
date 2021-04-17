@@ -187,7 +187,7 @@ Home.propTypes = {
 
 Home.defaultProps = {
   className: "",
-  user: {nickname: 'USER'}
+  user: {nickname: 'USER', projects: [], items: []}
 }
 
 export default Home;

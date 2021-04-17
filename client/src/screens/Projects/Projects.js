@@ -195,7 +195,7 @@ Projects.propTypes = {
 Projects.defaultProps = {
   className: "",
   setProject: () => console.log(logger + 'setProject'),
-  user: {nickname: 'USER', token: 'test', _id: '123'}
+  user: {nickname: 'USER', token: 'test', _id: '123', projects: [], items: []}
 }
 
 export default Projects;
