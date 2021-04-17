@@ -9,5 +9,6 @@
     flex-direction: column;
     width: 100%;
     height: 62vh;
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
 }

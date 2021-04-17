@@ -15,37 +15,8 @@ const Item = (props) => {
 		[`item`]: true
 	};
 
-  const dragStart = e => {
-    const target = e.target;
-    // e.dataTransfer.setData('item', target.getAttribute('data'));
-
-    // setTimeout(() => {
-    //   target.style.display = "none";
-    // }, 0);
-  }
-
-  const dragOver = e => {
-    e.stopPropagation();
-  }
-
-  const dragEnd = (e) => {
-    if (props.targetSection && props.targetSection !== undefined) {
-      props.onUpdateItem(props.targetSection, JSON.parse(e.target.getAttribute('data')))
-    } else {
-      console.log(logger + 'ERROR dragEnd: No target section!');
-    }
-  }
-
   return (
-    <div 
-      // id={props.id}
-      // onDragStart={dragStart}
-      // onDragOver={dragOver}
-      // onDragEnd={dragEnd}
-      // draggable="true"
-      // data={JSON.stringify(props.data)}
-      className="slide-top-random item-container"
-    >
+    <div className="slide-top-random item-container" id={props.id}>
       <Card kind="ghost" className={`${props.className} ${classnames(classes)}`}>
         <>
           <Row>

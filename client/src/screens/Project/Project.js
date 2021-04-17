@@ -2,44 +2,13 @@ import React, { useState, useEffect } from "react";
 import PropTypes from 'prop-types'
 import classnames from "classnames"
 import { Container, Row, Col, Form } from 'react-bootstrap'
-import { Card, Hero, Section, Item, Button, Icon, Test } from '../../components';
+import { Card, Hero, Section, Item, Button, Icon } from '../../components';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import * as api from '../../api';
 
 import './_project.scss';
 
 const logger = "ProjectScreen:: ";
-
-const testList = [
-  {checked: false, name: 'Item 1', _id: '1'},
-  {checked: false, name: 'Item 2', _id: '2'},
-  {checked: false, name: 'Item 3', _id: '3'},
-  {checked: false, name: 'Item 4', _id: '4'},
-]
-
-const testItems = [
-  {
-    label: 'Do something'
-  },
-  {
-    label: 'Do something else'
-  },
-]
-
-const testSections = [
-  {
-    label: 'Todo',
-    items: testItems
-  },
-  {
-    label: 'In-Progress',
-    items: testItems
-  },
-  {
-    label: 'Done',
-    items: testItems
-  },
-]
 
 const initialAdd = {
   name: '',
@@ -100,8 +69,8 @@ const ProjectScreen = (props) => {
       console.log(logger + 'onDelete: res', res);
       props.user.update(prev => ({
         ...prev,
-        items: prev.items.filter(p => p._id !== item._id),
-        projects: prev.projects.map(p => p._id === props.project._id ? p.items.filter(t => t._id !== item._id) : p)
+        projects: prev.projects.map(p => p._id === props.project._id ? {...p, items: p.items.filter(t => t._id !== item._id)} : p),
+        items: prev.items.filter(t => t._id !== item._id)
       }))
       props.setProject(prev => ({
         ...prev,
@@ -165,10 +134,17 @@ const ProjectScreen = (props) => {
   }
 
   const onDragEnd = (res) => {
-    console.log(logger + 'RES', res);
+    if (!res.destination) return;
+    console.log(logger + 'onDragEnd: res', res);
+    const section = res.destination.droppableId;
+    const item = JSON.parse(res.draggableId);
+    if (section !== item.section) {
+      document.getElementById(item._id).remove();
+      onUpdateItem(section, item);
+    } else {
+      console.log(logger + 'onDragEnd: Already there!');
+    }
   }
-
-  // return <Test />
 
   return (
     <Row className={`${props.className} ${classnames(classes)}`}>
@@ -181,19 +157,19 @@ const ProjectScreen = (props) => {
           className="slide-top"
         />
 
-        <Row className="mt-3">
+        <Row className="mt-3 fade-in">
           <DragDropContext onDragEnd={onDragEnd}>
             {props.project.sections.map((section, i) => (
               <Col xs={4} key={section} >
                 <Droppable droppableId={section} type="ITEM" >
                   {(provided) => (
                     <div {...provided.droppableProps} ref={provided.innerRef}>
-                      <Section section={section} >
+                      <Section section={section} onAdd={() => toggleNew(section)} >
                         {props.project.items.filter(t => t.section === section).map((item, item_i) => (
-                          <Draggable draggableId={`${section}-${item._id}`} key={`${section}-${item._id}`} index={item_i} >
+                          <Draggable draggableId={JSON.stringify(item)} key={`${section}-${item._id}`} index={item_i} >
                             {(provided) => (
                               <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} >
-                                <Item data={item} />
+                                <Item data={item} id={item._id} onCheck={() => onUpdateItem('Done', item)} onEdit={() => toggleEdit(item)} onDelete={() => onDelete(item)} />
                               </div>
                             )}
                           </Draggable>
@@ -207,18 +183,6 @@ const ProjectScreen = (props) => {
             ))}
           </DragDropContext>
         </Row>
-
-        {/* <Row className="mt-3 project-screen-sections">
-          {props.project.sections.map((section, i) => (
-            <Col key={`${props.project._id}-${section}`} className="slide-top-random" >
-              <Section section={section} onAdd={() => toggleNew(section)} id={section} onUpdateItem={onUpdateItem} setTargetSection={setTargetSection} >
-                {props.project.items.filter(t => t.section === section).map((item, item_i) => (
-                  <Item key={item._id} id={item._id} data={item} onDelete={() => onDelete(item)} onCheck={() => onUpdateItem('Done', item)} onEdit={() => toggleEdit(item)} targetSection={targetSection} onUpdateItem={onUpdateItem} index={item_i} />
-                ))}
-              </Section>
-            </Col>
-          ))}
-        </Row> */}
       </Col>
 
       <Col className={`slide-left ${add ? 'd-block' : 'd-none'} projects-col projects-sidebar`}>
