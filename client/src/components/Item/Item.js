@@ -48,7 +48,7 @@ const Item = (props) => {
       <Card kind="ghost" className={`${props.className} ${classnames(classes)}`}>
         <>
           <Row>
-            <Col xs={3} className="mx-0 pt-1 center-h">
+            <Col xs={2} className="pt-1 d-flex justify-content-end">
               <Checkbox checked={props.data.done} onCheck={props.onCheck} />
             </Col>
             <Col className="pl-0">
