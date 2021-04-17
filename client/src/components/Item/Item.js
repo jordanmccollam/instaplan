@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import PropTypes from 'prop-types'
 import classnames from "classnames"
 import { Row, Col } from 'react-bootstrap';
-import { Card, Checkbox, Button, Icon } from '../index';
+import { Card, Checkbox, Button, Icon, Tag } from '../index';
 import { Draggable } from 'react-beautiful-dnd';
 
 import './_item.scss';
@@ -14,6 +14,15 @@ const Item = (props) => {
   let classes = {
 		[`item`]: true
 	};
+
+  const renderTag = (tag) => {
+    switch(tag) {
+      // In Review
+      default: return 'primary';
+      case 'BUG': return 'danger';
+      case 'Testing': return 'success';
+    }
+  }
 
   return (
     <div className="slide-top-random item-container" id={props.id}>
@@ -27,6 +36,12 @@ const Item = (props) => {
               <div>{props.data.name}</div>
             </Col>
           </Row>
+          
+          <div className="d-flex justify-content-end">
+            {props.data.tags.map((tag, i) => (
+              <Tag kind={renderTag(tag)} key={`${props.id}-tag-${i}`} className="ml-1" />
+            ))}
+          </div>
 
           <div className={`mt-2 justify-content-end align-items-center ${props.hideActions ? 'd-none' : 'd-flex'}`}>
             <Button onClick={props.onEdit} className="mr-1" ><><Icon name="BsPencil" /></></Button>

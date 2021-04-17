@@ -15,7 +15,7 @@ const initialAdd = {
   dueDate: '',
   section: '',
   done: false,
-  tags: ['BUG']
+  tags: []
 }
 
 const ProjectScreen = (props) => {
@@ -116,7 +116,7 @@ const ProjectScreen = (props) => {
 
   const confirmEdit = () => {
     console.log(logger + 'confirmEdit', edit);
-    api.updateItem(props.user.token, edit._id, {name: edit.name}).then(res => {
+    api.updateItem(props.user.token, edit._id, {name: edit.name, tags: edit.tags}).then(res => {
       console.log(logger + 'confirmEdit: res', res);
       props.user.update(prev => ({
         ...prev,
@@ -144,6 +144,13 @@ const ProjectScreen = (props) => {
     } else {
       console.log(logger + 'onDragEnd: Already there!');
     }
+  }
+
+  const toggleTag = (tag, func) => {
+    func(prev => ({
+      ...prev,
+      tags: prev.tags.includes(tag) ? [...prev.tags.filter(t => t !== tag)] : [...prev.tags.filter(t => t !== tag), tag]
+    }))
   }
 
   return (
@@ -190,9 +197,9 @@ const ProjectScreen = (props) => {
         <Form.Label >Item Name</Form.Label>
         <Form.Control placeholder="Name" name="name" value={add?.name} onChange={onAdd} />
         <Form.Label className="mt-3" >Tags</Form.Label>
-        <Row className="center"><Col xs={2} className="center-h"><Checkbox checked={add?.tags.includes('In Review')} /></Col><Col><Tag kind="primary" className="mt-1" /></Col></Row>
-        <Row className="center"><Col xs={2} className="center-h"><Checkbox checked={add?.tags.includes('BUG')} /></Col><Col><Tag kind="danger" className="mt-1" /></Col></Row>
-        <Row className="center"><Col xs={2} className="center-h"><Checkbox checked={add?.tags.includes('Testing')} /></Col><Col><Tag kind="success" className="mt-1" /></Col></Row>
+        <Row className="center"><Col xs={2} className="center-h"><Checkbox checked={add?.tags.includes('In Review')} onCheck={() => toggleTag('In Review', setAdd)} /></Col><Col><Tag kind="primary" className="mt-1" /></Col></Row>
+        <Row className="center"><Col xs={2} className="center-h"><Checkbox checked={add?.tags.includes('BUG')} onCheck={() => toggleTag('BUG', setAdd)} /></Col><Col><Tag kind="danger" className="mt-1" /></Col></Row>
+        <Row className="center"><Col xs={2} className="center-h"><Checkbox checked={add?.tags.includes('Testing')} onCheck={() => toggleTag('Testing', setAdd)} /></Col><Col><Tag kind="success" className="mt-1" /></Col></Row>
         <Button onClick={confirmAdd} size="md" kind="success" full className="mt-4" ><>Add Item <Icon name="BsPlus"/></></Button>
         <Button onClick={toggleNew} size="md" kind="dark" full className="mt-2" ><>Cancel</></Button>
       </Col>
@@ -201,9 +208,9 @@ const ProjectScreen = (props) => {
         <Form.Label >Item Name</Form.Label>
         <Form.Control placeholder="Name" name="name" value={edit?.name} onChange={onEdit} />
         <Form.Label className="mt-3" >Tags</Form.Label>
-        <Row className="center"><Col xs={2} className="center-h"><Checkbox checked={edit?.tags.includes('In Review')} /></Col><Col><Tag kind="primary" className="mt-1" /></Col></Row>
-        <Row className="center"><Col xs={2} className="center-h"><Checkbox checked={edit?.tags.includes('BUG')} /></Col><Col><Tag kind="danger" className="mt-1" /></Col></Row>
-        <Row className="center"><Col xs={2} className="center-h"><Checkbox checked={edit?.tags.includes('Testing')} /></Col><Col><Tag kind="success" className="mt-1" /></Col></Row>
+        <Row className="center"><Col xs={2} className="center-h"><Checkbox checked={edit?.tags.includes('In Review')} onCheck={() => toggleTag('In Review', setEdit)} /></Col><Col><Tag kind="primary" className="mt-1" /></Col></Row>
+        <Row className="center"><Col xs={2} className="center-h"><Checkbox checked={edit?.tags.includes('BUG')} onCheck={() => toggleTag('BUG', setEdit)} /></Col><Col><Tag kind="danger" className="mt-1" /></Col></Row>
+        <Row className="center"><Col xs={2} className="center-h"><Checkbox checked={edit?.tags.includes('Testing')} onCheck={() => toggleTag('Testing', setEdit)} /></Col><Col><Tag kind="success" className="mt-1" /></Col></Row>
         <Button onClick={confirmEdit} size="md" kind="success" full className="mt-4" ><>Confirm Edit</></Button>
         <Button onClick={toggleEdit} size="md" kind="dark" full className="mt-2" ><>Cancel</></Button>
       </Col>
