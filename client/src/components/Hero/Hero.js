@@ -45,7 +45,7 @@ Hero.defaultProps = {
   kind: 'default',
   title: "Default Hero Title",
   subtitle: "And this is the default subtitle",
-  size: 40,
+  size: 38,
   links: []
 }
 
