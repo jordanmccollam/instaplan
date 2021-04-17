@@ -2,12 +2,20 @@ import React, { useState, useEffect } from "react";
 import PropTypes from 'prop-types'
 import classnames from "classnames"
 import { Container, Row, Col, Form } from 'react-bootstrap'
-import { Card, Hero, Section, Item, Button, Icon } from '../../components';
+import { Card, Hero, Section, Item, Button, Icon, Test } from '../../components';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import * as api from '../../api';
 
 import './_project.scss';
 
 const logger = "ProjectScreen:: ";
+
+const testList = [
+  {checked: false, name: 'Item 1', _id: '1'},
+  {checked: false, name: 'Item 2', _id: '2'},
+  {checked: false, name: 'Item 3', _id: '3'},
+  {checked: false, name: 'Item 4', _id: '4'},
+]
 
 const testItems = [
   {
@@ -156,6 +164,12 @@ const ProjectScreen = (props) => {
     toggleEdit();
   }
 
+  const onDragEnd = (res) => {
+    console.log(logger + 'RES', res);
+  }
+
+  // return <Test />
+
   return (
     <Row className={`${props.className} ${classnames(classes)}`}>
       <Col lg={(add || edit) ? 9 : 12} className="p-4 projects-col">
@@ -167,19 +181,44 @@ const ProjectScreen = (props) => {
           className="slide-top"
         />
 
-        <Row className="mt-3 project-screen-sections">
+        <Row className="mt-3">
+          <DragDropContext onDragEnd={onDragEnd}>
+            {props.project.sections.map((section, i) => (
+              <Col xs={4} key={section} >
+                <Droppable droppableId={section} type="ITEM" >
+                  {(provided) => (
+                    <div {...provided.droppableProps} ref={provided.innerRef}>
+                      <Section section={section} >
+                        {props.project.items.filter(t => t.section === section).map((item, item_i) => (
+                          <Draggable draggableId={`${section}-${item._id}`} key={`${section}-${item._id}`} index={item_i} >
+                            {(provided) => (
+                              <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} >
+                                <Item data={item} />
+                              </div>
+                            )}
+                          </Draggable>
+                        ))}
+                        {provided.placeholder}
+                      </Section>
+                    </div>
+                  )}
+                </Droppable>
+              </Col>
+            ))}
+          </DragDropContext>
+        </Row>
+
+        {/* <Row className="mt-3 project-screen-sections">
           {props.project.sections.map((section, i) => (
             <Col key={`${props.project._id}-${section}`} className="slide-top-random" >
               <Section section={section} onAdd={() => toggleNew(section)} id={section} onUpdateItem={onUpdateItem} setTargetSection={setTargetSection} >
-                <>
-                  {props.project.items.filter(t => t.section === section).map((item, item_i) => (
-                    <Item key={item._id} id={item._id} data={item} onDelete={() => onDelete(item)} onCheck={() => onUpdateItem('Done', item)} onEdit={() => toggleEdit(item)} targetSection={targetSection} onUpdateItem={onUpdateItem} />
-                  ))}
-                </>
+                {props.project.items.filter(t => t.section === section).map((item, item_i) => (
+                  <Item key={item._id} id={item._id} data={item} onDelete={() => onDelete(item)} onCheck={() => onUpdateItem('Done', item)} onEdit={() => toggleEdit(item)} targetSection={targetSection} onUpdateItem={onUpdateItem} index={item_i} />
+                ))}
               </Section>
             </Col>
           ))}
-        </Row>
+        </Row> */}
       </Col>
 
       <Col className={`slide-left ${add ? 'd-block' : 'd-none'} projects-col projects-sidebar`}>
@@ -208,7 +247,7 @@ ProjectScreen.propTypes = {
 
 ProjectScreen.defaultProps = {
   className: "",
-  project: {name: 'Default Project', description: 'Description here...'},
+  project: {name: 'Default Project', description: 'Description here...', sections: ['Todo', 'In-Progress', 'Done']},
   setProject: () => console.log(logger + 'setProject')
 }
 

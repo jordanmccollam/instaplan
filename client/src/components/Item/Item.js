@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import classnames from "classnames"
 import { Row, Col } from 'react-bootstrap';
 import { Card, Checkbox, Button, Icon } from '../index';
+import { Draggable } from 'react-beautiful-dnd';
 
 import './_item.scss';
 
@@ -37,13 +38,13 @@ const Item = (props) => {
 
   return (
     <div 
-      id={props.id}
-      onDragStart={dragStart}
-      onDragOver={dragOver}
-      draggable="true"
+      // id={props.id}
+      // onDragStart={dragStart}
+      // onDragOver={dragOver}
+      // onDragEnd={dragEnd}
+      // draggable="true"
+      // data={JSON.stringify(props.data)}
       className="slide-top-random item-container"
-      data={JSON.stringify(props.data)}
-      onDragEnd={dragEnd}
     >
       <Card kind="ghost" className={`${props.className} ${classnames(classes)}`}>
         <>
@@ -70,14 +71,20 @@ Item.propTypes = {
   className: PropTypes.string,
   data: PropTypes.object,
   id: PropTypes.string,
-  hideActions: PropTypes.bool
+  hideActions: PropTypes.bool,
+  onCheck: PropTypes.func,
+  onEdit: PropTypes.func,
+  onDelete: PropTypes.func,
 }
 
 Item.defaultProps = {
   className: "",
-  data: {label: 'Default Item'},
+  data: {name: 'Default Item', done: false},
   id: '123',
-  hideActions: false
+  hideActions: false,
+  onCheck: () => console.log(logger + 'onCheck'),
+  onEdit: () => console.log(logger + 'onEdit'),
+  onDelete: () => console.log(logger + 'onDelete'),
 }
 
 export default Item;

@@ -1,3 +1,4 @@
+import Test from "./Test/Test";
 import Checkbox from "./Checkbox/Checkbox";
 import Item from "./Item/Item";
 import Button from "./Button/Button";
@@ -11,6 +12,7 @@ import Icon from "./Icon/Icon";
 
 
 export {
+  Test,
   Checkbox,
   Item,
   Button,

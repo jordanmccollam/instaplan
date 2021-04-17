@@ -35,7 +35,7 @@ const Section = (props) => {
           </div>
         </div>
 
-        <div className="mt-2 section-dnd" id={props.id} onDrop={drop} onDragOver={dragOver}>
+        <div className="mt-2 section-dnd">
           {props.children}
         </div>
       </>
@@ -46,17 +46,20 @@ const Section = (props) => {
 Section.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.string,
-    PropTypes.element
+    PropTypes.element,
+    PropTypes.node
   ]),
   className: PropTypes.string,
   section: PropTypes.string,
-  onAdd: PropTypes.func
+  onAdd: PropTypes.func,
+  hideBtns: PropTypes.bool
 }
 
 Section.defaultProps = {
   className: "",
   section: 'Todo',
-  onAdd: () => console.log(logger + 'onAdd')
+  onAdd: () => console.log(logger + 'onAdd'),
+  hideBtns: false
 }
 
 export default Section;
