@@ -29,7 +29,7 @@ const Menu = (props) => {
   return (
     <Card className={`${props.className} ${classnames(classes)}`}>
       <>
-        <Logo size={'1.3vw'} />
+        <Logo size={'1.3vw'} break className="text-center" />
 
         <div className="mb-5" />
 
