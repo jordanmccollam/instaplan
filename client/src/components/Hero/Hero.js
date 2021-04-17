@@ -15,7 +15,7 @@ const Hero = (props) => {
 	};
 
   return (
-    <Card kind={props.kind} className={`${props.className} ${classnames(classes)} px-5 py-4`}>
+    <Card kind={props.kind} className={`${props.className} ${classnames(classes)} py-3 px-5`}>
       <div className="d-flex justify-content-between">
         <div>
           <div className="hero-title" style={{fontSize: props.size}}>
