@@ -14,12 +14,16 @@ const Checkbox = (props) => {
 		[`checkbox-checked`]: props.checked,
 	};
 
-  const onCheck = () => {
-    props.setChecked(prev => !prev);
+  const defaultCheck = () => {
+    if (props.setChecked) {
+      props.setChecked(prev => !prev);
+    } else {
+      console.log(logger + 'defaultCheck: No setChecked passed as props');
+    }
   }
 
   return (
-    <div onClick={props.onCheck ? props.onCheck : onCheck} className={`${props.className} ${classnames(classes)}`}>
+    <div onClick={props.onCheck ? props.onCheck : defaultCheck} className={`${props.className} ${classnames(classes)}`}>
       {props.checked ? <Icon name="BsCheck" /> : <Icon name="TiTimes" />}
     </div>
   )
@@ -28,13 +32,15 @@ const Checkbox = (props) => {
 Checkbox.propTypes = {
   className: PropTypes.string,
   checked: PropTypes.bool,
-  setChecked: PropTypes.func
+  setChecked: PropTypes.func,
+  onCheck: PropTypes.func
 }
 
 Checkbox.defaultProps = {
   className: "",
   checked: false,
-  setChecked: () => console.log(logger + 'setChecked')
+  setChecked: () => console.log(logger + 'setChecked'),
+  onCheck: () => console.log(logger + 'onCheck'),
 }
 
 export default Checkbox;

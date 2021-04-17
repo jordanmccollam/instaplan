@@ -1,0 +1,18 @@
+@import "../../sass/variables";
+
+.tag {
+    border-radius: $radius;
+    padding: $space-00 $space-03;
+    width: 100%;
+    color: white;
+
+    &-primary {
+        background-color: $primary;
+    }
+    &-danger {
+        background-color: $danger;
+    }
+    &-success {
+        background-color: $success;
+    }
+}

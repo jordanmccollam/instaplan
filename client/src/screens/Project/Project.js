@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import PropTypes from 'prop-types'
 import classnames from "classnames"
 import { Container, Row, Col, Form } from 'react-bootstrap'
-import { Card, Hero, Section, Item, Button, Icon } from '../../components';
+import { Card, Hero, Section, Item, Button, Icon, Tag, Checkbox } from '../../components';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import * as api from '../../api';
 
@@ -15,7 +15,7 @@ const initialAdd = {
   dueDate: '',
   section: '',
   done: false,
-  tags: []
+  tags: ['BUG']
 }
 
 const ProjectScreen = (props) => {
@@ -189,6 +189,10 @@ const ProjectScreen = (props) => {
         <h2>Add {add?.section} Item</h2>
         <Form.Label >Item Name</Form.Label>
         <Form.Control placeholder="Name" name="name" value={add?.name} onChange={onAdd} />
+        <Form.Label className="mt-3" >Tags</Form.Label>
+        <Row className="center"><Col xs={2} className="center-h"><Checkbox checked={add?.tags.includes('In Review')} /></Col><Col><Tag kind="primary" className="mt-1" /></Col></Row>
+        <Row className="center"><Col xs={2} className="center-h"><Checkbox checked={add?.tags.includes('BUG')} /></Col><Col><Tag kind="danger" className="mt-1" /></Col></Row>
+        <Row className="center"><Col xs={2} className="center-h"><Checkbox checked={add?.tags.includes('Testing')} /></Col><Col><Tag kind="success" className="mt-1" /></Col></Row>
         <Button onClick={confirmAdd} size="md" kind="success" full className="mt-4" ><>Add Item <Icon name="BsPlus"/></></Button>
         <Button onClick={toggleNew} size="md" kind="dark" full className="mt-2" ><>Cancel</></Button>
       </Col>
@@ -196,6 +200,10 @@ const ProjectScreen = (props) => {
         <h2>Edit {edit?.name}</h2>
         <Form.Label >Item Name</Form.Label>
         <Form.Control placeholder="Name" name="name" value={edit?.name} onChange={onEdit} />
+        <Form.Label className="mt-3" >Tags</Form.Label>
+        <Row className="center"><Col xs={2} className="center-h"><Checkbox checked={edit?.tags.includes('In Review')} /></Col><Col><Tag kind="primary" className="mt-1" /></Col></Row>
+        <Row className="center"><Col xs={2} className="center-h"><Checkbox checked={edit?.tags.includes('BUG')} /></Col><Col><Tag kind="danger" className="mt-1" /></Col></Row>
+        <Row className="center"><Col xs={2} className="center-h"><Checkbox checked={edit?.tags.includes('Testing')} /></Col><Col><Tag kind="success" className="mt-1" /></Col></Row>
         <Button onClick={confirmEdit} size="md" kind="success" full className="mt-4" ><>Confirm Edit</></Button>
         <Button onClick={toggleEdit} size="md" kind="dark" full className="mt-2" ><>Cancel</></Button>
       </Col>
