@@ -1,0 +1,12 @@
+@import "../../sass/variables";
+
+.landing {
+    background-color: $dark;
+
+    .title {
+        font-size: 3em;
+    }
+    .subtitle {
+        max-width: 30em;
+    }
+}

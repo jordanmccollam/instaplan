@@ -85,13 +85,7 @@ function App() {
             ) : (
               // LOGGED OUT CONTENT
               <>
-                <Container >
-                  <Row>
-                    <Col className="center">
-                      <Comp.Button onClick={loginWithRedirect} size="lg" ><div style={{fontSize: 50}}>LOGIN</div></Comp.Button>
-                    </Col>
-                  </Row>
-                </Container>
+                <Screens.Landing login={loginWithRedirect} />
               </>
               // ------------------
             )}
