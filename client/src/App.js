@@ -55,7 +55,13 @@ function App() {
     <div className="App">
       <Container fluid className="px-0">
         <Row className="full mx-0">
-          <Col className="center-v content px-0">
+          <Col className="d-flex d-lg-none center">
+            <div className="text-center">
+              <h1>Instaplan</h1>
+              <h3>Please use a bigger device such as a laptop</h3>
+            </div>
+          </Col>
+          <Col className="center-v content px-0 d-none d-lg-flex">
       
             {user ? (
               dbUser ? (
