@@ -1,3 +1,4 @@
+import Profile from "./Profile/Profile";
 import Tag from "./Tag/Tag";
 import Test from "./Test/Test";
 import Checkbox from "./Checkbox/Checkbox";
@@ -13,6 +14,7 @@ import Icon from "./Icon/Icon";
 
 
 export {
+  Profile,
   Tag,
   Test,
   Checkbox,

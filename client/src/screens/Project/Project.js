@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import PropTypes from 'prop-types'
 import classnames from "classnames"
 import { Container, Row, Col, Form } from 'react-bootstrap'
-import { Card, Hero, Section, Item, Button, Icon, Tag, Checkbox } from '../../components';
+import { Card, Hero, Section, Item, Button, Icon, Tag, Checkbox, Profile } from '../../components';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import * as api from '../../api';
 
@@ -162,7 +162,11 @@ const ProjectScreen = (props) => {
           subtitle={`${props.project.description}`} 
           links={[{label: 'Projects', action: () => props.setProject(null)}]}
           className="slide-top"
-        />
+        >
+          <div>
+            <Profile content={`${props.user.nickname} (owner)`} id={props.user.nickname} />
+          </div>
+        </Hero>
 
         <Row className="mt-3 fade-in">
           <DragDropContext onDragEnd={onDragEnd}>

@@ -17,7 +17,7 @@ const Hero = (props) => {
   return (
     <Card kind={props.kind} className={`${props.className} ${classnames(classes)} py-3 px-5`}>
       <div className="d-flex justify-content-between">
-        <div>
+        <div style={{width: 'max-content'}}>
           <div className="hero-title" style={{fontSize: props.size}}>
             {props.links.map((link, i) => (
               <span key={`hero-link-${i}`} className="hero-link" onClick={link.action}>{link.label} / </span>
@@ -25,6 +25,10 @@ const Hero = (props) => {
             {props.title}
           </div>
           <div className="hero-subtitle">{props.subtitle}</div>
+        </div>
+
+        <div>
+          {props.children}
         </div>
       </div>
     </Card>
@@ -37,7 +41,12 @@ Hero.propTypes = {
   title: PropTypes.string,
   subtitle: PropTypes.string,
   size: PropTypes.number,
-  links: PropTypes.array
+  links: PropTypes.array,
+  children: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.element,
+    PropTypes.node
+  ])
 }
 
 Hero.defaultProps = {
