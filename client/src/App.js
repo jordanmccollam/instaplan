@@ -26,8 +26,8 @@ function App() {
   }, [user])
 
   const connectUserToDb = async () => {
-    const _token = 'test';
-    // const _token = await getAccessTokenSilently();
+    // const _token = 'test';
+    const _token = await getAccessTokenSilently();
     setToken(_token);
     apis.getUser(_token, user.email).then(res => {
       console.log("connectUserToDb:: res", res);
