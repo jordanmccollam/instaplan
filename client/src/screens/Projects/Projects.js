@@ -4,6 +4,7 @@ import classnames from "classnames"
 import { Container, Row, Col, Form } from 'react-bootstrap'
 import { Hero, Project, Button, Icon } from '../../components';
 import * as api from '../../api/';
+import moment from 'moment';
 
 import './_projects.scss';
 

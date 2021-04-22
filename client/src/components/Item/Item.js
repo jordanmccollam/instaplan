@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import PropTypes from 'prop-types'
 import classnames from "classnames"
 import { Row, Col } from 'react-bootstrap';
-import { Card, Checkbox, Button, Icon, Tag } from '../index';
+import { Card, Checkbox, Button, Icon, Tag, Profile } from '../index';
 import { Draggable } from 'react-beautiful-dnd';
 
 import './_item.scss';
@@ -32,10 +32,16 @@ const Item = (props) => {
             <Col xs={2} className="pt-1 d-flex justify-content-end">
               <Checkbox checked={props.data.done} onCheck={props.onCheck} />
             </Col>
-            <Col className="pl-0">
-              <div>{props.data.name}</div>
+            <Col className="d-flex justify-content-end pr-4">
+              {props.data.assignee ? (
+                <div onClick={props.addAssignee}><Profile content={props.data.assignee.email} size="sm" position="top" /></div>
+              ) : (
+                <div onClick={props.addAssignee}><Profile content={'+ Assign'} size="sm" position="top" /></div>
+              )}
             </Col>
           </Row>
+          
+          <div className="px-3">{props.data.name}</div>
           
           <div className="d-flex justify-content-end">
             {props.data.tags.map((tag, i) => (
@@ -61,6 +67,7 @@ Item.propTypes = {
   onCheck: PropTypes.func,
   onEdit: PropTypes.func,
   onDelete: PropTypes.func,
+  addAssignee: PropTypes.func,
 }
 
 Item.defaultProps = {
@@ -71,6 +78,7 @@ Item.defaultProps = {
   onCheck: () => console.log(logger + 'onCheck'),
   onEdit: () => console.log(logger + 'onEdit'),
   onDelete: () => console.log(logger + 'onDelete'),
+  addAssignee: () => console.log(logger + 'addAssignee'),
 }
 
 export default Item;

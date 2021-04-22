@@ -5,7 +5,7 @@ getUser = async (req, res) => {
         {
             path: 'projects',
             populate: [
-                {path: 'items', model: 'items'},
+                {path: 'items', model: 'items', populate: [{path: 'assignee', model: 'users'}]},
                 {path: 'collaborators', model: 'users'},
                 {path: 'user', model: 'users'}
             ]
@@ -13,10 +13,14 @@ getUser = async (req, res) => {
         {
             path: 'shared',
             populate: [
-                {path: 'items', model: 'items'},
+                {path: 'items', model: 'items', populate: {path: 'assignee', model: 'users'}},
                 {path: 'collaborators', model: 'users'},
                 {path: 'user', model: 'users'}
             ]
+        },
+        {
+            path: 'items',
+            populate: [{path: 'assignee', model: 'users'}]
         }
     ]).populate('items').exec((err, user) => {
         if (err) {

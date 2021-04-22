@@ -9,8 +9,11 @@ const logger = "Profile:: ";
 
 const Profile = (props) => {
   let classes = {
-		[`profile`]: true
+		[`profile`]: true,
+    [`profile-${props.size}`]: true
 	};
+
+  console.log(logger + 'CONTENT', props.content);
 
   return (
     <OverlayTrigger placement={props.position} overlay={
@@ -29,14 +32,16 @@ Profile.propTypes = {
   className: PropTypes.string,
   position: PropTypes.string,
   id: PropTypes.string,
-  content: PropTypes.string
+  content: PropTypes.string,
+  size: PropTypes.oneOf(['sm', 'md'])
 }
 
 Profile.defaultProps = {
   className: "",
   position: 'bottom',
   id: 'default-tooltip-id',
-  content: 'Default Tooltip Content'
+  content: 'Default Tooltip Content',
+  size: 'md'
 }
 
 export default Profile;

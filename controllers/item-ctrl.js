@@ -95,7 +95,7 @@ updateItem = async (req, res) => {
         })
     }
 
-    Item.findOne({ _id: req.params.id }, (err, item) => {
+    Item.findOne({_id: req.params.id}).populate('assignee').exec((err, item ) => {
         if (err) {
             return res.status(404).json({
                 err,
@@ -108,6 +108,7 @@ updateItem = async (req, res) => {
         item.dueDate = body.dueDate ? body.dueDate : item.dueDate;
         item.tags = body.tags ? body.tags : item.tags;
         item.done = body.done ? body.done : item.done;
+        item.assignee = body.assignee ? body.assignee : item.assignee;
 
         item
             .save()
@@ -115,6 +116,7 @@ updateItem = async (req, res) => {
                 return res.status(200).json({
                     success: true,
                     output: item,
+                    assignee: body.assignee,
                     message: 'Item updated!',
                 })
             })

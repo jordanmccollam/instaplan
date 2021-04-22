@@ -1,6 +1,7 @@
 @import "variables";
 
-input {
+input,
+select {
     border-radius: $radius !important;
 
     &:focus {

@@ -24,12 +24,10 @@ const ProjectScreen = (props) => {
   const [ newUser, setNewUser ] = useState(null);
   const [ targetSection, setTargetSection ] = useState(null);
   const [ removeUser, setRemoveUser ] = useState(null);
+  const [ assignItem, setAssignItem ] = useState(false);
   let classes = {
 		[`project-screen`]: true
 	};
-
-  console.log(logger + 'project', props.project);
-  console.log(logger + 'user', props.user);
 
   const toggleNew = (section) => {
     if (add) {
@@ -227,9 +225,27 @@ const ProjectScreen = (props) => {
     })
   }
 
+  const onAssignItem = (e) => {
+    console.log(logger + 'onAssignItem', e.target.value);
+    if (e.target.value) {
+      const value = JSON.parse(e.target.value);
+      api.updateItem(props.user.token, assignItem._id, {assignee: value}).then(res => {
+        console.log(logger + 'onAssignItem', res);
+        const updatedProject = {
+          ...props.project,
+          items: [...props.project.items.filter(i => i._id !== res.data.output._id), {...res.data.output, assignee: res.data.assignee}]
+        }
+        props.setProject(updatedProject);
+        props.user.update(prev => ({...prev, projects: [...prev.projects.filter(p => p._id !== props.project._id), updatedProject]}));
+      }).catch(e => {console.log(logger + 'onAssignItem', e)})
+    } else {
+      // Assign as none
+    }
+  }
+
   return (
     <Row className={`${props.className} ${classnames(classes)}`}>
-      <Col lg={(add || edit || newUser || removeUser) ? 9 : 12} className="p-4 projects-col">
+      <Col lg={(add || edit || newUser || removeUser || assignItem) ? 9 : 12} className="p-4 projects-col">
         <Hero 
           kind="success" 
           title={`${props.project.name}`} 
@@ -258,7 +274,7 @@ const ProjectScreen = (props) => {
                           <Draggable draggableId={JSON.stringify(item)} key={`${section}-${item._id}`} index={item_i} >
                             {(provided) => (
                               <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} >
-                                <Item data={item} id={item._id} onCheck={() => onUpdateItem('Done', item)} onEdit={() => toggleEdit(item)} onDelete={() => onDelete(item)} />
+                                <Item data={item} id={item._id} onCheck={() => onUpdateItem('Done', item)} onEdit={() => toggleEdit(item)} onDelete={() => onDelete(item)} addAssignee={() => setAssignItem(item)} />
                               </div>
                             )}
                           </Draggable>
@@ -307,6 +323,18 @@ const ProjectScreen = (props) => {
         <h4>Do you want to remove {removeUser?.email} from this project?</h4>
         <Button onClick={confirmRemoveUser} size="md" kind="danger" full className="mt-4" ><>Yes, remove them.</></Button>
         <Button onClick={toggleRemoveUser} size="md" kind="dark" full className="mt-2" ><>Cancel</></Button>
+      </Col>
+      <Col className={`slide-left ${assignItem ? 'd-block' : 'd-none'} projects-col projects-sidebar`}>
+        <h2>Assign User to Item</h2>
+        <Form.Label>Assignee</Form.Label>
+        <Form.Control as="select" custom onChange={onAssignItem} value={JSON.stringify(assignItem?.assignee)}>
+          <option value={null} >None</option>
+          <option value={JSON.stringify(props.project.user)} >{props.project.user.email}</option>
+          {props.project.collaborators.map((user, i) => (
+            <option key={`add-assignee-${i}`} value={JSON.stringify(user)} >{user.email}</option>
+          ))}
+        </Form.Control>
+        <Button onClick={() => setAssignItem(null)} size="md" kind="dark" full className="mt-2" ><>Close</></Button>
       </Col>
     </Row>
   )
