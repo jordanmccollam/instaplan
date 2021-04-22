@@ -186,8 +186,12 @@ const ProjectScreen = (props) => {
           console.log(logger + 'confirmNewUser: updateUser', e);
         })
         props.user.update(tmp);
+        if (newUser.error) {
+          setNewUser(prev => ({...prev, error: null}))
+        }
       } else {
         console.log(logger + 'confirmNewUser: No user found');
+        setNewUser(prev => ({...prev, error: 'No user found'}));
       }
     }).catch(e => {
       console.log(logger + 'confirmNewUser', e);
@@ -323,6 +327,7 @@ const ProjectScreen = (props) => {
       </Col>
       <Col className={`slide-left ${newUser ? 'd-block' : 'd-none'} projects-col projects-sidebar`}>
         <h2>Add Collaborator</h2>
+        <div className="text-danger">{newUser?.error}</div>
         <Form.Label >User Email</Form.Label>
         <Form.Control placeholder="Email" name="email" value={newUser?.email} onChange={onChangeNewUser} />
         <Button onClick={confirmNewUser} size="md" kind="success" full className="mt-4" ><>Confirm</></Button>
