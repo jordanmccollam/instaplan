@@ -13,8 +13,6 @@ const Profile = (props) => {
     [`profile-${props.size}`]: true
 	};
 
-  console.log(logger + 'CONTENT', props.content);
-
   return (
     <OverlayTrigger placement={props.position} overlay={
       <Tooltip id={props.id} >

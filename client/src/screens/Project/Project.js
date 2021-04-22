@@ -227,7 +227,7 @@ const ProjectScreen = (props) => {
 
   const onAssignItem = (e) => {
     console.log(logger + 'onAssignItem', e.target.value);
-    if (e.target.value) {
+    if (e.target.value !== 'none') {
       const value = JSON.parse(e.target.value);
       api.updateItem(props.user.token, assignItem._id, {assignee: value}).then(res => {
         console.log(logger + 'onAssignItem', res);
@@ -237,9 +237,18 @@ const ProjectScreen = (props) => {
         }
         props.setProject(updatedProject);
         props.user.update(prev => ({...prev, projects: [...prev.projects.filter(p => p._id !== props.project._id), updatedProject]}));
+        setAssignItem({...res.data.output, assignee: res.data.assignee});
       }).catch(e => {console.log(logger + 'onAssignItem', e)})
     } else {
-      // Assign as none
+      api.updateItem(props.user.token, assignItem._id, {assignee: null}).then(res => {
+        const updatedProject = {
+          ...props.project,
+          items: [...props.project.items.filter(i => i._id !== res.data.output._id), {...res.data.output, assignee: res.data.assignee}]
+        }
+        props.setProject(updatedProject);
+        props.user.update(prev => ({...prev, projects: [...prev.projects.filter(p => p._id !== props.project._id), updatedProject]}));
+        setAssignItem({...res.data.output, assignee: res.data.assignee});
+      })
     }
   }
 
@@ -328,7 +337,7 @@ const ProjectScreen = (props) => {
         <h2>Assign User to Item</h2>
         <Form.Label>Assignee</Form.Label>
         <Form.Control as="select" custom onChange={onAssignItem} value={JSON.stringify(assignItem?.assignee)}>
-          <option value={null} >None</option>
+          <option value={'none'} >None</option>
           <option value={JSON.stringify(props.project.user)} >{props.project.user.email}</option>
           {props.project.collaborators.map((user, i) => (
             <option key={`add-assignee-${i}`} value={JSON.stringify(user)} >{user.email}</option>
