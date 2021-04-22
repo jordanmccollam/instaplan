@@ -180,6 +180,7 @@ const Projects = (props) => {
                 onSelect={() => onSelectProject(project, true)}
                 onDelete={() => onDelete(project)}
                 onEdit={() => toggleEdit(project)}
+                shared
               />
             </Col>
           ))}

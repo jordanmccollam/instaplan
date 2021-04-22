@@ -23,9 +23,13 @@ const Project = (props) => {
         </>
       </Card>
 
-      <div className="project-actions">
-        <div onClick={props.onEdit} className="mr-1" ><Icon name="BsPencil" className="project-action" /></div>
-        <div onClick={props.onDelete} ><Icon name="BsTrash" className="project-action" /></div>
+      <div className={`project-actions`}>
+        {props.shared ? <div className="pb-2 pt-1">{props.project.user.email}</div> : (
+          <>
+            <div onClick={props.onEdit} className="mr-1" ><Icon name="BsPencil" className="project-action" /></div>
+            <div onClick={props.onDelete} ><Icon name="BsTrash" className="project-action" /></div>
+          </>
+        )}
       </div>
     </div>
   )
@@ -42,17 +46,19 @@ Project.propTypes = {
   project: PropTypes.object,
   onSelect: PropTypes.func,
   onDelete: PropTypes.func,
-  onEdit: PropTypes.func
+  onEdit: PropTypes.func,
+  shared: PropTypes.bool
 }
 
 Project.defaultProps = {
   className: "",
   kind: 'ghost',
   size: 30,
-  project: {name: 'Default Project', description: 'This a description'},
+  project: {name: 'Default Project', description: 'This a description', user: 'USER'},
   onSelect: () => console.log(logger + 'onSelect'),
   onDelete: () => console.log(logger + 'onDelete'),
-  onEdit: () => console.log(logger + 'onEdit')
+  onEdit: () => console.log(logger + 'onEdit'),
+  shared: false
 }
 
 export default Project;
