@@ -17,7 +17,7 @@ const Menu = (props) => {
 	};
 
   const screens = [
-    {name: 'home', icon: 'GoHome', size: iconSize},
+    // {name: 'home', icon: 'GoHome', size: iconSize},
     {name: 'projects', icon: 'BsFolder', size: iconSize},
   ]
 

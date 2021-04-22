@@ -142,7 +142,7 @@ const Projects = (props) => {
       <Col lg={(add || edit) ? 9 : 12} className="p-4 projects-col">
         <Hero 
           kind="danger" 
-          title={`Projects`} 
+          title={`Hello, ${props.user.nickname}`} 
           subtitle="Manage your projects here" 
           className="slide-top"
         />

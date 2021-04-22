@@ -15,7 +15,7 @@ function App() {
   const [ theme, setTheme ] = useState('theme--light');
   const [ dbUser, setDbUser ] = useState(null);
   const [ token, setToken ] = useState(null);
-  const [ screen, setScreen ] = useState('home');
+  const [ screen, setScreen ] = useState('projects');
   const [ currentProject, setCurrentProject ] = useState(null);
 
   useEffect(() => {
