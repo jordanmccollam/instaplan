@@ -9,7 +9,7 @@ const router = express.Router();
 // USERS
 router.get('/user/:email', UserCtrl.getUser);
 router.post('/user', UserCtrl.createUser);
-router.put('/user/:id', UserCtrl.updateUser);
+router.put('/user/:email', UserCtrl.updateUser);
 
 // PROJECTS
 router.post('/project', ProjectCtrl.createProject);

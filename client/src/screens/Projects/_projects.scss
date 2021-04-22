@@ -12,4 +12,10 @@
         height: 100vh;
         padding: $space-05;
     }
+
+    &-row {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        overflow-y: hidden;
+    }
 }

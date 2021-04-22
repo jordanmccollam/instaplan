@@ -57,9 +57,9 @@ const Projects = (props) => {
 		[`projects`]: true
 	};
 
-  const onSelectProject = (project) => {
+  const onSelectProject = (project, shared) => {
     console.log(logger + 'onSelectProject', project)
-    props.setProject(project);
+    props.setProject({...project, shared});
   }
 
   const toggleNew = () => {
@@ -147,15 +147,37 @@ const Projects = (props) => {
           className="slide-top"
         />
 
-        <Row className="mt-2">
-          <Col xs={12} className="slide-top-random">
+        <Row className="mt-2 slide-top-random align-items-center">
+          <Col>
+            <h5 className="ml-3">Your Projects</h5>
+          </Col>
+          <Col className="d-flex justify-content-end">
             <Button onClick={toggleNew} size="md" ><>Add Project <Icon name="BsPlus"/></></Button>
           </Col>
+        </Row>
+
+        <Row className="projects-row">
           {props.user.projects.map((project, i) => (
             <Col lg={3} key={`project-${project._id}`} id={project._id} className="slide-top-random">
               <Project  
                 project={project}
-                onSelect={() => onSelectProject(project)}
+                onSelect={() => onSelectProject(project, false)}
+                onDelete={() => onDelete(project)}
+                onEdit={() => toggleEdit(project)}
+              />
+            </Col>
+          ))}
+        </Row>
+
+        <Row className="mt-2 slide-top-random align-items-center">
+          <h5 className="ml-3">Projects Shared With You</h5>
+        </Row>
+        <Row className="projects-row">
+          {props.user.shared.map((project, i) => (
+            <Col lg={3} key={`project-${project._id}`} id={project._id} className="slide-top-random">
+              <Project  
+                project={project}
+                onSelect={() => onSelectProject(project, true)}
                 onDelete={() => onDelete(project)}
                 onEdit={() => toggleEdit(project)}
               />

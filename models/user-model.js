@@ -6,7 +6,8 @@ const User = new Schema(
         email: { type: String, required: true, unique: true },
         theme: { type: String, required: true },
         projects: [{ type: Schema.Types.ObjectId, ref: "projects" }],
-        items: [{ type: Schema.Types.ObjectId, ref: 'items' }]
+        items: [{ type: Schema.Types.ObjectId, ref: 'items' }],
+        shared: [{ type: Schema.Types.ObjectId, ref: 'projects' }],
     },
     { timestamps: true },
 );

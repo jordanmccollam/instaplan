@@ -23,11 +23,13 @@ const ProjectScreen = (props) => {
   const [ add, setAdd ] = useState(null);
   const [ newUser, setNewUser ] = useState(null);
   const [ targetSection, setTargetSection ] = useState(null);
+  const [ removeUser, setRemoveUser ] = useState(null);
   let classes = {
 		[`project-screen`]: true
 	};
 
   console.log(logger + 'project', props.project);
+  console.log(logger + 'user', props.user);
 
   const toggleNew = (section) => {
     if (add) {
@@ -169,15 +171,23 @@ const ProjectScreen = (props) => {
   }
 
   const confirmNewUser = async () => {
-    console.log(logger + 'confirmNewUser', newUser, props.project._id);
+    var tmp = JSON.parse(JSON.stringify(props.user));
     api.getUser(props.user.token, newUser.email).then(target => {
-      console.log(logger + 'confirmUser: target', target)
       if (target.data.output) {
-        api.updateProject(props.user.token, props.project._id, {collaborator: target.data.output}).then(res => {
-          console.log(logger + 'confirmNewUser: res', res);
+
+        api.updateProject(props.user.token, props.project._id, {collaborator: {user: target.data.output, action: 'add'}}).then(res => {
+          console.log(logger + 'confirmNewUser: updateProject', res);
+          props.setProject(prev => ({...prev, collaborators: res.data.collaborators}));
         }).catch(e => {
-          console.log(logger + 'confirmNewUser', e);
+          console.log(logger + 'confirmNewUser: updateProject', e);
         })
+
+        api.updateUser(props.user.token, newUser.email, {shared: {project: props.project, action: 'add'}}).then(res => {
+          console.log(logger + 'confirmNewUser: updateUser', res);
+        }).catch(e => {
+          console.log(logger + 'confirmNewUser: updateUser', e);
+        })
+        props.user.update(tmp);
       } else {
         console.log(logger + 'confirmNewUser: No user found');
       }
@@ -193,9 +203,33 @@ const ProjectScreen = (props) => {
     }))
   }
 
+  const toggleRemoveUser = (user) => {
+    console.log(logger + 'toggleRemoveUser');
+    if (removeUser) {
+      setRemoveUser(null);
+    } else {
+      setRemoveUser(user);
+    }
+  }
+
+  const confirmRemoveUser = () => {
+    console.log(logger + 'confirmRemoveUser', removeUser);
+    api.updateProject(props.user.token, props.project._id, {collaborator: {user: removeUser, action: 'remove'}}).then(res => {
+      console.log(logger + 'confirmRemoveUser: updateProject', res);
+      props.setProject(prev => ({...prev, collaborators: res.data.collaborators}));
+    }).catch(e => {
+      console.log(logger + 'confirmRemoveUser: updateProject', e);
+    })
+    api.updateUser(props.user.token, removeUser.email, {shared: {project: props.project, action: 'remove'}}).then(res => {
+      console.log(logger + 'confirmRemoveUser: updateUser', res);
+    }).catch(e => {
+      console.log(logger + 'confirmRemoveUser: updateUser', e);
+    })
+  }
+
   return (
     <Row className={`${props.className} ${classnames(classes)}`}>
-      <Col lg={(add || edit || newUser) ? 9 : 12} className="p-4 projects-col">
+      <Col lg={(add || edit || newUser || removeUser) ? 9 : 12} className="p-4 projects-col">
         <Hero 
           kind="success" 
           title={`${props.project.name}`} 
@@ -205,10 +239,10 @@ const ProjectScreen = (props) => {
         >
           <div className="project-screen-profiles">
             {props.project.collaborators && props.project.collaborators.map((profile, i) => (
-              <Profile key={`collaborator-${profile._id}`} className="ml-2" content={profile.email} id={profile._id} />
+              <div key={`collaborator-${profile._id}`} className="ml-2" onClick={() => props.project.shared ? console.log(logger + 'toggleRemoveUser: not authorized') : toggleRemoveUser(profile)}><Profile content={profile.email} id={profile._id} /></div>
             ))}
-            <Profile className="ml-2" content={`${props.user.email} (owner)`} id={props.user._id} />
-            <div onClick={toggleNewUser}><Profile className="ml-2" content={`+ Add a collaborator`} id={'new-user'} /></div>
+            <Profile className="ml-2" content={`${props.project.user.email} (owner)`} id={props.user._id} />
+            {!props.project.shared && (<div onClick={toggleNewUser}><Profile className="ml-2" content={`+ Add a collaborator`} id={'new-user'} /></div>)}
           </div>
         </Hero>
 
@@ -268,6 +302,11 @@ const ProjectScreen = (props) => {
         <Form.Control placeholder="Email" name="email" value={newUser?.email} onChange={onChangeNewUser} />
         <Button onClick={confirmNewUser} size="md" kind="success" full className="mt-4" ><>Confirm</></Button>
         <Button onClick={toggleNewUser} size="md" kind="dark" full className="mt-2" ><>Cancel</></Button>
+      </Col>
+      <Col className={`slide-left ${removeUser ? 'd-block' : 'd-none'} projects-col projects-sidebar`}>
+        <h4>Do you want to remove {removeUser?.email} from this project?</h4>
+        <Button onClick={confirmRemoveUser} size="md" kind="danger" full className="mt-4" ><>Yes, remove them.</></Button>
+        <Button onClick={toggleRemoveUser} size="md" kind="dark" full className="mt-2" ><>Cancel</></Button>
       </Col>
     </Row>
   )

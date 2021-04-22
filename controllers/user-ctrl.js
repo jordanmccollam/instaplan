@@ -1,13 +1,24 @@
 const User = require('../models/user-model');
 
 getUser = async (req, res) => {
-    await User.findOne({ email: req.params.email }).populate({
-        path: 'projects',
-        populate: [
-            {path: 'items', model: 'items'},
-            {path: 'collaborators', model: 'users'}
-        ],
-    }).populate('items').exec((err, user) => {
+    await User.findOne({ email: req.params.email }).populate([
+        {
+            path: 'projects',
+            populate: [
+                {path: 'items', model: 'items'},
+                {path: 'collaborators', model: 'users'},
+                {path: 'user', model: 'users'}
+            ]
+        },
+        {
+            path: 'shared',
+            populate: [
+                {path: 'items', model: 'items'},
+                {path: 'collaborators', model: 'users'},
+                {path: 'user', model: 'users'}
+            ]
+        }
+    ]).populate('items').exec((err, user) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         } else {
@@ -56,7 +67,7 @@ updateUser = async (req, res) => {
         })
     }
 
-    User.findOne({ _id: req.params.id }, (err, User) => {
+    User.findOne({email: req.params.email}).populate('shared').exec((err, user ) => {
         if (err) {
             return res.status(404).json({
                 err,
@@ -64,14 +75,28 @@ updateUser = async (req, res) => {
             })
         }
 
-        User.theme = body.theme ? body.theme : User.theme;
+        var updatedShared = [...user.shared];
 
-        User
+        if (body.shared) {
+            if (body.shared.action === 'add') {
+                updatedShared = [...updatedShared.filter(s => s._id === body.shared.project._id), body.shared.project];
+                console.log('updatedShared (add):', updatedShared);
+            }
+            else if (body.shared.action === 'remove') {
+                updatedShared = updatedShared.filter(s => s._id === body.shared.project._id);
+                console.log('updatedShared (remove):', updatedShared);
+            }
+        }
+
+        user.shared = body.shared ? updatedShared : user.shared;
+
+        user
             .save()
             .then(() => {
                 return res.status(200).json({
                     success: true,
-                    output: User,
+                    output: user,
+                    shared: updatedShared,
                     message: 'User updated!',
                 })
             })

@@ -67,8 +67,8 @@ updateProject = async (req, res) => {
             error: 'You must provide a body to update',
         })
     }
-
-    Project.findOne({ _id: req.params.id }, (err, project) => {
+    
+    Project.findOne({_id: req.params.id}).populate('collaborators').exec((err, project ) => {
         if (err) {
             return res.status(404).json({
                 err,
@@ -76,11 +76,24 @@ updateProject = async (req, res) => {
             })
         }
 
+        var updatedCollaborators = [...project.collaborators];
+
+        if (body.collaborator) {
+            if (body.collaborator.action === 'add') {
+                updatedCollaborators = [...updatedCollaborators.filter(c => c._id === body.collaborator.user._id), body.collaborator.user];
+                console.log('updatedCollaborators (add):', updatedCollaborators);
+            }
+            else if (body.collaborator.action === 'remove') {
+                updatedCollaborators = updatedCollaborators.filter(c => c._id === body.collaborator.user._id);
+                console.log('updatedCollaborators (remove):', updatedCollaborators);
+            }
+        }
+
         project.name = body.name ? body.name : project.name;
         project.sections = body.sections ? body.sections : project.sections;
         project.description = body.description ? body.description : project.description;
         project.user = body.user ? body.user : project.user;
-        project.collaborators = body.collaborator ? [...project.collaborators, body.collaborator] : project.collaborators;
+        project.collaborators = body.collaborator ? updatedCollaborators : project.collaborators;
         
         project
             .save()
@@ -88,6 +101,7 @@ updateProject = async (req, res) => {
                 return res.status(200).json({
                     success: true,
                     output: project,
+                    collaborators: updatedCollaborators,
                     message: 'Project updated!',
                 })
             })
