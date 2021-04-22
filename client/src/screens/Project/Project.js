@@ -169,13 +169,14 @@ const ProjectScreen = (props) => {
   }
 
   const confirmNewUser = async () => {
-    var tmp = JSON.parse(JSON.stringify(props.user));
     api.getUser(props.user.token, newUser.email).then(target => {
       if (target.data.output) {
 
         api.updateProject(props.user.token, props.project._id, {collaborator: {user: target.data.output, action: 'add'}}).then(res => {
           console.log(logger + 'confirmNewUser: updateProject', res);
-          props.setProject(prev => ({...prev, collaborators: res.data.collaborators}));
+          const updatedProject = {...props.project, collaborators: res.data.collaborators};
+          props.setProject(updatedProject);
+          props.user.update(prev => ({...prev, projects: [...prev.projects.filter(p => p._id !== updatedProject._id), updatedProject]}));
         }).catch(e => {
           console.log(logger + 'confirmNewUser: updateProject', e);
         })
@@ -185,7 +186,6 @@ const ProjectScreen = (props) => {
         }).catch(e => {
           console.log(logger + 'confirmNewUser: updateUser', e);
         })
-        props.user.update(tmp);
         if (newUser.error) {
           setNewUser(prev => ({...prev, error: null}))
         }
@@ -218,7 +218,9 @@ const ProjectScreen = (props) => {
     console.log(logger + 'confirmRemoveUser', removeUser);
     api.updateProject(props.user.token, props.project._id, {collaborator: {user: removeUser, action: 'remove'}}).then(res => {
       console.log(logger + 'confirmRemoveUser: updateProject', res);
-      props.setProject(prev => ({...prev, collaborators: res.data.collaborators}));
+      const updatedProject = {...props.project, collaborators: res.data.collaborators};
+      props.setProject(updatedProject);
+      props.user.update(prev => ({...prev, projects: [...prev.projects.filter(p => p._id !== updatedProject._id), updatedProject]}));
     }).catch(e => {
       console.log(logger + 'confirmRemoveUser: updateProject', e);
     })
