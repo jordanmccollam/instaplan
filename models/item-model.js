@@ -8,6 +8,7 @@ const Item = new Schema(
         dueDate: { type: String, required: false },
         done: { type: Boolean, required: true },
         tags: [{ type: Object, required: true }], // {name: 'tagName', color: 'primary'}
+        assignee: { type: Schema.Types.ObjectId, ref: "users" },
         user: { type: Schema.Types.ObjectId, ref: "users" },
         project: { type: Schema.Types.ObjectId, ref: "projects" },
     },

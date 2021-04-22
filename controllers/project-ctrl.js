@@ -80,6 +80,7 @@ updateProject = async (req, res) => {
         project.sections = body.sections ? body.sections : project.sections;
         project.description = body.description ? body.description : project.description;
         project.user = body.user ? body.user : project.user;
+        project.collaborators = body.collaborator ? [...project.collaborators, body.collaborator] : project.collaborators;
         
         project
             .save()

@@ -2,4 +2,10 @@
 
 .project-screen {
     overflow: hidden;
+
+    &-profiles {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+    }
 }

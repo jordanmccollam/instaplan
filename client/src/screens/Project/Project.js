@@ -21,10 +21,13 @@ const initialAdd = {
 const ProjectScreen = (props) => {
   const [ edit, setEdit ] = useState(null);
   const [ add, setAdd ] = useState(null);
+  const [ newUser, setNewUser ] = useState(null);
   const [ targetSection, setTargetSection ] = useState(null);
   let classes = {
 		[`project-screen`]: true
 	};
+
+  console.log(logger + 'project', props.project);
 
   const toggleNew = (section) => {
     if (add) {
@@ -153,9 +156,46 @@ const ProjectScreen = (props) => {
     }))
   }
 
+  const toggleNewUser = () => {
+    console.log(logger + 'toggleNewUser');
+    if (newUser) {
+      setNewUser(null);
+    } else {
+      setNewUser(prev => ({
+        ...prev,
+        email: ''
+      }))
+    }
+  }
+
+  const confirmNewUser = async () => {
+    console.log(logger + 'confirmNewUser', newUser, props.project._id);
+    api.getUser(props.user.token, newUser.email).then(target => {
+      console.log(logger + 'confirmUser: target', target)
+      if (target.data.output) {
+        api.updateProject(props.user.token, props.project._id, {collaborator: target.data.output}).then(res => {
+          console.log(logger + 'confirmNewUser: res', res);
+        }).catch(e => {
+          console.log(logger + 'confirmNewUser', e);
+        })
+      } else {
+        console.log(logger + 'confirmNewUser: No user found');
+      }
+    }).catch(e => {
+      console.log(logger + 'confirmNewUser', e);
+    });
+  }
+
+  const onChangeNewUser = (e) => {
+    setNewUser(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }))
+  }
+
   return (
     <Row className={`${props.className} ${classnames(classes)}`}>
-      <Col lg={(add || edit) ? 9 : 12} className="p-4 projects-col">
+      <Col lg={(add || edit || newUser) ? 9 : 12} className="p-4 projects-col">
         <Hero 
           kind="success" 
           title={`${props.project.name}`} 
@@ -163,8 +203,12 @@ const ProjectScreen = (props) => {
           links={[{label: 'Projects', action: () => props.setProject(null)}]}
           className="slide-top"
         >
-          <div>
-            <Profile content={`${props.user.nickname} (owner)`} id={props.user.nickname} />
+          <div className="project-screen-profiles">
+            {props.project.collaborators && props.project.collaborators.map((profile, i) => (
+              <Profile key={`collaborator-${profile._id}`} className="ml-2" content={profile.email} id={profile._id} />
+            ))}
+            <Profile className="ml-2" content={`${props.user.email} (owner)`} id={props.user._id} />
+            <div onClick={toggleNewUser}><Profile className="ml-2" content={`+ Add a collaborator`} id={'new-user'} /></div>
           </div>
         </Hero>
 
@@ -218,6 +262,13 @@ const ProjectScreen = (props) => {
         <Button onClick={confirmEdit} size="md" kind="success" full className="mt-4" ><>Confirm Edit</></Button>
         <Button onClick={toggleEdit} size="md" kind="dark" full className="mt-2" ><>Cancel</></Button>
       </Col>
+      <Col className={`slide-left ${newUser ? 'd-block' : 'd-none'} projects-col projects-sidebar`}>
+        <h2>Add Collaborator</h2>
+        <Form.Label >User Email</Form.Label>
+        <Form.Control placeholder="Email" name="email" value={newUser?.email} onChange={onChangeNewUser} />
+        <Button onClick={confirmNewUser} size="md" kind="success" full className="mt-4" ><>Confirm</></Button>
+        <Button onClick={toggleNewUser} size="md" kind="dark" full className="mt-2" ><>Cancel</></Button>
+      </Col>
     </Row>
   )
 }
@@ -230,7 +281,7 @@ ProjectScreen.propTypes = {
 
 ProjectScreen.defaultProps = {
   className: "",
-  project: {name: 'Default Project', description: 'Description here...', sections: ['Todo', 'In-Progress', 'Done'], items: []},
+  project: {name: 'Default Project', description: 'Description here...', sections: ['Todo', 'In-Progress', 'Done'], items: [], collaborators: []},
   setProject: () => console.log(logger + 'setProject')
 }
 
