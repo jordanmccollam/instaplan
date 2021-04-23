@@ -335,7 +335,7 @@ const ProjectScreen = (props) => {
         <Button onClick={confirmNewUser} size="md" kind="success" full className="mt-4" ><>Confirm</></Button>
         <Button onClick={toggleNewUser} size="md" kind="dark" full className="mt-2" ><>Cancel</></Button>
       </Col>
-      <Col className={`slide-left ${removeUser ? 'd-block' : 'd-none'} projects-col projects-sidebar`}>
+      <Col xs={3} className={`slide-left ${removeUser ? 'd-block' : 'd-none'} projects-col projects-sidebar`}>
         <h4>Do you want to remove {removeUser?.email} from this project?</h4>
         <Button onClick={confirmRemoveUser} size="md" kind="danger" full className="mt-4" ><>Yes, remove them.</></Button>
         <Button onClick={toggleRemoveUser} size="md" kind="dark" full className="mt-2" ><>Cancel</></Button>
