@@ -1,8 +1,9 @@
 import axios from 'axios';
 
-const rest = process.env.REACT_APP_ENV === 'production' ? axios : axios.create({
-    baseURL: 'http://localhost:8000'
-})
+// const rest = process.env.REACT_APP_ENV === 'production' ? axios : axios.create({
+//     baseURL: 'http://localhost:8000'
+// })
+const rest = axios;
 
 // USERS
 export const getUser = (token, email) => rest.get(`/api/user/${email}`, {headers: {Authorization: `Bearer ${token}`}}).catch(e => console.error("request", e));
