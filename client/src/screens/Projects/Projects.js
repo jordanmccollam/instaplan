@@ -81,6 +81,7 @@ const Projects = (props) => {
   useEffect(() => {console.log(props.user)}, [props.user])
 
   const confirmAdd = () => {
+    console.log(logger + " PROPS", props);
     api.createProject(props.user.token, {
       ...add,
       user: props.user._id
@@ -88,7 +89,7 @@ const Projects = (props) => {
       console.log(logger + 'confirmAdd: res', res);
       props.user.update(prev => ({
         ...prev,
-        projects: [res.data.output, ...prev.projects]
+        projects: [{...res.data.output.project, user: res.data.output.user}, ...prev.projects]
       }))
     }).catch(e => {
       console.log(logger + 'confirmAdd: ERROR', e);
@@ -149,6 +150,7 @@ const Projects = (props) => {
         />
 
         <Row className="mt-2 slide-top-random align-items-center">
+          <Col xs={12} className="section-border" ></Col>
           <Col>
             <h5 className="ml-3">Your Projects</h5>
           </Col>
@@ -158,6 +160,11 @@ const Projects = (props) => {
         </Row>
 
         <Row className="projects-row">
+          {props.user.projects.length === 0 ? 
+            <Col className="d-flex justify-content-center align-items-center">
+              <div>THERE ARE NO PROJECTS YET</div>
+            </Col> 
+          : <></>}
           {props.user.projects.map((project, i) => (
             <Col lg={3} key={`project-${project._id}`} id={project._id} className="slide-top-random">
               <Project  
@@ -174,6 +181,11 @@ const Projects = (props) => {
           <h5 className="ml-3">Projects Shared With You</h5>
         </Row>
         <Row className="projects-row">
+          {props.user.shared.length === 0 ? 
+            <Col className="d-flex justify-content-center align-items-center">
+              <div>NO PROJECTS HAVE BEEN SHARED WITH YOU YET</div>
+            </Col> 
+          : <></>}
           {props.user.shared.map((project, i) => (
             <Col lg={3} key={`project-${project._id}`} id={project._id} className="slide-top-random">
               <Project  

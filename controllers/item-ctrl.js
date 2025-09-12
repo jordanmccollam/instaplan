@@ -2,87 +2,57 @@ const Item = require('../models/item-model');
 const Project = require('../models/project-model');
 const User = require('../models/user-model');
 
-createItem = (req, res) => {
-    const body = req.body;
+createItem = async (req, res) => {
+    try {
 
-    if (!body) {
-        return res.status(400).json({
-            success: false,
-            error: 'You must provide an Item'
-        })
-    }
+        const body = req.body;
+        if (!body) {
+            return res.status(400).json({
+                success: false,
+                error: 'You must provide an Item'
+            })
+        }
 
-    const item = new Item({...body});
+        // Create and save item
+        const item = new Item({ ...body });
+        await item.save();
 
-    if (!item) {
-        return res.status(400).json({ success: false, error: err })
-    }
+        // Find and update user
+        const user = await User.findById(body.user);
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: 'User not found!',
+            });
+        }
+        user.items.push(item._id);
+        await user.save();
 
-    item.save().then(() => {
-        User.findOne({ _id: body.user }, (err, user) => {
-            if (err) {
-                return res.status(404).json({
-                    err,
-                    message: 'User not found!',
-                })
-            }
+        // Find and update project
+        const project = await Project.findById(body.project);
+        if (!project) {
+            return res.status(404).json({
+                success: false,
+                message: 'Project not found!',
+            });
+        }
+        project.items.push(item._id);
+        await project.save();
 
-            user.items.push(item._id)
-
-            user
-                .save()
-                .then(() => {
-                    return res.status(200).json({
-                        success: true,
-                        output: user,
-                        message: 'User updated!',
-                    })
-                })
-                .catch(error => {
-                    return res.status(404).json({
-                        error,
-                        message: 'User not updated!',
-                    })
-                })
-        })
-        Project.findOne({ _id: body.project }, (err, project) => {
-            if (err) {
-                return res.status(404).json({
-                    err,
-                    message: 'item not found!',
-                })
-            }
-
-            project.items.push(item._id)
-
-            project
-                .save()
-                .then(() => {
-                    return res.status(200).json({
-                        success: true,
-                        output: project,
-                        message: 'item updated!',
-                    })
-                })
-                .catch(error => {
-                    return res.status(404).json({
-                        error,
-                        message: 'item not updated!',
-                    })
-                })
-        })
-        
+        // ✅ Only send ONE response here (prev code was setup to send 2 and errored)
         return res.status(201).json({
             success: true,
-            output: item,
-            message: 'Item created!',
-        })
-    }).catch(error => {
+            output: { item, project, user },
+            message: 'Item created! Project and User updated!',
+        });
+
+    } catch (error) {
         return res.status(400).json({
+            success: false,
             error,
             message: 'Item not created!',
-        })
-    })
+        });
+    }
 }
 
 updateItem = async (req, res) => {
@@ -130,13 +100,36 @@ updateItem = async (req, res) => {
 }
 
 deleteItem = async (req, res) => {
-    await Item.findOneAndDelete({ _id: req.params.id }, (err, entry) => {
-        if (!err) {
-            return res.status(200).json({ success: true, output: req.params.id });
-        } else {
-            return res.status(400).json({ success: false, error: err });
+    try {
+        const item = await Item.findOneAndDelete({ _id: req.params.id });
+        
+        if (!item) {
+            return res.status(404).json({
+                success: false,
+                message: 'Item not found',
+            });
         }
-    }).catch(err => console.log(err))
+
+        // Remove the item reference from the PROJECT
+        await Project.updateMany(
+            { items: item._id },
+            { $pull: { items: item._id } }
+        );
+
+        // Remove the item reference from the USER
+        await User.updateMany(
+            { items: item._id },
+            { $pull: { items: item._id } }
+        );
+
+        return res.status(200).json({ 
+            success: true, 
+            output: req.params.id,
+            message: 'Item deleted and references removed from users+projects',
+        });
+    } catch (err) {
+        return res.status(400).json({ success: false, error: err });
+    }
 }
 
 module.exports = {

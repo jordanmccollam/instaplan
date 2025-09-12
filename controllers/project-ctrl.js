@@ -1,61 +1,47 @@
 const Project = require('../models/project-model');
 const User = require('../models/user-model');
+const Item = require('../models/item-model');
 
-createProject = (req, res) => {
-    const body = req.body;
+createProject = async (req, res) => {
+    try {
+        
+        const body = req.body;
+        if (!body) {
+            return res.status(400).json({
+                success: false,
+                error: 'You must provide an Project'
+            })
+        }
 
-    if (!body) {
-        return res.status(400).json({
-            success: false,
-            error: 'You must provide an Project'
-        })
-    }
+        // Create and save project
+        const project = new Project({ ...body });
+        await project.save();
 
-    const project = new Project({...body});
+        // Find and update user
+        const user = await User.findById(body.user);
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: 'User not found!',
+            });
+        }
+        user.projects.push(project._id);
+        await user.save();
 
-    if (!project) {
-        return res.status(400).json({ success: false, error: err })
-    }
-
-    project.save().then(() => {
-        User.findOne({ _id: body.user }, (err, User) => {
-            if (err) {
-                return res.status(404).json({
-                    err,
-                    message: 'User not found!',
-                })
-            }
-
-            User.projects.push(project._id)
-
-            User
-                .save()
-                .then(() => {
-                    return res.status(200).json({
-                        success: true,
-                        output: User,
-                        message: 'User updated!',
-                    })
-                })
-                .catch(error => {
-                    return res.status(404).json({
-                        error,
-                        message: 'User not updated!',
-                    })
-                })
-        })
-
+        // ✅ Only send ONE response here (prev code was setup to send 2 and errored)
         return res.status(201).json({
             success: true,
-            output: project,
-            message: 'Project created!',
-        })
-    }).catch(error => {
+            output: { project, user },
+            message: 'Project created and User updated!',
+        });
+
+    } catch (error) {
         return res.status(400).json({
+            success: false,
             error,
             message: 'Project not created!',
-        })
-    })
+        });
+    }
 }
 
 updateProject = async (req, res) => {
@@ -115,13 +101,42 @@ updateProject = async (req, res) => {
 }
 
 deleteProject = async (req, res) => {
-    await Project.findOneAndDelete({ _id: req.params.id }, (err, entry) => {
-        if (!err) {
-            return res.status(200).json({ success: true, output: req.params.id });
-        } else {
-            return res.status(400).json({ success: false, error: err });
+    try {
+        const project = await Project.findOneAndDelete({ _id: req.params.id });
+        
+        if (!project) {
+            console.log("PROJECT NOT FOUND?")
+            return res.status(404).json({
+                success: false,
+                message: 'Project not found',
+            });
         }
-    }).catch(err => console.log(err))
+
+        // Delete all tasks/items linked to this project
+        // Store item Id's so we can remove their refrences from user
+        const itemsToDelete = await Item.find({ project: project._id });
+        const itemIds = itemsToDelete.map(item => item._id);
+        await Item.deleteMany({ project: project._id });
+
+        // Remove the project reference from the user
+        await User.updateMany(
+            { projects: project._id },
+            { $pull: { projects: project._id } }
+        );
+        // Remove all item references from the user
+        await User.updateMany(
+            { items: { $in: itemIds } },
+            { $pull: { items: { $in: itemIds } } }
+        );
+
+        return res.status(200).json({ 
+            success: true, 
+            output: req.params.id,
+            message: 'Project deleted, tasks deleted, user references removed',
+        });
+    } catch (err) {
+        return res.status(400).json({ success: false, error: err });
+    }
 }
 
 module.exports = {

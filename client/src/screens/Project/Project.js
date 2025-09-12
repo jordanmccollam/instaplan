@@ -37,8 +37,9 @@ const ProjectScreen = (props) => {
     }
   }
 
-  const confirmAdd = () => {
-    api.createItem(props.user.token, {
+  const confirmAdd = async () => {
+    console.log("ALL PROPS", props)
+    await api.createItem(props.user.token, {
       ...add,
       user: props.user._id,
       project: props.project._id
@@ -46,12 +47,12 @@ const ProjectScreen = (props) => {
       console.log(logger + 'confirmAdd: res', res);
       props.user.update(prev => ({
         ...prev,
-        projects: prev.projects.map(p => p._id === props.project._id ? {...p, items: [res.data.output, ...p.items]} : p),
-        items: [res.data.output, ...prev.items]
+        projects: prev.projects.map(p => p._id === props.project._id ? {...p, items: [res.data.output.item, ...p.items]} : p),
+        items: [res.data.output.item, ...prev.items]
       }))
       props.setProject(prev => ({
         ...prev,
-        items: [res.data.output, ...prev.items]
+        items: [res.data.output.item, ...prev.items]
       }))
     }).catch(e => {
       console.log(logger + 'confirmAdd: ERROR', e);

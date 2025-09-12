@@ -19,13 +19,13 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "cd client && yarn build",
-    "install-client": "cd client && yarn",
-    "heroku-postbuild": "yarn install-client && yarn build",
-    "dev": "concurrently \"nodemon server.js\" \"cd client/ && yarn start\"",
-    "client": "cd client && yarn start",
+    "build": "cd client && npm run build",
+    "install-client": "cd client && npm install",
+    "heroku-postbuild": "npm run install-client && npm run build",
+    "dev": "concurrently \"nodemon server.js\" \"cd client/ && npm start\"",
+    "client": "cd client && npm start",
     "start": "node server.js",
-    "storybook": "cd client && yarn storybook",
+    "storybook": "cd client && npm run storybook",
     "kill": "sudo kill $(lsof -t -i:8000)"
   },
   "repository": {
