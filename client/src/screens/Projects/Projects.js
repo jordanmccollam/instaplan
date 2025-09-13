@@ -81,7 +81,6 @@ const Projects = (props) => {
   useEffect(() => {console.log(props.user)}, [props.user])
 
   const confirmAdd = () => {
-    console.log(logger + " PROPS", props);
     api.createProject(props.user.token, {
       ...add,
       user: props.user._id

@@ -1,3 +1,31 @@
+# To Get Up And Running! | SETUP
+
+STEP 1 - Run 'npm install' to install backend packages
+
+STEP 2 - Run 'npm run install-client' to install react and frontend packages
+
+STEP 3 - Add a .env file in the root directory and add the following variables:
+
+```
+MONGODB_URI
+AUTH0_AUDIENCE
+AUTH0_ISSUER
+NODE_ENV
+REACT_APP_AUTH0_DOMAIN
+REACT_APP_AUTH0_CLIENT_ID
+REACT_APP_AUDIENCE
+REACT_APP_ENV
+```
+
+STEP 4 - Add a duplicate of this exact .env file to the client folder.
+
+STEP 5 - Run 'npm start' to run the server
+
+STEP 6 - Run 'npm run client' to boot the frontend. From here you should see the app come up.
+
+DONE!
+
+
 # MERN TEMPLATE
 --- 
 

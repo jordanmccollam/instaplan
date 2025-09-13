@@ -243,10 +243,21 @@ const ProjectScreen = (props) => {
           items: [...props.project.items.filter(i => i._id !== res.data.output._id), {...res.data.output, assignee: res.data.assignee}]
         }
         props.setProject(updatedProject);
-        props.user.update(prev => ({...prev, projects: [...prev.projects.filter(p => p._id !== props.project._id), updatedProject]}));
+        if (props.user.projects.some(p => p._id === updatedProject._id)) {
+          console.log("Assigned to a task in your OWN project.")
+          props.user.update(prev => ({...prev, projects: [...prev.projects.filter(p => p._id !== props.project._id), updatedProject]}));
+        }
+        else if (props.user.shared.some(s => s._id === updatedProject._id)) {
+          console.log("Assigned to a task in a SHARED project.")
+          props.user.update(prev => ({...prev, shared: [...prev.shared.filter(s => s._id !== props.project._id), updatedProject]}));
+        }
+        console.log(logger + "PROPS USER?", props.user)
+        // props.user.update(prev => ({...prev, projects: [...prev.projects.filter(p => p._id !== props.project._id), updatedProject]}));
         setAssignItem({...res.data.output, assignee: res.data.assignee});
       }).catch(e => {console.log(logger + 'onAssignItem', e)})
     } else {
+
+      // SELECTED 'NONE'
       api.updateItem(props.user.token, assignItem._id, {assignee: null}).then(res => {
         const updatedProject = {
           ...props.project,
